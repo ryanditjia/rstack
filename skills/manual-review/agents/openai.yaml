@@ -1,0 +1,7 @@
+interface:
+  display_name: "Manual Review"
+  short_description: "Review and stage a diff in coherent chunks"
+  default_prompt: "Use $manual-review to review this effective diff with me one coherent chunk at a time."
+
+policy:
+  allow_implicit_invocation: false
