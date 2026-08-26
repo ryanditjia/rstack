@@ -39,10 +39,6 @@ When the human says `next`, inspect the index and worktree again. A file may be 
 - Separate defects and maintainability costs from taste. Say when a point is merely preference or no longer worth review time.
 - Keep explanations short. Expand only where the human is still confused.
 
-## Editor safety
-
-Editor actions such as Accept or Discard do not mean the same thing as `git add`. Before recommending either action, inspect the file on disk and both its staged and unstaged diff. Never tell the human to discard a whole file when that could remove part of the branch under review.
-
 ## Finish
 
 After every intended file is staged, run the relevant full test and lint checks. Report staged, unstaged, and untracked files plus unresolved risks. Commit or push only with explicit authorization.
