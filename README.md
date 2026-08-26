@@ -31,7 +31,7 @@ The installer records the source repository, so `skills update` can pull future 
 ## Entry points
 
 - `rstack-mode` routes non-trivial engineering work through the adapted pstack playbooks.
-- `grilling` interviews the user until a plan or decision has no hidden branches.
+- `grill-me` interviews the user until a plan or decision has no hidden branches.
 - `bro`, `facts`, `readback`, and `recap` are explicit conversation controls.
 - The remaining skills are focused engineering workflows and principles used directly or through `rstack-mode`.
 

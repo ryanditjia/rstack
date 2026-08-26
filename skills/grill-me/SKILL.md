@@ -1,9 +1,9 @@
 ---
-name: grilling
+name: grill-me
 description: Stress-test a plan, decision, or design through a structured interview. Use when the user explicitly asks to be grilled or wants hidden assumptions exposed before work starts.
 ---
 
-# Grilling
+# Grill me
 
 Interview the user until the decision tree has no unresolved branches.
 

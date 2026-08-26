@@ -10,7 +10,7 @@
     {
       "title": "Conversation",
       "description": "Explicit controls for decisions, clarity, alignment, and status.",
-      "skills": ["grilling", "bro", "facts", "readback", "recap"]
+      "skills": ["grill-me", "bro", "facts", "readback", "recap"]
     }
   ]
 }
