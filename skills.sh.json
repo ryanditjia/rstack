@@ -1,0 +1,16 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Rstack",
+      "description": "Portable engineering workflows adapted from pstack.",
+      "skills": ["rstack-mode", "setup-rstack", "interrogate", "how", "why", "architect", "arena", "swarm"]
+    },
+    {
+      "title": "Conversation",
+      "description": "Explicit controls for decisions, clarity, alignment, and status.",
+      "skills": ["grilling", "bro", "facts", "readback", "recap"]
+    }
+  ]
+}

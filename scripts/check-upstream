@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+imported="bdf7aa355337897f167153e05069aca505dae17c"
+latest=$(git ls-remote https://github.com/cursor/plugins.git refs/heads/main | awk '{print $1}')
+
+printf 'imported pstack commit: %s\n' "$imported"
+printf 'latest plugins commit: %s\n' "$latest"
+
+if [ "$imported" = "$latest" ]; then
+  echo "upstream is unchanged"
+else
+  echo "upstream changed; review pstack commits after the imported commit before porting updates"
+  printf 'https://github.com/cursor/plugins/compare/%s...%s\n' "$imported" "$latest"
+fi
