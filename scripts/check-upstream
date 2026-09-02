@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-imported="799151d91b6e12ee7dbd09f708eec108d7de9b3b"
+imported="efa2a531985e0a8084d36ff3cf87233be8a9f34b"
 latest=$(git ls-remote https://github.com/cursor/plugins.git refs/heads/main | awk '{print $1}')
 
 printf 'imported pstack commit: %s\n' "$imported"
