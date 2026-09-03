@@ -20,6 +20,14 @@ Use the host's task-history or transcript interface only when it is exposed for 
 
 Prefer the shared `.agents/skills/<name>/SKILL.md` project layout for portable skills. A host may also expose a user-level skill directory or authoring workflow. Use it only when the user asks for a user-level installation.
 
+## GitHub pull request stacks
+
+Use GitHub's native stacked pull requests for every rstack stack. Prefer the `gh stack` extension for stack creation, submission, inspection, synchronization, rebasing, and merging. Do not use Graphite or another stack manager.
+
+GitHub stacks require branches in one repository. If the host cannot run `gh stack`, keep the same GitHub stack shape through the connected GitHub tools or API: the root PR targets trunk, and each child PR targets its parent branch. State that the extension was unavailable. Do not change to another forge.
+
+Use GitHub's PR, check, review-thread, and merge interfaces for details that `gh stack` does not expose. Treat `gh stack merge` as a merge operation. Run it only when the relevant playbook authorizes merging.
+
 ## UI and CLI verification
 
 Use an available browser, computer-control, simulator, or CLI-testing capability that matches the real surface. If none exists, use the closest executable harness and name the verification gap.
