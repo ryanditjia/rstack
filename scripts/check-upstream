@@ -1,15 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-imported="efa2a531985e0a8084d36ff3cf87233be8a9f34b"
-latest=$(git ls-remote https://github.com/cursor/plugins.git refs/heads/main | awk '{print $1}')
+pstack_imported="efa2a531985e0a8084d36ff3cf87233be8a9f34b"
+show_me_imported="3c2629142c5d437428269b1b722b08c0b87f574d"
 
-printf 'imported pstack commit: %s\n' "$imported"
-printf 'latest plugins commit: %s\n' "$latest"
+pstack_latest=$(git ls-remote https://github.com/cursor/plugins.git refs/heads/main | awk '{print $1}')
+show_me_latest=$(git ls-remote https://github.com/humanlayer/skills.git refs/heads/main | awk '{print $1}')
 
-if [ "$imported" = "$latest" ]; then
-  echo "upstream is unchanged"
-else
-  echo "upstream changed; review pstack commits after the imported commit before porting updates"
-  printf 'https://github.com/cursor/plugins/compare/%s...%s\n' "$imported" "$latest"
-fi
+check_upstream() {
+  local name=$1
+  local imported=$2
+  local latest=$3
+  local compare_url=$4
+
+  printf '%s imported commit: %s\n' "$name" "$imported"
+  printf '%s latest commit: %s\n' "$name" "$latest"
+
+  if [ "$imported" = "$latest" ]; then
+    printf '%s upstream is unchanged\n' "$name"
+  else
+    printf '%s upstream changed; review relevant commits after the imported commit\n' "$name"
+    printf '%s/%s...%s\n' "$compare_url" "$imported" "$latest"
+  fi
+}
+
+check_upstream "pstack" "$pstack_imported" "$pstack_latest" "https://github.com/cursor/plugins/compare"
+check_upstream "show-me" "$show_me_imported" "$show_me_latest" "https://github.com/humanlayer/skills/compare"

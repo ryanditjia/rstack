@@ -26,12 +26,13 @@ Update installed skills with:
 npx -y skills@latest update --global --yes
 ```
 
-The installer records the source repository, so `skills update` can pull future rstack releases after this directory is published as a Git repository. Run `scripts/check-upstream` before a release to see whether pstack has moved; upstream changes still need a human portability review.
+The installer records the source repository, so `skills update` can pull future rstack releases after this directory is published as a Git repository. Run `scripts/check-upstream` before a release to see whether a tracked source has moved. Upstream changes still need a human portability review.
 
 ## Entry points
 
 - `rstack-mode` routes non-trivial engineering work through the adapted pstack playbooks.
 - `grill-me` interviews the user until a plan or decision has no hidden branches.
+- `show-me` explains the current topic with diagrams, code-shape sketches, and focused HTML artifacts.
 - `bro`, `facts`, `readback`, and `recap` are explicit conversation controls.
 - The remaining skills are focused engineering workflows and principles used directly or through `rstack-mode`.
 
@@ -41,4 +42,4 @@ Skills describe host capabilities instead of assuming one agent product. Pull re
 
 ## Attribution
 
-The engineering skills are adapted from pstack. See `UPSTREAMS.md` and `LICENSE-PSTACK`. The conversation-control skills are independently authored for rstack.
+The engineering skills are adapted from pstack. The `show-me` skill is adapted from HumanLayer. See `UPSTREAMS.md`, `LICENSE-PSTACK`, and `LICENSE-SHOW-ME`. The conversation-control skills are independently authored for rstack.
