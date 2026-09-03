@@ -22,7 +22,7 @@ After these sections, attach videos or screenshots when they prove a claim. Do n
 
 **GitHub.** Use GitHub for every PR operation. Use the connected GitHub tools or `gh` for single PRs. Use `gh stack` for every stack. Do not use Graphite or another stack manager. If the host cannot run `gh stack`, create the same GitHub-native base-branch chain through the connected GitHub tools or API and report that fallback.
 
-**Size and stacks.** Prefer five narrow PRs to one large PR. For a new stack, run `gh stack init` for the root and `gh stack add` for each child. Run `gh stack submit` to create or update the PRs. The root PR targets trunk, and each child PR targets its parent branch. Keep all branches in the same GitHub repository. Branch from trunk only for independent work. Run `gh stack sync` or `gh stack rebase` before substantial stack work when the stack has drifted from trunk.
+**Size and stacks.** Prefer five narrow PRs to one large PR. For a new stack, run `gh stack init` for the root and `gh stack add` for each child. Run `gh stack submit` to create or update the PRs. The root PR targets trunk, and each child PR targets its parent branch. Keep all branches in the same GitHub repository. Branch from trunk only for independent work. When the stack has drifted from trunk, run `gh stack sync`. For an interactive conflict resolution, run `gh stack rebase`, then `gh stack push`.
 
 **Readiness.** Open every PR ready, never as a draft. After `gh stack submit`, inspect the stack with `gh stack view` and inspect each PR through GitHub before you refer to its status. If a fallback creates a draft, mark it ready through GitHub.
 
