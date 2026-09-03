@@ -54,8 +54,8 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 ### PR mechanics, for every PR
 
-- [ ] Resolve the forge once through the host capability contract. Prefer connected forge tools, then a supported forge CLI. Record any fallback. Never require Graphite.
-- [ ] Open the PR ready, never draft, through the resolved forge. A stack child targets its parent branch.
+- [ ] Use GitHub for every PR. Use `gh stack` for every stack. If the extension is unavailable, create the same GitHub-native base-branch chain through the connected GitHub tools or API and record the fallback. Never use Graphite or another stack manager.
+- [ ] Open the PR ready, never draft. Run `gh stack submit` for a stack. A stack child targets its parent branch.
 - [ ] Run the repo's lint and typecheck once before the PR-facing push. Push with hooks on.
 - [ ] Run a diff-cleanup pass before each commit and the no-comments skill before review.
 - [ ] Triage every Bugbot and security-reviewer comment per `../references/bugbot-triage.md`.
@@ -129,7 +129,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through the availa
 - [ ] Root's clean verdict at the exact head SHA.
 - [ ] Bugbot triage done.
 - [ ] Rebased onto current trunk after the verdict, patch-id unchanged.
-- [ ] <The owner squash-merges its own PR, or the root appends the PR to the base-branch stack and the operator lands it bottom-up.>
+- [ ] <The owner squash-merges its own GitHub PR, or the root appends the PR with `gh stack add` and the operator lands the GitHub stack.>
 
 ## Close the program
 
