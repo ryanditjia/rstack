@@ -20,9 +20,11 @@ Invoked at the end of every other playbook.
 
 After these sections, attach videos or screenshots when they prove a claim. Do not use `## Summary` or `## Test plan` boilerplate. A commit body does not restate its subject.
 
-**Size and stacks.** Prefer five narrow PRs to one large PR. Stack follow-ups with Graphite (`gt`), and keep the ordered stack visible to reviewers. Branch from main only for independent work. Rebase on `main` before substantial stack work.
+**GitHub.** Use GitHub for every PR operation. Use the connected GitHub tools or `gh` for single PRs. Use `gh stack` for every stack. Do not use Graphite or another stack manager. If the host cannot run `gh stack`, create the same GitHub-native base-branch chain through the connected GitHub tools or API and report that fallback.
 
-**Readiness.** Open every PR ready, never as a draft. Cloud-agent PR tools default to draft, so set `draft: false` on every PR creation call. If a PR still opens as a draft, run the host's ready command, such as `gh pr ready <number>`. Run `gh pr view <number>` before you refer to PR status.
+**Size and stacks.** Prefer five narrow PRs to one large PR. For a new stack, run `gh stack init` for the root and `gh stack add` for each child. Run `gh stack submit` to create or update the PRs. The root PR targets trunk, and each child PR targets its parent branch. Keep all branches in the same GitHub repository. Branch from trunk only for independent work. When the stack has drifted from trunk, run `gh stack sync`. For an interactive conflict resolution, run `gh stack rebase`, then `gh stack push`.
+
+**Readiness.** Open every PR ready, never as a draft. After `gh stack submit`, inspect the stack with `gh stack view` and inspect each PR through GitHub before you refer to its status. If a fallback creates a draft, mark it ready through GitHub.
 
 **Babysit.** Opening a PR does not start a babysit. Post the URL and keep building. Finish the phase or stack first. Run a separate babysit pass only when the user asks for one after the whole stack exists. A babysit for each new PR stalls the build and spends checks on commits that later waves restart. Push back when feedback drifts from intent.
 

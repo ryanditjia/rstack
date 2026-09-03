@@ -37,7 +37,7 @@ The installer records the source repository, so `skills update` can pull future 
 
 ## Portability
 
-Skills describe capabilities instead of requiring host-specific tool names. Read `skills/rstack-mode/references/host-capabilities.md` for the shared fallback contract. Run `scripts/check-portability` before publishing.
+Skills describe host capabilities instead of assuming one agent product. Pull request stacks are the exception: rstack uses GitHub's native stacked pull requests and prefers the `gh stack` extension. Read `skills/rstack-mode/references/host-capabilities.md` for the fallback contract. Run `scripts/check-portability` before publishing.
 
 ## Attribution
 
