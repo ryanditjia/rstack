@@ -1,6 +1,7 @@
 ---
 name: rstack-mode
 description: Route non-trivial engineering work through rigorous investigation, design, implementation, verification, review, and delivery playbooks. Use when the user explicitly invokes rstack-mode or asks to work in the rstack style.
+disable-model-invocation: true
 ---
 
 # Rstack mode
@@ -14,7 +15,7 @@ Remaining triggers:
 - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
 - Before asking the user to choose an approach, classify the fork. Observe facts by running a safe experiment. Ask only when the choice is a genuine preference, product decision, or risk tradeoff that evidence cannot settle.
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
-- Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
+- Code crossing a function boundary → the **architect** skill, design the caller-facing shape before implementing and explore alternatives when the shape is genuinely open.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
@@ -42,7 +43,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 - **Minimize Reader Load** (**principle-minimize-reader-load**). Reviewing or shaping code that's hard to trace. Count layers and hidden state, collapse one-caller wrappers, shrink mutable scope.
 - **Outcome-Oriented Execution** (**principle-outcome-oriented-execution**). Planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture, don't preserve throwaway compatibility states.
 - **Experience First** (**principle-experience-first**). Product, UX, or feature-scope tradeoffs. Choose user delight over implementation convenience.
-- **Exhaust the Design Space** (**principle-exhaust-the-design-space**). A novel interaction or architectural decision with no precedent. Build 2-3 competing prototypes and compare before committing.
+- **Exhaust the Design Space** (**principle-exhaust-the-design-space**). A novel interaction or architectural decision with no precedent. Explore competing concrete shapes before committing; let uncertainty determine the effort.
 - **Build the Lever** (**principle-build-the-lever**). Any non-trivial work. Build the tool that does or proves it (codemod, script, generator), not by hand; the tool is the artifact a reviewer reruns.
 
 **Architecture**

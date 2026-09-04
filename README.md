@@ -30,11 +30,14 @@ The installer records the source repository, so `skills update` can pull future 
 
 ## Entry points
 
-- `rstack-mode` routes non-trivial engineering work through the adapted pstack playbooks.
+- `argus-mode` applies the shared rstack workflow to Argus Labs repositories, with repository-first evidence and Bun, TypeScript, and Go conventions.
+- `rmode` applies the shared workflow to non-Argus projects without assuming a language or toolchain.
+- `rstack-mode` contains the shared engineering workflow and remains a compatibility entry point.
 - `grill-me` interviews the user until a plan or decision has no hidden branches.
 - `show-me` explains the current topic with diagrams, code-shape sketches, and focused HTML artifacts.
 - `bro`, `facts`, `readback`, and `recap` are explicit conversation controls.
-- The remaining skills are focused engineering workflows and principles used directly or through `rstack-mode`.
+- `typescript-best-practices` and `go-best-practices` apply language-specific guidance when their source files are in scope.
+- The remaining skills are focused engineering workflows and principles used directly or through a mode.
 
 ## Portability
 

@@ -21,14 +21,10 @@ fast-code: inherit-parent
 precise-code: inherit-parent
 judgment: inherit-parent
 alternate-judgment: inherit-parent
-how-explorer: inherit-parent
 how-critics: inherit-parent
-why-investigators: inherit-parent
-why-synthesizer: inherit-parent
 arena-runners: inherit-parent
 arena-judge: inherit-parent
 swarm-workers: inherit-parent
-architect-reviewers: inherit-parent
 interrogate-reviewers: inherit-parent
 reflect-reviewers: inherit-parent
 ```

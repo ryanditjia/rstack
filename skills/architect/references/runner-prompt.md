@@ -1,20 +1,31 @@
 # Architect runner prompt
 
-The orchestrator passes this file through to every parallel candidate runner during Phase B and fills in the variable inputs around it: the task, the Phase A grounding artifacts, the isolated working directory, and the path to write outputs. The working directory is a git worktree when available, otherwise a per-runner subdirectory under the sketch dir; what matters is independence between candidates.
+Use this prompt for a bounded design exploration. The orchestrating thread supplies the task, grounding evidence, and the design angle to investigate.
 
-You are producing one candidate design in architect's parallel exploration. Read the **architect** skill in full first; that's the workflow you're inside. Output a candidate design package: type sketch, function signatures, module map, and prose rationale shaped per [`rationale-template.md`](rationale-template.md).
+Return one coherent candidate design. Do not choose the final architecture or write implementation code.
 
-Apply the following discipline. The orchestrator compares candidates on these axes to pick a base.
+## Required package
 
-- Caller's usage first. Write the README-style usage and two or three real call sites before the types, then derive the type sketch from them. The usage is the spec; the two must agree, so reconcile the sketch to the usage, not the reverse.
-- Data structures first. Get the core types right and the code becomes obvious. Trace each dominant access pattern through the proposed structure; if the answer is "we'll add a map / index / cache later," the structure is wrong.
-- Interface depth. Compare the capability hidden behind the public surface relative to the size of that surface. Prefer a simple interface that pulls complexity into the callee, even when the implementation becomes less simple. Do not put transport or wire types on the public surface; parse into domain types behind the interface.
-- Shared state: if two actors might both write, ask "what happens?" If the answer isn't "nothing," default to per-actor state with a merge at the read boundary, per the **separate-before-serializing-shared-state** principle skill.
-- Make boundaries visible. `not implemented` errors for bodies, `// TODO` pseudocode for tricky logic, doc comments stating intent and invariants. A reader should trace data from input to output by reading types and signatures alone.
-- Encode invariants in types: hard-to-misuse types > runtime checks > prose comments, per the **encode-lessons-in-structure** principle skill.
-- Validate at boundaries, trust types inside, per the **boundary-discipline** principle skill. Business logic as pure functions; the shell stays thin.
-- Single source of truth per invariant. Derive instead of sync.
-- Idempotent state transitions where applicable, per the **make-operations-idempotent** principle skill. Ask what happens if the operation runs twice or crashes halfway.
-- Short call chains. If tracing the flow needs more than three files, flatten the hierarchy, per the **laziness-protocol** and **minimize-reader-load** principle skills.
+- Caller-facing usage with realistic call sites
+- Core data structures and invariants
+- Runtime flow and failure paths
+- Configuration ownership, defaults, parsing, and validation
+- Function or method signatures
+- Module map and ownership boundaries
+- Accepted tradeoffs, risks, and rejected alternatives
 
-You are one of several runners, each on a different model. Produce the best design your model can make; don't hedge against the others. Differences between candidates are the signal used to pick a base and graft. Converging on a safe-looking middle defeats the exploration.
+## Design tests
+
+- Derive the type sketch from caller usage, not the reverse.
+- Trace dominant reads and writes through the proposed data structures.
+- Keep transport, storage, and framework types behind boundaries. Parse them into domain types.
+- Make each invariant have one owner and one source of truth.
+- Prefer per-actor state over shared writable state. If sharing is required, name the writer and synchronization rule.
+- Make retries and partial execution converge to a valid state.
+- Prefer a small public interface that hides policy and implementation complexity.
+- Remove pass-through layers and call chains that do not hide a decision.
+- Encode invalid states in types when the language can do so honestly.
+
+Read `design-red-flags.md` before returning. Cite the grounding evidence behind each constraint. Report unresolved questions instead of filling them with assumptions.
+
+The current thread compares this package with other evidence or candidates and owns synthesis.
