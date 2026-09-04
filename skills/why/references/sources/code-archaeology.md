@@ -1,88 +1,36 @@
-# Code Archaeology (git + in-repo)
+# Code archaeology
 
-## What this source contains
+Use the repository record to find when a decision appeared and what its authors said about it.
 
-- Commit history (messages, dates, authors, diffs)
-- PR descriptions, review comments, and discussion threads (via `gh`)
-- Inline code comments, TODOs, FIXMEs, deprecation notes
-- ADRs (architectural decision records) if the repo keeps them
-- Tests. Names and assertions often encode the edge cases that motivated a change
-- Related files modified in the same commits (co-change signal)
-- CHANGELOG entries, release notes in the repo
-- Issue/ticket IDs mentioned in commit messages and PR bodies
+## Search
 
-The most trustworthy source, tied directly to the code, and the most complete. Everything that went through the repo should be here.
+Read the target source, tests, comments, configuration, ADRs, RFCs, READMEs, changelogs, and release notes. Search TODOs, FIXMEs, error strings, feature names, and issue IDs when relevant.
 
-## How to search it
-
-Expand the seed commit list:
+Trace history with the commands that fit the question:
 
 ```bash
-# Full history of the file through renames
-git log --follow --oneline -- <file>
-
-# Pickaxe: commits that added or removed this exact text
-git log -S '<exact_string_from_code>' -- <file>
-
-# Or for patterns:
-git log -G '<regex>' -- <file>
-
-# Who wrote each line and when
 git blame -L <start>,<end> <file>
-
-# The full diff of a specific commit
-git show <hash>
-
-# Commits between two points affecting this file
-git log <old>..<new> -p -- <file>
+git log --follow -p -- <file>
+git log -S '<exact text>' -p -- <path>
+git log -G '<pattern>' -p -- <path>
+git show <commit>
 ```
 
-For each substantive commit, pull the PR context:
+Inspect the full diff and the files changed with each substantive commit. Co-changed files often reveal the constraint or failing case. Follow renames and find the earlier source when the target copied an existing pattern.
 
-```bash
-# Find the PR number from the merge commit or branch
-git log -1 --format=%B <hash>
+Use `gh pr view` to read the full PR body, review discussion, comments, files, and linked issues. Follow relevant links rather than stopping at the title or summary.
 
-# Full PR context: body, review comments, linked issues
-gh pr view <number> --json title,body,author,createdAt,mergedAt,labels,closingIssuesReferences,comments,reviews,files
+For a numeric threshold, trace the exact literal and its replacements. Check nearby configuration, tests, benchmarks, PRs, and issues. A matching measurement or constant is circumstantial unless a source states the connection.
 
-# The --json reviews and comments fields are where the real signal is
-```
+Read the full history of relevant issues and repository docs. Follow parent, duplicate, and linked items. Compare plans with the shipped diff, and report stale documents or scope changes as contradictions.
 
-Look for out-of-band docs:
+## Judge the record
 
-```bash
-# ADRs often live in docs/adr/ or similar
-rg -l -i 'architecture.decision' --glob '*.md'
+- Prefer an explicit explanation in a PR, commit, comment, test, or repository doc.
+- Treat a test as evidence of a motivating case only when its name, assertion, or surrounding discussion connects it to the change.
+- Treat commit messages cautiously. Read the diff.
+- For squash merges, use the PR body and discussion when branch commits are absent.
+- Skip bot commits unless the automation itself explains the decision.
+- Do not cite current code as proof of its author's intent.
 
-# TODOs and FIXMEs near the target
-rg -n -C2 '(TODO|FIXME|HACK|XXX|NOTE)' <target_file>
-
-# Related tests. Names often encode the "why"
-rg -l '<symbol>' --glob '*test*'
-```
-
-## What good evidence looks like here
-
-- A PR description that explains the problem being solved, not just the change ("This fixes the pagination bug that caused X")
-- A long review thread where alternatives were debated
-- An inline comment near the target line that explains a non-obvious constraint
-- A test named `test_handles_edge_case_when_X` that reveals an edge case motivating the code
-- A commit message that references a ticket or incident ID
-- A CHANGELOG entry that summarizes the user-visible rationale
-
-## Common pitfalls
-
-- **Squash-merge flatlands.** If the repo squashes PRs, individual commits in the branch history are lost. Fall back to PR body and comments.
-- **Misleading commit messages.** "Small refactor" sometimes hides an intentional behavior change. Look at the diff, not the message.
-- **Cargo-culted patterns.** The author may have copied a pattern without understanding why. Check if the pattern originated earlier in the codebase and investigate *that* commit.
-- **Bot commits and auto-merges.** Dependabot, Renovate, and automated backports usually don't carry motivation. Skip them when trying to find intent.
-- **Treating code as evidence of intent.** The code itself isn't evidence for why it exists. Evidence comes from commit messages, PRs, comments, tests, docs. Don't cite "the function is named X" as evidence of intent.
-
-## What to return
-
-Every commit/PR/comment that bears on the question, with:
-- The exact text (quoted)
-- The hash / PR number / file:line
-- Author and date
-- Whether it's direct (explicitly addresses the question) or circumstantial
+Return exact quotes when wording matters. Include the source, author and date when available, whether the evidence is direct or circumstantial, and what you searched without finding.
