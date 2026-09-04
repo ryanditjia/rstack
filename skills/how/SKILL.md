@@ -12,9 +12,9 @@ Two modes:
 1. **Explain** (default). Explore the codebase and produce a clear explanation
 2. **Critique.** Explain first, then spawn multiple models to independently identify architectural issues
 
-## Explain Mode
+## Explain mode
 
-### Step 1. Understand the Question and Assess Complexity
+### Understand the question
 
 Parse what the user is asking about:
 
@@ -25,53 +25,28 @@ Parse what the user is asking about:
 
 Identify the scope. If ambiguous, state your best-guess interpretation before exploring. Don't ask. Let the user redirect if you're off.
 
-**Assess complexity to decide the approach:**
+### Explore
 
-- **Simple** (a single module, a small utility, a narrow question like "how does function X work"): skip explorer agents; the explainer explores and explains in a single pass. Go to Step 2b.
-- **Complex** (a subsystem spanning multiple files/services, a cross-cutting feature, a full architectural overview): spawn parallel explorer agents first, then hand off to the explainer. Go to Step 2a.
+Start broad enough to find the relevant code, then follow the implementation. Read the code rather than guessing from names.
 
-When in doubt, lean simple. You can always spawn explorers if the explainer hits a wall.
+For complex questions, cover the data model and state management, request path and enforcement, configuration and metrics infrastructure, and subsystem boundaries.
 
-### Step 2a. Explore (complex questions only)
+Choose how to investigate based on the workload and available capabilities. Work directly or delegate independent, bounded investigations to subagents or agent threads when useful. When delegating, use `references/explorer-prompt.md` with a specific exploration focus. Delegated work is read-only and returns evidence and unresolved gaps to the current thread.
 
-Decompose the question into 2-4 parallel exploration angles, each a distinct slice of the subsystem so explorers don't duplicate work. Example split for "how does the rate limiter work?":
-
-- Explorer 1: data model and state management
-- Explorer 2: request path and enforcement
-- Explorer 3: configuration and metrics infrastructure
-
-The right decomposition depends on the question. Use your judgment. Narrow questions: 2 explorers is fine. Broad subsystems: up to 4.
-
-When the host supports delegation, start all explorers together. Use the optional `how-explorer` model preference from `~/.config/rstack/models.md`, otherwise inherit the current model. Explorers need read-only access only. If delegation is unavailable, explore each angle sequentially.
-
-Each explorer gets the same base prompt from `references/explorer-prompt.md` plus a specific exploration angle naming its slice. Each explorer should:
+During exploration:
 - Start broad: Glob for relevant directories, Grep for key types/interfaces/class names
 - Follow the thread: from an entry point, trace the call chain (callers, callees, data flow, type definitions)
 - Read the actual code, don't guess from file names
 - Stop when it can describe the full path from input to output (or trigger to effect) without hand-waving any step
 - Note things that are surprising, non-obvious, or that a newcomer would get wrong
 
-Each explorer returns structured findings: components found, flow traced, files read, anything non-obvious. Overlap between explorers is fine; the explainer reconciles.
+The current thread owns the question, reconciles findings, and writes the final explanation. Do not delegate synthesis. Check the code when delegated findings conflict or leave gaps.
 
-Then proceed to Step 3.
+### Present
 
-### Step 2b. Direct Explain (simple questions)
-
-Explore and explain in one pass. Delegate to one read-only worker when supported, using the optional `how-explainer` model preference; otherwise do the pass directly.
-
-The agent does its own exploration (Glob, Grep, Read) and writes the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. Same structure, just no explorer findings as input.
-
-Proceed to Step 4.
-
-### Step 3. Synthesize (complex questions only)
-
-Once all explorers return, synthesize their findings into one coherent explanation. Use a read-only delegated worker with the optional `how-explainer` model preference when supported, or synthesize directly.
-
-The explainer gets all explorers' findings and writes the human-facing explanation (output format below). Read `references/explainer-prompt.md` for the full prompt template. The explainer reconciles overlapping findings, resolves contradictions, and weaves the slices into a unified picture.
-
-### Step 4. Present
-
-Present the explainer's output to the user. You may lightly edit for clarity or add context from the conversation, but don't substantially rewrite. The explainer's communication is the product.
+Present one coherent explanation grounded in the code.
+Use concrete names and mechanisms. Explain the source of complexity, keep simple behavior brief, and state unresolved questions.
+Use `show-me` when a diagram, call tree, or file map would make the explanation clearer than prose.
 
 ### Output Format
 
@@ -93,7 +68,7 @@ Triggered when the user asks for architectural issues, problems, or improvements
 
 ### Step 1. Explain First
 
-Run the full explain flow above (Steps 1-4). You must understand the architecture before critiquing it.
+Run the full explain flow above. You must understand the architecture before critiquing it.
 
 ### Step 2. Spawn Critics
 
