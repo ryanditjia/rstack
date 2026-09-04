@@ -20,6 +20,10 @@ Inspect the full diff and the files changed with each substantive commit. Co-cha
 
 Use `gh pr view` to read the full PR body, review discussion, comments, files, and linked issues. Follow relevant links rather than stopping at the title or summary.
 
+For a numeric threshold, trace the exact literal and its replacements. Check nearby configuration, tests, benchmarks, PRs, and issues. A matching measurement or constant is circumstantial unless a source states the connection.
+
+Read the full history of relevant issues and repository docs. Follow parent, duplicate, and linked items. Compare plans with the shipped diff, and report stale documents or scope changes as contradictions.
+
 ## Judge the record
 
 - Prefer an explicit explanation in a PR, commit, comment, test, or repository doc.
