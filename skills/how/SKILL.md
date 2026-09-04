@@ -45,6 +45,7 @@ The current thread owns the question, reconciles findings, and writes the final 
 ### Present
 
 Present one coherent explanation grounded in the code.
+Use `show-me` when a diagram, call tree, or file map would make the explanation clearer than prose.
 
 ### Output Format
 
