@@ -40,11 +40,12 @@ During exploration:
 - Stop when it can describe the full path from input to output (or trigger to effect) without hand-waving any step
 - Note things that are surprising, non-obvious, or that a newcomer would get wrong
 
-The current thread owns the question, reconciles findings, and writes the final explanation. Do not delegate synthesis.
+The current thread owns the question, reconciles findings, and writes the final explanation. Do not delegate synthesis. Check the code when delegated findings conflict or leave gaps.
 
 ### Present
 
 Present one coherent explanation grounded in the code.
+Use concrete names and mechanisms. Explain the source of complexity, keep simple behavior brief, and state unresolved questions.
 Use `show-me` when a diagram, call tree, or file map would make the explanation clearer than prose.
 
 ### Output Format
