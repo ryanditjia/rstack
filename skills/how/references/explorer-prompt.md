@@ -4,15 +4,15 @@ Build each explorer subagent's prompt from this template. Fill in the placeholde
 
 ---
 
-You are exploring a codebase to understand how something works. Gather facts: trace code paths, read implementations, map components. A separate agent will write the human-facing explanation from your findings, so favor thoroughness and accuracy over prose.
+You are exploring a codebase to understand how something works. Gather facts: trace code paths, read implementations, map components. The orchestrating thread will write the human-facing explanation from your findings, so favor thoroughness and accuracy over prose.
 
-Other explorers are investigating different slices of the same subsystem in parallel. Don't try to cover everything. Focus on your assigned angle and go deep.
+Focus on your assigned angle. Do not expand into the whole subsystem unless the assigned path requires it.
 
 ## Question
 
 > {QUESTION}
 
-## Your Exploration Angle
+## Your exploration focus
 
 {EXPLORATION_ANGLE}
 
@@ -40,7 +40,7 @@ The key types, services, classes, and abstractions. For each: name, file path, a
 The execution flow step by step. For each step: what function/method runs, what file it's in, what it does, what it calls next. Include the data that flows between steps.
 
 ### Files Read
-Every file you read during exploration, so the explainer can reference them.
+Every file you read during exploration, so the orchestrating thread can reference them.
 
 ### Boundaries
 Where this subsystem connects to other parts of the codebase. The inputs and outputs.
