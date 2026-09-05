@@ -116,8 +116,8 @@
       "tokens": 2618
     },
     "skills/unslop/SKILL.md": {
-      "words": 981,
-      "tokens": 1619
+      "words": 280,
+      "tokens": 450
     }
   },
   "description": {
@@ -128,7 +128,9 @@
     "words": 8623,
     "tokens": 12010
   },
-  "metadata": [],
+  "metadata": [
+    "skills/unslop/agents/openai.yaml"
+  ],
   "routes": {
     "conversation": [
       "skills/unslop/SKILL.md"
