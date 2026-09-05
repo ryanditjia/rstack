@@ -8,7 +8,9 @@ disable-model-invocation: true
 
 ## Repository first
 
-Treat the current repository as the source of truth. Follow concrete dependencies into repositories that the user controls or names. Use code, tests, configuration, repository docs, Git history, and repository-host discussions as evidence.
+Treat the current repository as the source of truth. Use code, tests, configuration, repository docs, Git history, and repository-host discussions as evidence.
+
+When invoked as `/rmode argus <request>`, treat `argus` as a profile selector, use the remaining text as the request, and follow concrete dependencies into relevant Argus repositories.
 
 Infer languages, package managers, and test commands from repository files and instructions. Apply the matching language skills, including TypeScript and Go, only when those files are in scope. Prefer repository scripts and CI commands over generic replacements.
 
