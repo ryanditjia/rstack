@@ -44,7 +44,7 @@ Skills describe host capabilities instead of assuming one agent product. Pull re
 
 ## UI design validation and migration
 
-Run `uv run scripts/check-ui-design` to check instruction budgets, YAML metadata, and local links. The script declares pinned Python dependencies. It measures complete Markdown files with `tiktoken` and `o200k_base`; these counts compare instruction size, not billing or any host's full prompt. Add `--baseline /resolved/path/to/impeccable` to measure the previous workflow with the same tokenizer.
+Run `./scripts/check-ui-design` to check instruction budgets, YAML metadata, and local links. On macOS or Linux, it requires Python 3.10 or newer with `venv` support. The first run downloads the pinned dependencies from `scripts/ui-design-requirements.txt` into a private environment under `${XDG_CACHE_HOME:-$HOME/.cache}/rstack/ui-design`. Later runs reuse that environment; no global Python packages or `uv` installation are needed. Changing the pins or Python version creates a separate environment. It measures complete Markdown files with `tiktoken` and `o200k_base`; these counts compare instruction size, not billing or any host's full prompt. Add `--baseline /resolved/path/to/impeccable` to measure the previous workflow with the same tokenizer.
 
 Replay `tests/ui-design/trigger-cases.json` in fresh host sessions when changing routing. Inspect actual reference reads and actions against each case. The deterministic validator checks the fixtures' structure, not model behavior. Test installation in a clean environment and verify `npx -y skills@latest list --global --json` discovers the committed skill for the intended agents.
 
