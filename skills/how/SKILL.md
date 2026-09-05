@@ -72,9 +72,9 @@ Run the full explain flow above. You must understand the architecture before cri
 
 ### Step 2. Spawn Critics
 
-After the explanation is complete, run independent architectural critics. Use the configured `how-critics` list when present; otherwise use the host's available reviewers. Run them together when parallel delegation is supported and sequentially otherwise.
+After the explanation is complete, run independent architectural critics. Use the configured `how-critics` list when present; otherwise start with two critics. Add critics only for an unresolved disagreement, a named coverage gap, or an explicit user request. Run them together when parallel delegation is supported.
 
-Each critic is read-only and uses one configured model when model selection is supported. When it is not, inherit the current model and preserve independence through separate review passes.
+Each critic is read-only and uses one configured model when model selection is supported. When model selection is unavailable, inherit the current model. If delegation is unavailable, perform a separate review pass and report that independent critique was unavailable.
 
 Read `references/critic-prompt.md` for the prompt template. Each critic gets:
 1. The explanation from Step 1 (so they don't re-explore)
