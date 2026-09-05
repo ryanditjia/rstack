@@ -1,6 +1,6 @@
 ### Hillclimb
 
-**You own the metric and the experiment's integrity. Supervise and review; delegate the attempts.** For sustained, iterative improvement of one measurable thing against a target ("hillclimb on X", "make startup 50% faster", "systematically drive down <metric>", "keep trying until <metric> improves by N%"). A one-off fix is Bug fix or Perf issue; this is the loop.
+**You own the metric and the experiment's integrity. Implement directly or delegate bounded attempts; preserve independent review.** For sustained, iterative improvement of one measurable thing against a target ("hillclimb on X", "make startup 50% faster", "systematically drive down <metric>", "keep trying until <metric> improves by N%"). A one-off fix is Bug fix or Perf issue; this is the loop.
 
 Core discipline: one change, one measurement, keep or revert. Never stack untested changes, and never claim a win from code inspection. The data decides (the **prove-it-works** principle skill).
 
@@ -9,7 +9,7 @@ Core discipline: one change, one measurement, keep or revert. Never stack untest
 3. Open the decision log via the **show-me-your-work** skill. A `decision.tsv`, one row per attempt: id, hypothesis, change, before, after, delta, tests, verdict (kept or reverted), note. This is the run's memory. Read it before each attempt so the search accumulates instead of circling. Keep it out of the tree (gitignored) so it survives reverts.
 4. Ground each hypothesis in the architecture model from step 1, so it names a specific mechanism ("defer X off the boot path because it blocks first paint"), not "try memoizing something".
 5. Loop, one hypothesis per iteration:
-   - Hand the change to a subagent using your configured hillclimb model (default `configured precise code model`) with a tight scope; supervise and review the diff rather than typing it (the **guard-the-context-window** principle skill). When several independent hypotheses are live, fan them to parallel subagents, each in its own worktree so they can't collide (the **separate-before-serializing-shared-state** principle skill).
+   - Implement the hypothesis directly or delegate a bounded attempt. Before accepting a change, have a reviewer who did not write it inspect the diff; the parent can review a delegate's change. Delegate independent hypotheses only when parallel exploration is useful, with one worktree per writer (the **separate-before-serializing-shared-state** principle skill).
    - Measure before and after with the frozen harness, and run the regression gate.
    - Accept only when the metric moves past noise and the gate stays green. Otherwise revert the change in full; a tweak that "might help" does not ride along.
    - One commit per accepted fix, staging only the files you changed (`git add <files>`, never `-A`). Log the row either way, kept or reverted.
