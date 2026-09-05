@@ -1,20 +1,10 @@
 ---
 name: principle-exhaust-the-design-space
-description: "Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Explore competing concrete shapes before committing, with effort chosen from the uncertainty and cost of being wrong."
+description: "Use when a consequential design has multiple plausible shapes and no established precedent."
 ---
 
-# Exhaust the Design Space
+# exhaust the design space
 
-When a novel interaction or architectural decision has no established precedent, explore concrete alternatives before implementation. Spend more effort when uncertainty and the cost of being wrong are high.
+Compare structurally distinct sketches or prototypes before committing. Cosmetic variations do not resolve an architectural choice.
 
-**The rule.** When the right answer is not obvious, build enough competing prototypes or sketches to expose the real choice. Compare them side by side before committing. Structurally distinct alternatives count; cosmetic variations do not.
-
-**When it applies:**
-- Novel UI interactions (no prior art in the codebase)
-- Architectural choices with multiple viable approaches
-- Product design decisions where user experience depends on feel, not logic
-
-**When it doesn't:**
-- Mechanical implementation where the pattern is established
-- Bug fixes or refactors with a clear target state
-- Changes where constraints dictate a single viable approach
+Scale effort to uncertainty and the cost of being wrong. Work directly unless independent alternatives would benefit from authorized delegation. Skip exploration for mechanical work, a clear repair target, or constraints that leave one viable shape; name the constraint when it rules out an alternative.

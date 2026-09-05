@@ -28,88 +28,88 @@
   ],
   "files": {
     "skills/principle-boundary-discipline/SKILL.md": {
-      "words": 278,
-      "tokens": 378
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-build-the-lever/SKILL.md": {
-      "words": 424,
-      "tokens": 606
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-encode-lessons-in-structure/SKILL.md": {
-      "words": 343,
-      "tokens": 467
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-exhaust-the-design-space/SKILL.md": {
-      "words": 169,
-      "tokens": 212
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-experience-first/SKILL.md": {
-      "words": 199,
-      "tokens": 260
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-fix-root-causes/SKILL.md": {
-      "words": 218,
-      "tokens": 286
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-foundational-thinking/SKILL.md": {
-      "words": 243,
-      "tokens": 331
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-guard-the-context-window/SKILL.md": {
-      "words": 169,
-      "tokens": 235
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-laziness-protocol/SKILL.md": {
-      "words": 233,
-      "tokens": 318
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-make-operations-idempotent/SKILL.md": {
-      "words": 202,
-      "tokens": 283
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md": {
-      "words": 169,
-      "tokens": 222
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-minimize-reader-load/SKILL.md": {
-      "words": 325,
-      "tokens": 437
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-model-the-domain/SKILL.md": {
-      "words": 329,
-      "tokens": 413
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-never-block-on-the-human/SKILL.md": {
-      "words": 229,
-      "tokens": 340
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-outcome-oriented-execution/SKILL.md": {
-      "words": 142,
-      "tokens": 194
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-prove-it-works/SKILL.md": {
-      "words": 315,
-      "tokens": 431
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-redesign-from-first-principles/SKILL.md": {
-      "words": 141,
-      "tokens": 181
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-separate-before-serializing-shared-state/SKILL.md": {
-      "words": 228,
-      "tokens": 335
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-sequence-verifiable-units/SKILL.md": {
-      "words": 387,
-      "tokens": 494
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-subtract-before-you-add/SKILL.md": {
-      "words": 191,
-      "tokens": 253
+      "words": 100,
+      "tokens": 160
     },
     "skills/principle-type-system-discipline/SKILL.md": {
-      "words": 800,
-      "tokens": 1097
+      "words": 250,
+      "tokens": 400
     },
     "skills/technical-writing/SKILL.md": {
       "words": 220,
@@ -137,12 +137,12 @@
     }
   },
   "description": {
-    "words": 685,
-    "tokens": 884
+    "words": 360,
+    "tokens": 500
   },
   "total": {
-    "words": 8623,
-    "tokens": 12010
+    "words": 4050,
+    "tokens": 6440
   },
   "metadata": [
     "skills/unslop/agents/openai.yaml",
@@ -372,5 +372,6 @@
         "sha256": "181883e539caec8258ec9129e3ba5f133409144a2cbf2aa361158ab94cfc3441"
       }
     }
-  }
+  },
+  "self_contained": true
 }
