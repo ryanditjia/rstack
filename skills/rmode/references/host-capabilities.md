@@ -22,7 +22,7 @@ Prefer the shared `.agents/skills/<name>/SKILL.md` project layout for portable s
 
 ## GitHub pull request stacks
 
-Use GitHub's native stacked pull requests for every rstack stack. Prefer the `gh stack` extension for stack creation, submission, inspection, synchronization, rebasing, and merging. Do not use Graphite or another stack manager.
+Use GitHub's native stacked pull requests for every rstack stack. Prefer the `gh stack` extension for stack creation, submission, inspection, synchronization, rebasing, and merging. Do not use another stack manager.
 
 GitHub stacks require branches in one repository. If the host cannot run `gh stack`, keep the same GitHub stack shape through the connected GitHub tools or API: the root PR targets trunk, and each child PR targets its parent branch. State that the extension was unavailable. Do not change to another forge.
 

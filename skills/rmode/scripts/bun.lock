@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@rstack/rstack-mode-tools",
+      "name": "@rstack/rmode-tools",
       "dependencies": {
         "commander": "14.0.0",
       },

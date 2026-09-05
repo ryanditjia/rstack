@@ -8,7 +8,7 @@ Invoked at the end of every other playbook.
 
 **PRs.** Run a diff-cleanup pass from available host tooling over the diff before commit. Run the no-comments skill before review. Write every PR title, PR description, and commit body with the technical-writing skill, then apply the unslop skill. Apply every technical-writing layer except Diátaxis. Use one word for each action, keep articles, and avoid `-ing` when a plain verb works.
 
-**Titles.** Use Conventional Commits in the form `type(scope): subject`. Use `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, or `perf` as the type. Use the changed area, such as `rstack` or `rstack-mode`, as the scope. Keep the subject short and imperative. Apply the same the technical-writing skill and the unslop skill pass as the body. Name a real symbol when one carries the change. For example, `fix(rstack): retarget opening-a-pr babysit trigger`. Do not add a trailing period.
+**Titles.** Use Conventional Commits in the form `type(scope): subject`. Use `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, or `perf` as the type. Use the changed area, such as `rstack` or `rmode`, as the scope. Keep the subject short and imperative. Apply the same the technical-writing skill and the unslop skill pass as the body. Name a real symbol when one carries the change. For example, `fix(rstack): retarget opening-a-pr babysit trigger`. Do not add a trailing period.
 
 **Descriptions.** Use these sections in order. Drop a section when it is empty.
 
@@ -20,7 +20,7 @@ Invoked at the end of every other playbook.
 
 After these sections, attach videos or screenshots when they prove a claim. Do not use `## Summary` or `## Test plan` boilerplate. A commit body does not restate its subject.
 
-**GitHub.** Use GitHub for every PR operation. Use the connected GitHub tools or `gh` for single PRs. Use `gh stack` for every stack. Do not use Graphite or another stack manager. If the host cannot run `gh stack`, create the same GitHub-native base-branch chain through the connected GitHub tools or API and report that fallback.
+**GitHub.** Use GitHub for every PR operation. Use the connected GitHub tools or `gh` for single PRs. Use `gh stack` for every stack. Do not use another stack manager. If the host cannot run `gh stack`, create the same GitHub-native base-branch chain through the connected GitHub tools or API and report that fallback.
 
 **Size and stacks.** Prefer five narrow PRs to one large PR. For a new stack, run `gh stack init` for the root and `gh stack add` for each child. Run `gh stack submit` to create or update the PRs. The root PR targets trunk, and each child PR targets its parent branch. Keep all branches in the same GitHub repository. Branch from trunk only for independent work. When the stack has drifted from trunk, run `gh stack sync`. For an interactive conflict resolution, run `gh stack rebase`, then `gh stack push`.
 

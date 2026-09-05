@@ -5,17 +5,7 @@ description: "Sketch types, signatures, and module structure before code, then s
 
 # Architect
 
-Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
-
-## Start
-
-Open a todolist with one entry per phase before starting. Autonomous mode without checkpoints needs the list to show phase position and keep phases from silently disappearing.
-
-1. Ground
-2. Sketch
-3. Agree
-4. Implement
-5. Scrap
+Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Compare concrete alternatives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
 
 ## Phase A: Ground the problem
 
@@ -27,17 +17,15 @@ Skip Phase A only when the work is genuinely greenfield with no surrounding syst
 
 ## Phase B: Sketch
 
-Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt. Each candidate produces a design package shaped per `references/rationale-template.md`: the caller's usage written first, then the type sketch, function signatures, module map, and prose rationale derived from it.
+Choose direct work or bounded delegation from the workload. Use `arena` when independent competing designs would resolve a material uncertainty. When delegating, pass `references/runner-prompt.md`, the grounding evidence, and an isolated output path. Each design package follows `references/rationale-template.md`: caller usage first, then types, signatures, module map, and rationale. Cover runtime flow, failure paths, and configuration ownership, including defaults, parsing, and validation.
 
-Use your configured architect runners (defaults `configured judgment model`, `configured precise code model`, `configured fast code model`, `configured alternate judgment model`).
-
-Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
+Design it twice. Compare at least two structurally distinct shapes before synthesis. The current thread can sketch both. When constraints leave only one viable shape, name a concrete rejected alternative and the constraint that rules it out. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
 
 Screen every candidate against [`references/design-red-flags.md`](references/design-red-flags.md) before synthesis. Reject or revise shallow modules, information leakage, temporal decomposition, and pass-through methods.
 
 Compare viable candidates on interface depth. Prefer the design that hides more complexity behind a smaller, simpler public surface. A rich interface can keep call chains short by concentrating capability instead of scattering it across layers.
 
-Arena returns one synthesized design package. The synthesis decision populates the rationale's "Synthesis decision" section.
+The current thread owns synthesis and the final recommendation. Record the selection in the rationale's "Synthesis decision" section.
 
 ## Phase C: Agree (opt-in)
 
@@ -75,7 +63,7 @@ When you scrap:
 1. Re-run the **how** skill over what's been built. The implementation lessons enter the new design as inputs, not vibes.
 2. Redesign as if the new constraints had been day-one assumptions, per redesign-from-first-principles.
 3. Subtract before adding, per the **subtract-before-you-add** principle skill. The new sketch should be smaller than the old one before it grows.
-4. Return to Phase B and re-run arena.
+4. Return to Phase B and compare designs against the new constraints.
 
 ## Outputs
 

@@ -3,10 +3,10 @@ set -euo pipefail
 
 root=$(cd "$(dirname "$0")/.." && pwd)
 
-forbidden='\.cursor/|cursor-team-kit|AskQuestion|subagent_type|run_in_background|cloud_base_branch|worker role:|host\.s|<agent-transcripts>|claude-fable|gpt-5\.6-sol|grok-4\.6'
+forbidden='\.cursor/|cursor-team-kit|AskQuestion|subagent_type|run_in_background|cloud_base_branch|worker role:|host\.s|<agent-transcripts>|claude-fable|gpt-5\.6-sol|grok-4\.6|Graphite|gt log|gt info'
 
 if rg -n -i "$forbidden" "$root/skills" \
-  -g '*.md' -g '*.sh' -g '*.mjs' -g 'package.json' -g 'bun.lock'; then
+  -g '*.md' -g '*.sh' -g '*.mjs' -g '*.ts' -g '*.tsx' -g '!**/node_modules/**' -g 'package.json' -g 'bun.lock'; then
   echo "portability check failed: host-specific assumptions remain" >&2
   exit 1
 fi

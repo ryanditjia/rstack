@@ -5,7 +5,7 @@
     {
       "title": "Rstack",
       "description": "Portable engineering workflows adapted from pstack.",
-      "skills": ["rstack-mode", "setup-rstack", "manual-review", "interrogate", "how", "why", "architect", "arena", "swarm"]
+      "skills": ["rmode", "setup-rstack", "manual-review", "interrogate", "how", "why", "architect", "arena", "swarm", "typescript-best-practices", "go-best-practices"]
     },
     {
       "title": "Conversation",
