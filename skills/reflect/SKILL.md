@@ -37,15 +37,15 @@ Pass each template verbatim, substituting the transcript path or digest where ma
 
 ### 3. Synthesize
 
-Synthesize the three reviews, delegating to an independent reviewer when supported. Use `references/synthesizer.md` with each reviewer's full output inlined where marked. Spot-check citations through available read-only tools. Return a structured Accepted / Rejected / Backlog list.
+The current thread synthesizes the three reviews using `references/synthesizer.md`. Read all reviewer findings and apply every criterion in that checklist. Do not create a separate synthesizer. Spot-check citations through available read-only tools. Return a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 
-Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. The synthesizer already applies this criterion; this is a final pass before edits land. See the **encode-lessons-in-structure** principle skill.
+Sanity-check the Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. Apply this check before edits land. See the **encode-lessons-in-structure** principle skill.
 
 ### 5. Apply
 
-Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org; do not auto-apply.
+Before applying any Accepted edit, present the full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org; do not auto-apply.
 
 Do not file backlog items or make skill edits without the user's approval. After approval, file tracker items only when the user has authorized that external action.
 
@@ -65,4 +65,4 @@ Short list, no preamble:
 - Edits applied: `<skill path>`. What changed, one line each.
 - New skills created: `<skill path>`. One line each (rare).
 - Backlog filed to the devex tracker: `<issue title>` (`<tags>`). One line each.
-- Dropped: one line per rejected finding + reason from the synthesizer.
+- Dropped: one line per rejected finding + reason from synthesis.
