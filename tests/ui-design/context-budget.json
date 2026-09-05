@@ -1,0 +1,36 @@
+{
+  "encoding": "o200k_base",
+  "files": {
+    "SKILL.md": {"words": 400, "tokens": 650},
+    "references/review.md": {"words": 650, "tokens": 1050},
+    "references/redesign.md": {"words": 1300, "tokens": 2100}
+  },
+  "total": {"words": 2350, "tokens": 3800},
+  "baseline": {
+    "source": "Installed pbakaus/impeccable, metadata version 4.1.3, measured 2026-09-05",
+    "tokenizer": "tiktoken 0.14.0, o200k_base",
+    "scope": "Complete files only; excludes dynamic context, additional references, and reviewers",
+    "files": {
+      "SKILL.md": {
+        "words": 1445,
+        "tokens": 2410,
+        "sha256": "c2c0d8e5ea5dc3f36b879f099e72d83f506a6e626dcc075c1a7e14763f200d4d"
+      },
+      "reference/polish.md": {
+        "words": 958,
+        "tokens": 1305,
+        "sha256": "e25e675a476e08fa9dc33eecef6c0538a36fcef39c052c9728b8be9209bba124"
+      },
+      "reference/craft-floor.md": {
+        "words": 881,
+        "tokens": 1200,
+        "sha256": "e802e4f7bdc89050a9c0f2ca506e1d493a2316e6e810c0336c57aa073717ef3e"
+      },
+      "reference/new-work.md": {
+        "words": 8137,
+        "tokens": 11099,
+        "sha256": "e378818dc2095c701b3affe8a6d8e46c2b7788206b5a025e67af07b75199419c"
+      }
+    }
+  }
+}

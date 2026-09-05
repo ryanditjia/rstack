@@ -1,0 +1,86 @@
+[
+  {
+    "id": "implicit-spacing",
+    "prompt": "Tighten the spacing between the labels and inputs in the billing form.",
+    "mode": "tune",
+    "loads": ["SKILL.md"],
+    "observe": ["Inspect the billing form and relevant styles", "No references, images, or reviewers"]
+  },
+  {
+    "id": "implicit-typography",
+    "prompt": "Make the text hierarchy clearer in the existing account summary card.",
+    "mode": "tune",
+    "loads": ["SKILL.md"],
+    "observe": ["Preserve content and identity", "No broad audit"]
+  },
+  {
+    "id": "implicit-color",
+    "prompt": "Adjust the warning text color on the payment screen to improve contrast.",
+    "mode": "tune",
+    "loads": ["SKILL.md"],
+    "observe": ["Inspect the rendered warning state", "Keep the adjustment local to the owning style"]
+  },
+  {
+    "id": "general-frontend",
+    "prompt": "Add pagination to the React customer table.",
+    "mode": "none",
+    "loads": [],
+    "observe": ["Do not select ui-design automatically"]
+  },
+  {
+    "id": "backend",
+    "prompt": "Fix the API timeout when fetching customers.",
+    "mode": "none",
+    "loads": [],
+    "observe": ["Do not select ui-design automatically"]
+  },
+  {
+    "id": "uninvoked-redesign",
+    "prompt": "Redesign the dashboard and build a new landing page.",
+    "mode": "none",
+    "loads": [],
+    "observe": ["Do not select ui-design automatically"]
+  },
+  {
+    "id": "uninvoked-audit",
+    "prompt": "Audit the whole app for accessibility and performance issues.",
+    "mode": "none",
+    "loads": [],
+    "observe": ["Do not select ui-design automatically"]
+  },
+  {
+    "id": "explicit-tune-no-browser",
+    "prompt": "$ui-design tune the settings button alignment. The app cannot run here and there are no screenshots.",
+    "mode": "tune",
+    "loads": ["SKILL.md"],
+    "observe": ["Inspect source", "Disclose missing visual verification", "Do not claim a rendered check"]
+  },
+  {
+    "id": "explicit-review",
+    "prompt": "$ui-design review the checkout flow. Report findings without editing.",
+    "mode": "review",
+    "loads": ["SKILL.md", "references/review.md"],
+    "observe": ["Inspect the requested flow", "Report evidence and limitations", "No edits or reviewers"]
+  },
+  {
+    "id": "explicit-redesign",
+    "prompt": "$ui-design redesign the analytics overview. Compare two structures and implement the stronger one.",
+    "mode": "redesign",
+    "loads": ["SKILL.md", "references/redesign.md"],
+    "observe": ["Compare two concrete approaches", "Verify the implemented result", "At most one independent reviewer with a self-contained brief"]
+  },
+  {
+    "id": "pinned-direction",
+    "prompt": "$ui-design redesign the pricing page to match the supplied layout exactly, using our existing fonts and palette.",
+    "mode": "redesign",
+    "loads": ["SKILL.md", "references/redesign.md"],
+    "observe": ["Honor the supplied design", "No forced alternatives, fonts, or generated images"]
+  },
+  {
+    "id": "bare-invocation",
+    "prompt": "$ui-design",
+    "mode": "route",
+    "loads": ["SKILL.md"],
+    "observe": ["Explain the modes without loading either reference"]
+  }
+]

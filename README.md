@@ -18,7 +18,7 @@ npx -y skills@latest add /path/to/rstack \
   --yes
 ```
 
-After publishing the repository, replace `/path/to/rstack` with `ryanditjia/rstack`.
+For the published repository, replace `/path/to/rstack` with `ryanditjia/rstack`. To install only the UI design skill, use that source with `--skill ui-design` and the same agent flags. For changes on a non-default branch, append `#branch-name` to the quoted source, for example `'ryanditjia/rstack#audit/merged-rstack-skills'`.
 
 Update installed skills with:
 
@@ -26,13 +26,14 @@ Update installed skills with:
 npx -y skills@latest update --global --yes
 ```
 
-The installer records the source repository, so `skills update` can pull future rstack releases after this directory is published as a Git repository. Run `scripts/check-upstream` before a release to see whether a tracked source has moved. Upstream changes still need a human portability review.
+The installer records the source repository. Use `npx -y skills@latest update ui-design --global --yes` to update only UI design. Develop and commit changes here, then install from the published source instead of editing installed copies. Run `scripts/check-upstream` before a release to see whether a tracked source has moved. Upstream changes still need a human portability review.
 
 ## Entry points
 
 - `rmode` applies the repository-first engineering workflow. It infers the language and toolchain from the project, including Bun, TypeScript, and Go.
 - `grill-me` interviews the user until a plan or decision has no hidden branches.
 - `show-me` explains the current topic with diagrams, code-shape sketches, and focused HTML artifacts.
+- `ui-design` automatically handles requested spacing, alignment, typography, or color adjustments to a named existing interface. Use `$ui-design tune the billing form spacing`, `$ui-design review the checkout flow`, or `$ui-design redesign the analytics overview`. Review reports findings without editing. Review and redesign require an explicit invocation with that mode.
 - `bro`, `facts`, `readback`, and `recap` are explicit conversation controls.
 - `typescript-best-practices` and `go-best-practices` apply language-specific guidance when their source files are in scope.
 - The remaining skills are focused engineering workflows and principles used directly or through `rmode`.
@@ -40,6 +41,14 @@ The installer records the source repository, so `skills update` can pull future 
 ## Portability
 
 Skills describe host capabilities instead of assuming one agent product. Pull request stacks are the exception: rstack uses GitHub's native stacked pull requests and prefers the `gh stack` extension. Read `skills/rmode/references/host-capabilities.md` for the fallback contract. Run `scripts/check-portability` before publishing.
+
+## UI design validation and migration
+
+Run `uv run scripts/check-ui-design` to check instruction budgets, YAML metadata, and local links. The script declares pinned Python dependencies. It measures complete Markdown files with `tiktoken` and `o200k_base`; these counts compare instruction size, not billing or any host's full prompt. Add `--baseline /resolved/path/to/impeccable` to measure the previous workflow with the same tokenizer.
+
+Replay `tests/ui-design/trigger-cases.json` in fresh host sessions when changing routing. Inspect actual reference reads and actions against each case. The deterministic validator checks the fixtures' structure, not model behavior. Test installation in a clean environment and verify `npx -y skills@latest list --global --json` discovers the committed skill for the intended agents.
+
+After UI design validates and is installed, replace broad Impeccable discovery with the explicit `$ui-design redesign` workflow. First inventory Impeccable copies, pinned shortcuts, and project hooks. Resolve each installed target with `skills list --global --json`. Remove the resolved global skill with `npx -y skills@latest remove impeccable --global --yes`; this removes its installed files and agent links. Archive a custom installation outside discovery first if it needs to remain recoverable. Check pinned shortcuts and hooks separately, and preserve product design documents and assets. Verify discovery in a fresh session. Do not patch an installed Impeccable copy to maintain a second, untracked policy.
 
 ## Attribution
 

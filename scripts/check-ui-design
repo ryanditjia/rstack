@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["PyYAML==6.0.3", "tiktoken==0.14.0"]
+# ///
+"""Validate UI design instructions. Run with uv run scripts/check-ui-design."""
+
+import argparse
+import hashlib
+import json
+import re
+from pathlib import Path
+
+import tiktoken
+import yaml
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def measure(path, encoder):
+    content = path.read_text()
+    return {
+        "words": len(content.split()),
+        "tokens": len(encoder.encode(content, disallowed_special=())),
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+    }
+
+
+def check(root, baseline):
+    skill = root / "skills/ui-design"
+    config = json.loads((root / "tests/ui-design/context-budget.json").read_text())
+    encoder = tiktoken.get_encoding(config["encoding"])
+    entry = (skill / "SKILL.md").read_text()
+    match = re.match(r"\A---\n(.*?)\n---\n", entry, re.S)
+    require(match, "SKILL.md needs YAML frontmatter")
+    metadata = yaml.safe_load(match[1])
+    require(isinstance(metadata, dict), "frontmatter must be a mapping")
+    require(metadata.get("name") == skill.name, "name must match the skill directory")
+    description = metadata.get("description")
+    require(isinstance(description, str) and description.strip(), "description is required")
+
+    agent_text = (skill / "agents/openai.yaml").read_text()
+    agent = yaml.safe_load(agent_text)
+    require(isinstance(agent, dict), "agent metadata must be a mapping")
+    interface = agent.get("interface", {})
+    for key in ("display_name", "short_description", "default_prompt"):
+        require(isinstance(interface.get(key), str) and interface[key].strip(), f"missing {key}")
+    require(25 <= len(interface["short_description"]) <= 64, "short_description must be 25-64 characters")
+    require("$ui-design" in interface["default_prompt"], "default_prompt must name $ui-design")
+    require(agent.get("policy", {}).get("allow_implicit_invocation") is True, "tune requires implicit invocation")
+    for key, value in yaml.compose(agent_text).value:
+        if key.value == "interface":
+            for field, scalar in value.value:
+                require(scalar.style == '"', f"quote interface.{field.value}")
+
+    paths = {str(path.relative_to(skill)): path for path in skill.rglob("*.md")}
+    require(set(paths) == set(config["files"]), "instruction file inventory differs from budget")
+    metrics = {}
+    for name, path in sorted(paths.items()):
+        metrics[name] = measure(path, encoder)
+        for unit in ("words", "tokens"):
+            require(metrics[name][unit] <= config["files"][name][unit], f"{name} exceeds {unit} budget")
+        for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text()):
+            require(not re.match(r"[a-z]+:", target), f"unexpected external instruction link: {target}")
+            destination = (path.parent / target.split("#", 1)[0]).resolve()
+            require(destination.is_relative_to(skill.resolve()) and destination.is_file(), f"broken local link: {target}")
+
+    total = {unit: sum(value[unit] for value in metrics.values()) for unit in ("words", "tokens")}
+    for unit in total:
+        require(total[unit] <= config["total"][unit], f"total exceeds {unit} budget")
+
+    cases = json.loads((root / "tests/ui-design/trigger-cases.json").read_text())
+    ids = set()
+    for case in cases:
+        require(case["id"] not in ids, f"duplicate trigger case: {case['id']}")
+        ids.add(case["id"])
+        require(bool(case["prompt"].strip()), "empty trigger prompt")
+        require(case["mode"] in ("none", "tune", "review", "redesign", "route"), "unknown expected mode")
+        require(set(case["loads"]).issubset(paths), "trigger references an unknown file")
+        require(bool(case["observe"]), "trigger case needs observable expectations")
+    require({case["mode"] for case in cases} == {"none", "tune", "review", "redesign", "route"}, "missing routing coverage")
+
+    report = {
+        "tokenizer": f"tiktoken {tiktoken.__version__}, {config['encoding']}",
+        "files": metrics,
+        "total": total,
+        "trigger_fixtures": len(cases),
+        "behavioral_replay": "not performed by this validator",
+    }
+    if baseline:
+        report["baseline"] = {
+            name: measure(baseline / name, encoder)
+            for name in ("SKILL.md", "reference/polish.md", "reference/craft-floor.md", "reference/new-work.md")
+        }
+    return report
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
+    parser.add_argument("--baseline", type=Path, help="optional installed Impeccable directory to measure")
+    args = parser.parse_args()
+    try:
+        print(json.dumps(check(args.root.resolve(), args.baseline), indent=2))
+    except (ValueError, OSError, KeyError, TypeError, AttributeError, yaml.YAMLError) as error:
+        parser.exit(1, f"UI design validation failed: {error}\n")
