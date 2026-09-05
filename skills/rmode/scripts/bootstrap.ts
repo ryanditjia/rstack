@@ -11,7 +11,7 @@ const commanderPackagePath = join(
 );
 const installKeyPath = join(
   nodeModulesDirectory,
-  ".rstack-mode-tools-install-key"
+  ".rmode-tools-install-key"
 );
 
 function currentInstallKey(): string {

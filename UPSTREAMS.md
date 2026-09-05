@@ -5,7 +5,7 @@
 - Source: https://github.com/cursor/plugins/tree/main/pstack
 - Imported commit: `efa2a531985e0a8084d36ff3cf87233be8a9f34b`
 - License: MIT, copyright Lauren Tan. The required notice is preserved in `LICENSE-PSTACK`.
-- Adaptation: added `rmode` and `argus-mode` entry points over the shared workflow, removed Cursor-only packaging, replaced host-specific tools and hard-coded models with capability-based behavior, and preserved portable scripts.
+- Adaptation: renamed the mode entry point to `rmode`, removed Cursor-only packaging, replaced host-specific tools and hard-coded models with capability-based behavior, and preserved portable scripts.
 - Rstack addition: `go-best-practices` applies the shared type and boundary principles to Go. It has no pstack counterpart.
 - Review note: pstack 0.14.4 added `grokbot/make-bot-ui`. Rstack does not port it because it depends on Cursor Grok Bot routines, Cursor's secret-request flow, `update_state`, and a local Tailscale host. The supported Agent Skills hosts do not share those capabilities.
 - Review note: pstack 0.14.6 made its PR workflows forge-neutral and added schema-first TypeScript boundary guidance. Rstack ports the workflow changes as a GitHub-native policy that uses `gh stack`, with a connected-GitHub fallback that preserves the same base-branch chain. It does not port Cursor model defaults or Cursor-only skill frontmatter.

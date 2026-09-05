@@ -1,5 +1,5 @@
 {
-  "name": "@rstack/rstack-mode-tools",
+  "name": "@rstack/rmode-tools",
   "private": true,
   "type": "module",
   "scripts": {

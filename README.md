@@ -30,18 +30,16 @@ The installer records the source repository, so `skills update` can pull future 
 
 ## Entry points
 
-- `argus-mode` applies the shared rstack workflow to Argus Labs repositories, with repository-first evidence and Bun, TypeScript, and Go conventions.
-- `rmode` applies the shared workflow to non-Argus projects without assuming a language or toolchain.
-- `rstack-mode` contains the shared engineering workflow and remains a compatibility entry point.
+- `rmode` applies the repository-first engineering workflow. It infers the language and toolchain from the project, including Bun, TypeScript, and Go.
 - `grill-me` interviews the user until a plan or decision has no hidden branches.
 - `show-me` explains the current topic with diagrams, code-shape sketches, and focused HTML artifacts.
 - `bro`, `facts`, `readback`, and `recap` are explicit conversation controls.
 - `typescript-best-practices` and `go-best-practices` apply language-specific guidance when their source files are in scope.
-- The remaining skills are focused engineering workflows and principles used directly or through a mode.
+- The remaining skills are focused engineering workflows and principles used directly or through `rmode`.
 
 ## Portability
 
-Skills describe host capabilities instead of assuming one agent product. Pull request stacks are the exception: rstack uses GitHub's native stacked pull requests and prefers the `gh stack` extension. Read `skills/rstack-mode/references/host-capabilities.md` for the fallback contract. Run `scripts/check-portability` before publishing.
+Skills describe host capabilities instead of assuming one agent product. Pull request stacks are the exception: rstack uses GitHub's native stacked pull requests and prefers the `gh stack` extension. Read `skills/rmode/references/host-capabilities.md` for the fallback contract. Run `scripts/check-portability` before publishing.
 
 ## Attribution
 
