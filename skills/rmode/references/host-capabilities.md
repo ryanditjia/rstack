@@ -6,6 +6,8 @@ Rstack runs on any Agent Skills host. Discover the current host's capabilities a
 
 When a workflow asks for independent agents, use the host's delegation mechanism. Run independent work in parallel when supported. If delegation is unavailable, perform separate passes sequentially and state that model or context independence was unavailable.
 
+On Codex, set `fork_turns: "none"` by default and pass a self-contained brief. Independent reviewers must use `fork_turns: "none"`. Use a positive turn count only when the task depends on recent conversation context. Use `fork_turns: "all"` only when the delegate needs the complete transcript, and state the reason before spawning.
+
 Use model roles from `~/.config/rstack/models.md` only when the host supports explicit model selection. Otherwise inherit the current model. Reject unavailable configured models and fall back to inheritance instead of guessing another identifier.
 
 ## Persistent work
