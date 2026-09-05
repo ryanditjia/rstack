@@ -1,0 +1,150 @@
+{
+  "skills/architect/SKILL.md": [
+    "principle-exhaust-the-design-space",
+    "principle-fix-root-causes",
+    "principle-foundational-thinking",
+    "principle-outcome-oriented-execution",
+    "principle-redesign-from-first-principles",
+    "principle-subtract-before-you-add"
+  ],
+  "skills/architect/references/runner-prompt.md": [
+    "principle-boundary-discipline",
+    "principle-encode-lessons-in-structure",
+    "principle-laziness-protocol",
+    "principle-make-operations-idempotent",
+    "principle-minimize-reader-load",
+    "principle-separate-before-serializing-shared-state"
+  ],
+  "skills/arena/SKILL.md": [
+    "principle-prove-it-works",
+    "principle-redesign-from-first-principles",
+    "principle-separate-before-serializing-shared-state"
+  ],
+  "skills/automate-me/SKILL.md": [
+    "unslop"
+  ],
+  "skills/blast-radius/SKILL.md": [
+    "unslop"
+  ],
+  "skills/figure-it-out/SKILL.md": [
+    "principle-encode-lessons-in-structure",
+    "principle-foundational-thinking",
+    "principle-laziness-protocol",
+    "principle-never-block-on-the-human",
+    "principle-prove-it-works",
+    "principle-separate-before-serializing-shared-state",
+    "principle-sequence-verifiable-units"
+  ],
+  "skills/go-best-practices/SKILL.md": [
+    "principle-boundary-discipline",
+    "principle-type-system-discipline"
+  ],
+  "skills/recall/SKILL.md": [
+    "unslop"
+  ],
+  "skills/reflect/SKILL.md": [
+    "principle-encode-lessons-in-structure"
+  ],
+  "skills/rmode/SKILL.md": [
+    "principle-model-the-domain",
+    "technical-writing",
+    "unslop"
+  ],
+  "skills/rmode/playbooks/authoring-a-skill.md": [
+    "principle-encode-lessons-in-structure"
+  ],
+  "skills/rmode/playbooks/autonomous-run.md": [
+    "principle-sequence-verifiable-units"
+  ],
+  "skills/rmode/playbooks/autopilot-full.md": [
+    "principle-prove-it-works",
+    "unslop"
+  ],
+  "skills/rmode/playbooks/autopilot-stack.md": [
+    "unslop"
+  ],
+  "skills/rmode/playbooks/bug-fix.md": [
+    "principle-sequence-verifiable-units"
+  ],
+  "skills/rmode/playbooks/feature.md": [
+    "principle-sequence-verifiable-units"
+  ],
+  "skills/rmode/playbooks/hillclimb.md": [
+    "principle-build-the-lever",
+    "principle-laziness-protocol",
+    "principle-prove-it-works",
+    "principle-separate-before-serializing-shared-state",
+    "principle-sequence-verifiable-units"
+  ],
+  "skills/rmode/playbooks/investigation.md": [
+    "unslop"
+  ],
+  "skills/rmode/playbooks/multi-phase-plan.md": [
+    "principle-encode-lessons-in-structure",
+    "principle-guard-the-context-window",
+    "principle-never-block-on-the-human",
+    "principle-prove-it-works",
+    "principle-sequence-verifiable-units",
+    "technical-writing",
+    "unslop"
+  ],
+  "skills/rmode/playbooks/opening-a-pr.md": [
+    "technical-writing",
+    "unslop"
+  ],
+  "skills/rmode/playbooks/orchestrate.md": [
+    "principle-encode-lessons-in-structure",
+    "principle-separate-before-serializing-shared-state"
+  ],
+  "skills/rmode/playbooks/perf-issue.md": [
+    "principle-sequence-verifiable-units"
+  ],
+  "skills/rmode/playbooks/prototype.md": [
+    "principle-exhaust-the-design-space"
+  ],
+  "skills/rmode/playbooks/refactoring.md": [
+    "principle-foundational-thinking",
+    "principle-laziness-protocol",
+    "principle-migrate-callers-then-delete-legacy-apis",
+    "principle-minimize-reader-load",
+    "principle-model-the-domain",
+    "principle-prove-it-works",
+    "principle-redesign-from-first-principles",
+    "principle-sequence-verifiable-units",
+    "principle-subtract-before-you-add"
+  ],
+  "skills/rmode/playbooks/runtime-forensics.md": [
+    "principle-guard-the-context-window"
+  ],
+  "skills/rmode/playbooks/session-pickup.md": [
+    "principle-guard-the-context-window",
+    "principle-prove-it-works"
+  ],
+  "skills/rmode/playbooks/trace-forensics.md": [
+    "principle-guard-the-context-window"
+  ],
+  "skills/rmode/playbooks/visual-parity.md": [
+    "principle-separate-before-serializing-shared-state"
+  ],
+  "skills/rmode/playbooks/worktree-cleanup.md": [
+    "principle-build-the-lever",
+    "principle-encode-lessons-in-structure",
+    "principle-guard-the-context-window",
+    "principle-prove-it-works"
+  ],
+  "skills/show-me-your-work/SKILL.md": [
+    "principle-encode-lessons-in-structure",
+    "unslop"
+  ],
+  "skills/teach/SKILL.md": [
+    "unslop"
+  ],
+  "skills/typescript-best-practices/SKILL.md": [
+    "principle-boundary-discipline",
+    "principle-type-system-discipline"
+  ],
+  "skills/typescript-best-practices/references/patterns.md": [
+    "principle-boundary-discipline",
+    "principle-type-system-discipline"
+  ]
+}

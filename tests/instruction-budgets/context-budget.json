@@ -1,0 +1,338 @@
+{
+  "encoding": "o200k_base",
+  "tokenizer_version": "0.14.0",
+  "skills": [
+    "principle-boundary-discipline",
+    "principle-build-the-lever",
+    "principle-encode-lessons-in-structure",
+    "principle-exhaust-the-design-space",
+    "principle-experience-first",
+    "principle-fix-root-causes",
+    "principle-foundational-thinking",
+    "principle-guard-the-context-window",
+    "principle-laziness-protocol",
+    "principle-make-operations-idempotent",
+    "principle-migrate-callers-then-delete-legacy-apis",
+    "principle-minimize-reader-load",
+    "principle-model-the-domain",
+    "principle-never-block-on-the-human",
+    "principle-outcome-oriented-execution",
+    "principle-prove-it-works",
+    "principle-redesign-from-first-principles",
+    "principle-separate-before-serializing-shared-state",
+    "principle-sequence-verifiable-units",
+    "principle-subtract-before-you-add",
+    "principle-type-system-discipline",
+    "technical-writing",
+    "unslop"
+  ],
+  "files": {
+    "skills/principle-boundary-discipline/SKILL.md": {
+      "words": 278,
+      "tokens": 378
+    },
+    "skills/principle-build-the-lever/SKILL.md": {
+      "words": 424,
+      "tokens": 606
+    },
+    "skills/principle-encode-lessons-in-structure/SKILL.md": {
+      "words": 343,
+      "tokens": 467
+    },
+    "skills/principle-exhaust-the-design-space/SKILL.md": {
+      "words": 169,
+      "tokens": 212
+    },
+    "skills/principle-experience-first/SKILL.md": {
+      "words": 199,
+      "tokens": 260
+    },
+    "skills/principle-fix-root-causes/SKILL.md": {
+      "words": 218,
+      "tokens": 286
+    },
+    "skills/principle-foundational-thinking/SKILL.md": {
+      "words": 243,
+      "tokens": 331
+    },
+    "skills/principle-guard-the-context-window/SKILL.md": {
+      "words": 169,
+      "tokens": 235
+    },
+    "skills/principle-laziness-protocol/SKILL.md": {
+      "words": 233,
+      "tokens": 318
+    },
+    "skills/principle-make-operations-idempotent/SKILL.md": {
+      "words": 202,
+      "tokens": 283
+    },
+    "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md": {
+      "words": 169,
+      "tokens": 222
+    },
+    "skills/principle-minimize-reader-load/SKILL.md": {
+      "words": 325,
+      "tokens": 437
+    },
+    "skills/principle-model-the-domain/SKILL.md": {
+      "words": 329,
+      "tokens": 413
+    },
+    "skills/principle-never-block-on-the-human/SKILL.md": {
+      "words": 229,
+      "tokens": 340
+    },
+    "skills/principle-outcome-oriented-execution/SKILL.md": {
+      "words": 142,
+      "tokens": 194
+    },
+    "skills/principle-prove-it-works/SKILL.md": {
+      "words": 315,
+      "tokens": 431
+    },
+    "skills/principle-redesign-from-first-principles/SKILL.md": {
+      "words": 141,
+      "tokens": 181
+    },
+    "skills/principle-separate-before-serializing-shared-state/SKILL.md": {
+      "words": 228,
+      "tokens": 335
+    },
+    "skills/principle-sequence-verifiable-units/SKILL.md": {
+      "words": 387,
+      "tokens": 494
+    },
+    "skills/principle-subtract-before-you-add/SKILL.md": {
+      "words": 191,
+      "tokens": 253
+    },
+    "skills/principle-type-system-discipline/SKILL.md": {
+      "words": 800,
+      "tokens": 1097
+    },
+    "skills/technical-writing/SKILL.md": {
+      "words": 1908,
+      "tokens": 2618
+    },
+    "skills/unslop/SKILL.md": {
+      "words": 981,
+      "tokens": 1619
+    }
+  },
+  "description": {
+    "words": 673,
+    "tokens": 872
+  },
+  "total": {
+    "words": 8623,
+    "tokens": 12010
+  },
+  "metadata": [],
+  "routes": {
+    "conversation": [
+      "skills/unslop/SKILL.md"
+    ],
+    "commit": [
+      "skills/unslop/SKILL.md",
+      "skills/technical-writing/SKILL.md"
+    ],
+    "typed-engineering": [
+      "skills/unslop/SKILL.md",
+      "skills/principle-model-the-domain/SKILL.md",
+      "skills/principle-boundary-discipline/SKILL.md",
+      "skills/principle-type-system-discipline/SKILL.md",
+      "skills/principle-prove-it-works/SKILL.md"
+    ]
+  },
+  "baseline": {
+    "revision": "4684b5d",
+    "tokenizer": "tiktoken 0.14.0, o200k_base",
+    "files": {
+      "skills/principle-boundary-discipline/SKILL.md": {
+        "words": 278,
+        "tokens": 378,
+        "description_words": 29,
+        "description_tokens": 39,
+        "name_tokens": 6,
+        "sha256": "3fee7ce89a74a9911e769e38b39f4505887b06842c36902e7a1733a4e5a07576"
+      },
+      "skills/principle-build-the-lever/SKILL.md": {
+        "words": 424,
+        "tokens": 606,
+        "description_words": 45,
+        "description_tokens": 64,
+        "name_tokens": 6,
+        "sha256": "de717c17ba655f299dab4232ce8a6ed4d226e8f5700ba89784e8292f1b9df40a"
+      },
+      "skills/principle-encode-lessons-in-structure/SKILL.md": {
+        "words": 343,
+        "tokens": 467,
+        "description_words": 33,
+        "description_tokens": 39,
+        "name_tokens": 9,
+        "sha256": "9ab0e6d979982260ead6410e51709fba4e37add615871993ff8a4725b5f2af3d"
+      },
+      "skills/principle-exhaust-the-design-space/SKILL.md": {
+        "words": 169,
+        "tokens": 212,
+        "description_words": 33,
+        "description_tokens": 37,
+        "name_tokens": 7,
+        "sha256": "5d58b649f6943a1becfcfe6020cee691783245678e489f18c7f0477d344cbb4a"
+      },
+      "skills/principle-experience-first/SKILL.md": {
+        "words": 199,
+        "tokens": 260,
+        "description_words": 23,
+        "description_tokens": 31,
+        "name_tokens": 5,
+        "sha256": "f8f61e0b0c215988b3199ae4b1f9e16c9443e5580906594feb23d48b12d3dafe"
+      },
+      "skills/principle-fix-root-causes/SKILL.md": {
+        "words": 218,
+        "tokens": 286,
+        "description_words": 28,
+        "description_tokens": 34,
+        "name_tokens": 7,
+        "sha256": "1f88767ab08caffa8fda3335cf7cc79ba66412d19cd5c4dc865c95df000b7a1e"
+      },
+      "skills/principle-foundational-thinking/SKILL.md": {
+        "words": 243,
+        "tokens": 331,
+        "description_words": 28,
+        "description_tokens": 36,
+        "name_tokens": 5,
+        "sha256": "64aec61f4d1f9f977662b3b90abac09865eaa1f80ee61da85c15adaa8dc84ae0"
+      },
+      "skills/principle-guard-the-context-window/SKILL.md": {
+        "words": 169,
+        "tokens": 235,
+        "description_words": 27,
+        "description_tokens": 38,
+        "name_tokens": 7,
+        "sha256": "17301d7bd38c98b4ea73d9390a4565c5623b06f454a71b568adb64589653f396"
+      },
+      "skills/principle-laziness-protocol/SKILL.md": {
+        "words": 233,
+        "tokens": 318,
+        "description_words": 26,
+        "description_tokens": 34,
+        "name_tokens": 7,
+        "sha256": "02cd2c474b9ceec8611ce9bd8861eb4e5129aa324223d8b6b0e1a1d847347585"
+      },
+      "skills/principle-make-operations-idempotent/SKILL.md": {
+        "words": 202,
+        "tokens": 283,
+        "description_words": 27,
+        "description_tokens": 36,
+        "name_tokens": 9,
+        "sha256": "6ff9aed07af7c3e57c4ef247f1a236b6ffdd1b294732cfedb9845413395d659c"
+      },
+      "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md": {
+        "words": 169,
+        "tokens": 222,
+        "description_words": 28,
+        "description_tokens": 31,
+        "name_tokens": 13,
+        "sha256": "9a91f35639fabff432f1ed8b79c2a4249d53a0a4eb7019c1aa2b8855224f27ea"
+      },
+      "skills/principle-minimize-reader-load/SKILL.md": {
+        "words": 325,
+        "tokens": 437,
+        "description_words": 30,
+        "description_tokens": 37,
+        "name_tokens": 6,
+        "sha256": "02f1bf8431cb21e5011d9cf5f426f9d052167564dcb02eac0883965ec2494772"
+      },
+      "skills/principle-model-the-domain/SKILL.md": {
+        "words": 329,
+        "tokens": 413,
+        "description_words": 28,
+        "description_tokens": 33,
+        "name_tokens": 5,
+        "sha256": "5c3c1a3db2af1452a742b4c3d50ef34118e0ea2cf90c6042749abe2abc31a0e0"
+      },
+      "skills/principle-never-block-on-the-human/SKILL.md": {
+        "words": 229,
+        "tokens": 340,
+        "description_words": 28,
+        "description_tokens": 37,
+        "name_tokens": 8,
+        "sha256": "f543460518bfb74d3e7edbfd5348271e5ed7b2db40a8cbd7305d7086a3ef98ce"
+      },
+      "skills/principle-outcome-oriented-execution/SKILL.md": {
+        "words": 142,
+        "tokens": 194,
+        "description_words": 24,
+        "description_tokens": 31,
+        "name_tokens": 7,
+        "sha256": "f2fe80adf2da1e1e15aa1d1b465f1cb963acb05114be9032a89ae6ead06df288"
+      },
+      "skills/principle-prove-it-works/SKILL.md": {
+        "words": 315,
+        "tokens": 431,
+        "description_words": 30,
+        "description_tokens": 42,
+        "name_tokens": 7,
+        "sha256": "124cebf0527fb24bd37be21dbbf4447f9ddce5c058872cfce047e043bbf70bfd"
+      },
+      "skills/principle-redesign-from-first-principles/SKILL.md": {
+        "words": 141,
+        "tokens": 181,
+        "description_words": 28,
+        "description_tokens": 33,
+        "name_tokens": 9,
+        "sha256": "bd51e67f78eefa6af7e1d12cd15dba9e55fd9ab96f7942163fe5bacc36b79941"
+      },
+      "skills/principle-separate-before-serializing-shared-state/SKILL.md": {
+        "words": 228,
+        "tokens": 335,
+        "description_words": 30,
+        "description_tokens": 38,
+        "name_tokens": 11,
+        "sha256": "d3fc7b258718c845ec880e14a0ef36fab59a6a4c1ccb16d811a2bcb1f46e5489"
+      },
+      "skills/principle-sequence-verifiable-units/SKILL.md": {
+        "words": 387,
+        "tokens": 494,
+        "description_words": 46,
+        "description_tokens": 59,
+        "name_tokens": 8,
+        "sha256": "40de5b6d82a408423fffcc9553c73aaf278bd6a1ba24659a4e56174726374bcb"
+      },
+      "skills/principle-subtract-before-you-add/SKILL.md": {
+        "words": 191,
+        "tokens": 253,
+        "description_words": 23,
+        "description_tokens": 31,
+        "name_tokens": 7,
+        "sha256": "6382fdd1225c9564f3edd6c27aa112a7dae190992673ba3a7f00c58cec284254"
+      },
+      "skills/principle-type-system-discipline/SKILL.md": {
+        "words": 800,
+        "tokens": 1097,
+        "description_words": 39,
+        "description_tokens": 53,
+        "name_tokens": 6,
+        "sha256": "f19d9f42bb046dd861863b536b00c7569f2c4d86a06004c02d85e87c239b5778"
+      },
+      "skills/technical-writing/SKILL.md": {
+        "words": 1908,
+        "tokens": 2618,
+        "description_words": 31,
+        "description_tokens": 48,
+        "name_tokens": 2,
+        "sha256": "61bf832c187a1eb0ab5c5ff9bcac41b6386d953ff588ea5b304375bd8f7bea66"
+      },
+      "skills/unslop/SKILL.md": {
+        "words": 981,
+        "tokens": 1619,
+        "description_words": 9,
+        "description_tokens": 11,
+        "name_tokens": 2,
+        "sha256": "181883e539caec8258ec9129e3ba5f133409144a2cbf2aa361158ab94cfc3441"
+      }
+    }
+  }
+}

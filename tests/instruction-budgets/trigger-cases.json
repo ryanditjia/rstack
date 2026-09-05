@@ -1,0 +1,258 @@
+[
+  {
+    "id": "manual-principle-boundary-discipline",
+    "prompt": "Use $principle-boundary-discipline for the current decision.",
+    "loads": [
+      "skills/principle-boundary-discipline/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-build-the-lever",
+    "prompt": "Use $principle-build-the-lever for the current decision.",
+    "loads": [
+      "skills/principle-build-the-lever/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-encode-lessons-in-structure",
+    "prompt": "Use $principle-encode-lessons-in-structure for the current decision.",
+    "loads": [
+      "skills/principle-encode-lessons-in-structure/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-exhaust-the-design-space",
+    "prompt": "Use $principle-exhaust-the-design-space for the current decision.",
+    "loads": [
+      "skills/principle-exhaust-the-design-space/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-experience-first",
+    "prompt": "Use $principle-experience-first for the current decision.",
+    "loads": [
+      "skills/principle-experience-first/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-fix-root-causes",
+    "prompt": "Use $principle-fix-root-causes for the current decision.",
+    "loads": [
+      "skills/principle-fix-root-causes/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-foundational-thinking",
+    "prompt": "Use $principle-foundational-thinking for the current decision.",
+    "loads": [
+      "skills/principle-foundational-thinking/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-guard-the-context-window",
+    "prompt": "Use $principle-guard-the-context-window for the current decision.",
+    "loads": [
+      "skills/principle-guard-the-context-window/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-laziness-protocol",
+    "prompt": "Use $principle-laziness-protocol for the current decision.",
+    "loads": [
+      "skills/principle-laziness-protocol/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-make-operations-idempotent",
+    "prompt": "Use $principle-make-operations-idempotent for the current decision.",
+    "loads": [
+      "skills/principle-make-operations-idempotent/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-migrate-callers-then-delete-legacy-apis",
+    "prompt": "Use $principle-migrate-callers-then-delete-legacy-apis for the current decision.",
+    "loads": [
+      "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-minimize-reader-load",
+    "prompt": "Use $principle-minimize-reader-load for the current decision.",
+    "loads": [
+      "skills/principle-minimize-reader-load/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-model-the-domain",
+    "prompt": "Use $principle-model-the-domain for the current decision.",
+    "loads": [
+      "skills/principle-model-the-domain/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-never-block-on-the-human",
+    "prompt": "Use $principle-never-block-on-the-human for the current decision.",
+    "loads": [
+      "skills/principle-never-block-on-the-human/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-outcome-oriented-execution",
+    "prompt": "Use $principle-outcome-oriented-execution for the current decision.",
+    "loads": [
+      "skills/principle-outcome-oriented-execution/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-prove-it-works",
+    "prompt": "Use $principle-prove-it-works for the current decision.",
+    "loads": [
+      "skills/principle-prove-it-works/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-redesign-from-first-principles",
+    "prompt": "Use $principle-redesign-from-first-principles for the current decision.",
+    "loads": [
+      "skills/principle-redesign-from-first-principles/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-separate-before-serializing-shared-state",
+    "prompt": "Use $principle-separate-before-serializing-shared-state for the current decision.",
+    "loads": [
+      "skills/principle-separate-before-serializing-shared-state/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-sequence-verifiable-units",
+    "prompt": "Use $principle-sequence-verifiable-units for the current decision.",
+    "loads": [
+      "skills/principle-sequence-verifiable-units/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-subtract-before-you-add",
+    "prompt": "Use $principle-subtract-before-you-add for the current decision.",
+    "loads": [
+      "skills/principle-subtract-before-you-add/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "manual-principle-type-system-discipline",
+    "prompt": "Use $principle-type-system-discipline for the current decision.",
+    "loads": [
+      "skills/principle-type-system-discipline/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "The named skill resolves without requiring another principle."
+    ]
+  },
+  {
+    "id": "conversation",
+    "prompt": "What does HTTP 404 mean?",
+    "loads": [
+      "skills/unslop/SKILL.md"
+    ],
+    "forbids": [
+      "skills/technical-writing/SKILL.md"
+    ],
+    "observe": [
+      "Answer directly without a technical-writing workflow."
+    ]
+  },
+  {
+    "id": "commit",
+    "prompt": "Write a commit message for this diff.",
+    "loads": [
+      "skills/unslop/SKILL.md",
+      "skills/technical-writing/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "Describe the concrete change and material verification."
+    ]
+  }
+]

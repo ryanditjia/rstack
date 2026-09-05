@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Check portable skill budgets and fixtures; this does not replay model behavior."""
+
+import argparse
+import fcntl
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+
+def bootstrap():
+    if sys.version_info < (3, 10):
+        sys.exit("Instruction validation requires Python 3.10 or newer.")
+    script = Path(__file__).resolve()
+    requirements = script.with_name("instruction-budget-requirements.txt")
+    identity = hashlib.sha256(requirements.read_bytes() + sys.version.encode()).hexdigest()[:16]
+    cache = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "rstack/instruction-budgets"
+    environment = cache / identity
+    if Path(sys.prefix).resolve() == environment.resolve():
+        return
+    cache.mkdir(parents=True, exist_ok=True)
+    python = environment / "bin/python"
+    with (cache / f"{identity}.lock").open("w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        ready = environment / ".ready"
+        if not ready.exists():
+            subprocess.run([sys.executable, "-m", "venv", str(environment)], check=True)
+            subprocess.run([str(python), "-m", "pip", "install", "--quiet", "--disable-pip-version-check", "--no-deps", "-r", str(requirements)], check=True)
+            subprocess.run([str(python), "-m", "pip", "check"], check=True, stdout=sys.stderr)
+            ready.touch()
+    os.execv(str(python), [str(python), str(script), *sys.argv[1:]])
+
+
+if __name__ == "__main__":
+    bootstrap()
+
+import tiktoken
+import yaml
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def measure(text, encoder):
+    return {"words": len(text.split()), "tokens": len(encoder.encode(text, disallowed_special=()))}
+
+
+def limits(actual, ceiling, label):
+    for unit in ("words", "tokens"):
+        require(actual[unit] <= ceiling[unit], f"{label} exceeds {unit} budget")
+
+
+def read_json(path):
+    return json.loads(path.read_text())
+
+
+def check(root):
+    folder = root / "tests/instruction-budgets"
+    config = read_json(folder / "context-budget.json")
+    require(tiktoken.__version__ == config["tokenizer_version"], "tokenizer version differs")
+    encoder = tiktoken.get_encoding(config["encoding"])
+    skills = config["skills"]
+    require(len(skills) == len(set(skills)), "duplicate skill name")
+    require(set(skills) == {"unslop", "technical-writing"} | {p.name for p in (root / "skills").glob("principle-*")}, "skill inventory differs")
+    paths = {str(p.relative_to(root)): p for name in skills for p in (root / "skills" / name).rglob("*.md")}
+    require(set(paths) == set(config["files"]), "instruction file inventory differs")
+    metadata_paths = {str(p.relative_to(root)) for name in skills for p in (root / "skills" / name).rglob("*.yaml")}
+    require(metadata_paths == set(config["metadata"]), "metadata inventory differs")
+    metrics = {}
+    descriptions = {"words": 0, "tokens": 0}
+    name_tokens = 0
+    for relative, path in sorted(paths.items()):
+        content = path.read_text()
+        metrics[relative] = measure(content, encoder)
+        metrics[relative]["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        limits(metrics[relative], config["files"][relative], relative)
+        skill = root / "skills" / relative.split("/")[1]
+        for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", content):
+            if re.match(r"[a-z][a-z0-9+.-]*:", target):
+                require(target.startswith("https://"), f"unsupported link: {target}")
+                continue
+            destination = (path.parent / target.split("#", 1)[0]).resolve()
+            require(destination.is_relative_to((root / "skills").resolve()) and destination.is_file(), f"broken local link: {relative}: {target}")
+            if config.get("self_contained"):
+                require(destination.is_relative_to(skill.resolve()), f"cross-skill link: {relative}")
+        if path.name != "SKILL.md":
+            continue
+        match = re.match(r"\A---\n(.*?)\n---\n", content, re.S)
+        require(match, f"missing frontmatter: {relative}")
+        front = yaml.safe_load(match[1])
+        require(isinstance(front, dict) and front.get("name") == skill.name, f"invalid skill name: {relative}")
+        description = front.get("description")
+        require(isinstance(description, str) and description.strip(), f"missing description: {relative}")
+        for unit, value in measure(description, encoder).items():
+            descriptions[unit] += value
+        name_tokens += measure(front["name"], encoder)["tokens"]
+        if config.get("self_contained") and skill.name.startswith("principle-"):
+            body = content[match.end():]
+            require(not re.search(r"principle-[a-z-]+|principle skill", body), f"transitive principle instruction: {relative}")
+    limits(descriptions, config["description"], "descriptions")
+    total = {unit: sum(m[unit] for m in metrics.values()) for unit in ("words", "tokens")}
+    limits(total, config["total"], "total instructions")
+    for relative in metadata_paths:
+        agent = yaml.safe_load((root / relative).read_text())
+        skill_name = relative.split("/")[1]
+        require(agent.get("policy", {}).get("allow_implicit_invocation") is True, f"implicit invocation disabled: {relative}")
+        interface = agent.get("interface", {})
+        require(isinstance(interface.get("display_name"), str), f"missing display name: {relative}")
+        require(25 <= len(interface.get("short_description", "")) <= 64, f"invalid short description: {relative}")
+        require(f"${skill_name}" in interface.get("default_prompt", ""), f"invalid default prompt: {relative}")
+    callers = {}
+    for path in sorted((root / "skills").rglob("*.md")):
+        relative = str(path.relative_to(root))
+        if relative in paths:
+            continue
+        found = sorted(name for name in skills if name.removeprefix("principle-") in path.read_text())
+        if found:
+            callers[relative] = found
+    require(callers == read_json(folder / "callers.json"), "caller inventory differs")
+    if config.get("self_contained"):
+        require(set(p for p in paths if p.startswith("skills/unslop/")) == {"skills/unslop/SKILL.md"}, "unslop must remain self-contained")
+        for name in ("opening-a-pr", "multi-phase-plan"):
+            content = (root / f"skills/rmode/playbooks/{name}.md").read_text()
+            require(not re.search(r"technical-writing (?:skill in full|layer)|every technical-writing layer", content), f"unconditional writing layers: {name}")
+    cases = read_json(folder / "trigger-cases.json")
+    ids = set()
+    for case in cases:
+        require(case["id"] not in ids, "duplicate fixture id")
+        ids.add(case["id"])
+        require(case["prompt"].strip() and case["observe"], "empty fixture")
+        require(set(case["loads"]) <= paths.keys(), "fixture loads unknown file")
+        require(set(case["forbids"]) <= paths.keys(), "fixture forbids unknown file")
+        require(not set(case["loads"]) & set(case["forbids"]), "fixture contradicts itself")
+    require({f"manual-{name}" for name in skills if name.startswith("principle-")} <= ids, "missing manual invocation coverage")
+    routes = {}
+    for name, selected in config["routes"].items():
+        require(len(selected) == len(set(selected)) and set(selected) <= paths.keys(), f"invalid route: {name}")
+        routes[name] = {unit: sum(metrics[p][unit] for p in selected) for unit in ("words", "tokens")}
+    return {"tokenizer": f"tiktoken {tiktoken.__version__}, {config['encoding']}", "files": metrics, "descriptions": descriptions, "name_tokens": name_tokens, "total": total, "routes": routes, "caller_files": len(callers), "structural_fixtures": len(cases), "behavioral_replay": "not performed"}
+
+
+def self_test(root):
+    mutations = {
+        "word-budget": ("skills/unslop/SKILL.md", lambda s: s + "\n" + "word " * 1000, "words budget"),
+        "token-budget": ("tests/instruction-budgets/context-budget.json", lambda s: json.dumps(dict(read := json.loads(s), files={**read["files"], "skills/unslop/SKILL.md": {"words": 10000, "tokens": 1}})), "tokens budget"),
+        "description-budget": ("tests/instruction-budgets/context-budget.json", lambda s: json.dumps(dict(json.loads(s), description={"words": 10000, "tokens": 1})), "descriptions exceeds tokens"),
+        "missing-file": ("skills/unslop/SKILL.md", None, "inventory differs"),
+        "broken-link": ("skills/unslop/SKILL.md", lambda s: s + "\n[x](missing.md)\n", "broken local link"),
+        "caller-drift": ("tests/instruction-budgets/callers.json", lambda s: "{}", "caller inventory differs"),
+        "invalid-fixture": ("tests/instruction-budgets/trigger-cases.json", lambda s: json.dumps([dict(c, loads=["missing.md"]) for c in json.loads(s)]), "fixture loads unknown"),
+    }
+    for name, (relative, mutation, expected) in mutations.items():
+        with tempfile.TemporaryDirectory(prefix="rstack-budget-test-") as temporary:
+            destination = Path(temporary)
+            shutil.copytree(root / "skills", destination / "skills")
+            shutil.copytree(root / "tests/instruction-budgets", destination / "tests/instruction-budgets")
+            if name == "broken-link":
+                budget_path = destination / "tests/instruction-budgets/context-budget.json"
+                budget = read_json(budget_path)
+                budget["files"]["skills/unslop/SKILL.md"] = {"words": 10000, "tokens": 20000}
+                budget_path.write_text(json.dumps(budget))
+            target = destination / relative
+            if mutation is None:
+                target.unlink()
+            else:
+                target.write_text(mutation(target.read_text()))
+            try:
+                check(destination)
+            except ValueError as error:
+                require(expected in str(error), f"{name}: unexpected failure: {error}")
+            else:
+                raise ValueError(f"{name}: mutation was not rejected")
+    return list(mutations)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
+    parser.add_argument("--self-test", action="store_true")
+    args = parser.parse_args()
+    try:
+        report = check(args.root.resolve())
+        if args.self_test:
+            report["negative_tests"] = self_test(args.root.resolve())
+        print(json.dumps(report, indent=2))
+    except (ValueError, OSError, KeyError, TypeError, AttributeError, yaml.YAMLError) as error:
+        parser.exit(1, f"Instruction validation failed: {error}\n")
