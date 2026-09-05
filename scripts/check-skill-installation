@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+"""Compare installed skill files with a Git revision, including unexpected files."""
+
+import argparse
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+
+def verify(root, revision, installed_roots, names):
+    resolved = subprocess.check_output(["git", "rev-parse", "--verify", f"{revision}^{{commit}}"], cwd=root, text=True).strip()
+    report = {"revision": resolved, "installations": [], "errors": []}
+    for name in names:
+        prefix = f"skills/{name}/"
+        paths = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", resolved, "--", prefix], cwd=root, text=True).splitlines()
+        if not paths:
+            report["errors"].append(f"skill absent from revision: {name}")
+            continue
+        expected = {path[len(prefix):]: subprocess.check_output(["git", "show", f"{resolved}:{path}"], cwd=root) for path in paths}
+        digest = hashlib.sha256()
+        for path, content in sorted(expected.items()):
+            digest.update(path.encode() + b"\0" + hashlib.sha256(content).digest())
+        for installed_root in installed_roots:
+            destination = installed_root / name
+            actual = {str(path.relative_to(destination)): path for path in destination.rglob("*") if path.is_file()}
+            missing = sorted(expected.keys() - actual.keys())
+            extra = sorted(actual.keys() - expected.keys())
+            changed = sorted(path for path in expected.keys() & actual.keys() if expected[path] != actual[path].read_bytes())
+            if missing or extra or changed:
+                report["errors"].append({"destination": str(destination), "missing": missing, "unexpected": extra, "changed": changed})
+            report["installations"].append({"skill": name, "destination": str(destination), "resolved": str(destination.resolve()), "files": len(expected), "tree_sha256": digest.hexdigest(), "matches": not (missing or extra or changed)})
+    return report
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
+    parser.add_argument("--revision", default="HEAD")
+    parser.add_argument("--installed-root", type=Path, action="append", required=True)
+    parser.add_argument("--skill", action="append", help="repeat to select skills; defaults to the budgeted skills and rmode")
+    args = parser.parse_args()
+    config = json.loads((args.root / "tests/instruction-budgets/context-budget.json").read_text())
+    report = verify(args.root, args.revision, args.installed_root, args.skill or [*config["skills"], "rmode"])
+    print(json.dumps(report, indent=2))
+    raise SystemExit(bool(report["errors"]))

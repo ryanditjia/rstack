@@ -1,233 +1,233 @@
 [
   {
     "id": "manual-principle-boundary-discipline",
-    "prompt": "Use $principle-boundary-discipline for the current decision.",
+    "prompt": "Use $principle-boundary-discipline. Parse an untrusted JSON request for a domain service.",
     "loads": [
       "skills/principle-boundary-discipline/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Parse at the boundary and keep framework representation out of domain contracts."
     ]
   },
   {
     "id": "manual-principle-build-the-lever",
-    "prompt": "Use $principle-build-the-lever for the current decision.",
+    "prompt": "Use $principle-build-the-lever. Apply the same documented rename across 80 files and verify it.",
     "loads": [
       "skills/principle-build-the-lever/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Prefer a small rerunnable transformation and prove it on one unit."
     ]
   },
   {
     "id": "manual-principle-encode-lessons-in-structure",
-    "prompt": "Use $principle-encode-lessons-in-structure for the current decision.",
+    "prompt": "Use $principle-encode-lessons-in-structure. This is the third time a caller passed raw data around the parser.",
     "loads": [
       "skills/principle-encode-lessons-in-structure/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Choose an enforceable boundary constraint instead of another reminder."
     ]
   },
   {
     "id": "manual-principle-exhaust-the-design-space",
-    "prompt": "Use $principle-exhaust-the-design-space for the current decision.",
+    "prompt": "Use $principle-exhaust-the-design-space. Design navigation for a new interaction with no precedent.",
     "loads": [
       "skills/principle-exhaust-the-design-space/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Compare materially distinct shapes with effort proportional to uncertainty."
     ]
   },
   {
     "id": "manual-principle-experience-first",
-    "prompt": "Use $principle-experience-first for the current decision.",
+    "prompt": "Use $principle-experience-first. Choose between more settings and polishing the central workflow.",
     "loads": [
       "skills/principle-experience-first/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Evaluate the user and maintainer experience when choosing scope."
     ]
   },
   {
     "id": "manual-principle-fix-root-causes",
-    "prompt": "Use $principle-fix-root-causes for the current decision.",
+    "prompt": "Use $principle-fix-root-causes. The service fails only after restart; diagnose it.",
     "loads": [
       "skills/principle-fix-root-causes/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Inspect persistent state and report the cause without unauthorized edits."
     ]
   },
   {
     "id": "manual-principle-foundational-thinking",
-    "prompt": "Use $principle-foundational-thinking for the current decision.",
+    "prompt": "Use $principle-foundational-thinking. Choose the shared data model before implementing its consumers.",
     "loads": [
       "skills/principle-foundational-thinking/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Choose from invariants and access patterns and order genuine dependencies first."
     ]
   },
   {
     "id": "manual-principle-guard-the-context-window",
-    "prompt": "Use $principle-guard-the-context-window for the current decision.",
+    "prompt": "Use $principle-guard-the-context-window. A log search would print 40,000 lines; find the relevant failure.",
     "loads": [
       "skills/principle-guard-the-context-window/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Use bounded queries before loading bulk; do not copy the full transcript into delegates."
     ]
   },
   {
     "id": "manual-principle-laziness-protocol",
-    "prompt": "Use $principle-laziness-protocol for the current decision.",
+    "prompt": "Use $principle-laziness-protocol. Pass this optional flag through six adapters.",
     "loads": [
       "skills/principle-laziness-protocol/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Check for a direct path and layers that do not hide useful complexity."
     ]
   },
   {
     "id": "manual-principle-make-operations-idempotent",
-    "prompt": "Use $principle-make-operations-idempotent for the current decision.",
+    "prompt": "Use $principle-make-operations-idempotent. Make startup recover from a crash halfway through creating work.",
     "loads": [
       "skills/principle-make-operations-idempotent/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Reconcile partial state and test reruns and interruptions."
     ]
   },
   {
     "id": "manual-principle-migrate-callers-then-delete-legacy-apis",
-    "prompt": "Use $principle-migrate-callers-then-delete-legacy-apis for the current decision.",
+    "prompt": "Use $principle-migrate-callers-then-delete-legacy-apis. Replace an internal function used only by this repository.",
     "loads": [
       "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Migrate owned callers and delete the obsolete path together."
     ]
   },
   {
     "id": "manual-principle-minimize-reader-load",
-    "prompt": "Use $principle-minimize-reader-load for the current decision.",
+    "prompt": "Use $principle-minimize-reader-load. Explain why tracing this value requires six wrappers and global state.",
     "loads": [
       "skills/principle-minimize-reader-load/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Inspect both indirection and mutable state, not only file size."
     ]
   },
   {
     "id": "manual-principle-model-the-domain",
-    "prompt": "Use $principle-model-the-domain for the current decision.",
+    "prompt": "Use $principle-model-the-domain. Two booleans represent a state that cannot be both true.",
     "loads": [
       "skills/principle-model-the-domain/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Propose a representation that removes invalid combinations."
     ]
   },
   {
     "id": "manual-principle-never-block-on-the-human",
-    "prompt": "Use $principle-never-block-on-the-human for the current decision.",
+    "prompt": "Use $principle-never-block-on-the-human. Implement the already-approved reversible file edit.",
     "loads": [
       "skills/principle-never-block-on-the-human/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Proceed within scope without treating reversibility as external-write permission."
     ]
   },
   {
     "id": "manual-principle-outcome-oriented-execution",
-    "prompt": "Use $principle-outcome-oriented-execution for the current decision.",
+    "prompt": "Use $principle-outcome-oriented-execution. Plan a migration with an explicitly accepted temporary compile failure.",
     "loads": [
       "skills/principle-outcome-oriented-execution/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Name the scoped boundary and final verification rather than preserving disposable adapters."
     ]
   },
   {
     "id": "manual-principle-prove-it-works",
-    "prompt": "Use $principle-prove-it-works for the current decision.",
+    "prompt": "Use $principle-prove-it-works. The delegate says the feature works; verify the result.",
     "loads": [
       "skills/principle-prove-it-works/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Inspect or exercise the actual artifact, not only the summary."
     ]
   },
   {
     "id": "manual-principle-redesign-from-first-principles",
-    "prompt": "Use $principle-redesign-from-first-principles for the current decision.",
+    "prompt": "Use $principle-redesign-from-first-principles. A new requirement keeps forcing the same workaround in several modules.",
     "loads": [
       "skills/principle-redesign-from-first-principles/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Reconsider the shape using the requirement as a starting assumption."
     ]
   },
   {
     "id": "manual-principle-separate-before-serializing-shared-state",
-    "prompt": "Use $principle-separate-before-serializing-shared-state for the current decision.",
+    "prompt": "Use $principle-separate-before-serializing-shared-state. Two workers rewrite different fields in state.json.",
     "loads": [
       "skills/principle-separate-before-serializing-shared-state/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Recognize the shared write target and separate ownership before adding a lock."
     ]
   },
   {
     "id": "manual-principle-sequence-verifiable-units",
-    "prompt": "Use $principle-sequence-verifiable-units for the current decision.",
+    "prompt": "Use $principle-sequence-verifiable-units. Migrate six components with an existing behavior check.",
     "loads": [
       "skills/principle-sequence-verifiable-units/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Verify coherent units before advancing; explain any deliberate red state."
     ]
   },
   {
     "id": "manual-principle-subtract-before-you-add",
-    "prompt": "Use $principle-subtract-before-you-add for the current decision.",
+    "prompt": "Use $principle-subtract-before-you-add. Add a feature to a module with dead branches and redundant validation.",
     "loads": [
       "skills/principle-subtract-before-you-add/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Remove relevant dead weight before adding the required behavior."
     ]
   },
   {
     "id": "manual-principle-type-system-discipline",
-    "prompt": "Use $principle-type-system-discipline for the current decision.",
+    "prompt": "Use $principle-type-system-discipline. A completed boolean and optional completion time admit a contradictory state.",
     "loads": [
       "skills/principle-type-system-discipline/SKILL.md"
     ],
     "forbids": [],
     "observe": [
-      "The named skill resolves without requiring another principle."
+      "Construct legal variants or derive the flag; do not hide contradictions with assertions."
     ]
   },
   {
@@ -237,7 +237,11 @@
       "skills/unslop/SKILL.md"
     ],
     "forbids": [
-      "skills/technical-writing/SKILL.md"
+      "skills/technical-writing/SKILL.md",
+      "skills/technical-writing/references/document-structure.md",
+      "skills/technical-writing/references/procedures.md",
+      "skills/technical-writing/references/global-english.md",
+      "skills/technical-writing/references/deep-review.md"
     ],
     "observe": [
       "Answer directly without a technical-writing workflow."
@@ -250,9 +254,126 @@
       "skills/unslop/SKILL.md",
       "skills/technical-writing/SKILL.md"
     ],
-    "forbids": [],
+    "forbids": [
+      "skills/technical-writing/references/document-structure.md",
+      "skills/technical-writing/references/procedures.md",
+      "skills/technical-writing/references/global-english.md",
+      "skills/technical-writing/references/deep-review.md"
+    ],
     "observe": [
       "Describe the concrete change and material verification."
+    ]
+  },
+  {
+    "id": "sentence",
+    "prompt": "Fix one awkward sentence in this README.",
+    "loads": [
+      "skills/unslop/SKILL.md",
+      "skills/technical-writing/SKILL.md"
+    ],
+    "forbids": [
+      "skills/technical-writing/references/document-structure.md",
+      "skills/technical-writing/references/procedures.md",
+      "skills/technical-writing/references/global-english.md",
+      "skills/technical-writing/references/deep-review.md"
+    ],
+    "observe": [
+      "Make the local correction without a document-wide workflow."
+    ]
+  },
+  {
+    "id": "tutorial",
+    "prompt": "Write a tutorial for configuring the service.",
+    "loads": [
+      "skills/unslop/SKILL.md",
+      "skills/technical-writing/SKILL.md",
+      "skills/technical-writing/references/document-structure.md",
+      "skills/technical-writing/references/procedures.md"
+    ],
+    "forbids": [
+      "skills/technical-writing/references/global-english.md",
+      "skills/technical-writing/references/deep-review.md"
+    ],
+    "observe": [
+      "Explain what the learner builds and the expected result of each step."
+    ]
+  },
+  {
+    "id": "translation",
+    "prompt": "Review this manual for translation ambiguity.",
+    "loads": [
+      "skills/unslop/SKILL.md",
+      "skills/technical-writing/SKILL.md",
+      "skills/technical-writing/references/global-english.md"
+    ],
+    "forbids": [
+      "skills/technical-writing/references/deep-review.md"
+    ],
+    "observe": [
+      "Check modifier scope and ambiguous referents without automatically reading deep review."
+    ]
+  },
+  {
+    "id": "deep-commit",
+    "prompt": "Use $technical-writing deep-review on this commit message.",
+    "loads": [
+      "skills/unslop/SKILL.md",
+      "skills/technical-writing/SKILL.md",
+      "skills/technical-writing/references/deep-review.md"
+    ],
+    "forbids": [
+      "skills/technical-writing/references/document-structure.md",
+      "skills/technical-writing/references/procedures.md"
+    ],
+    "observe": [
+      "Review the message without imposing Diátaxis or a procedure."
+    ]
+  },
+  {
+    "id": "diagnosis-only",
+    "prompt": "Diagnose why the service fails after restart. Do not change files.",
+    "loads": [
+      "skills/principle-fix-root-causes/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "Investigate state and report evidence; do not implement a repair."
+    ]
+  },
+  {
+    "id": "trivial-edit",
+    "prompt": "Rename this local variable to match its use.",
+    "loads": [
+      "skills/unslop/SKILL.md"
+    ],
+    "forbids": [
+      "skills/principle-build-the-lever/SKILL.md",
+      "skills/principle-exhaust-the-design-space/SKILL.md"
+    ],
+    "observe": [
+      "Make the scoped edit without requiring a new script, prototypes, or delegation."
+    ]
+  },
+  {
+    "id": "public-api",
+    "prompt": "Replace this public versioned API used by external clients.",
+    "loads": [
+      "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "Respect external compatibility and rollout contracts; do not infer permission to remove them."
+    ]
+  },
+  {
+    "id": "concurrent-writes",
+    "prompt": "Two independent workers write different fields in one JSON file.",
+    "loads": [
+      "skills/principle-separate-before-serializing-shared-state/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "Consider separate write targets before serializing a truly shared object."
     ]
   }
 ]

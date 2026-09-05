@@ -69,6 +69,7 @@ def check(root):
     encoder = tiktoken.get_encoding(config["encoding"])
     skills = config["skills"]
     require(len(skills) == len(set(skills)), "duplicate skill name")
+    require(set(skills) == {p.split("/")[1] for p in config["baseline"]["files"]}, "legacy skill inventory differs")
     require(set(skills) == {"unslop", "technical-writing"} | {p.name for p in (root / "skills").glob("principle-*")}, "skill inventory differs")
     paths = {str(p.relative_to(root)): p for name in skills for p in (root / "skills" / name).rglob("*.md")}
     require(set(paths) == set(config["files"]), "instruction file inventory differs")
@@ -119,9 +120,12 @@ def check(root):
     callers = {}
     for path in sorted((root / "skills").rglob("*.md")):
         relative = str(path.relative_to(root))
+        content = path.read_text()
+        named_principles = set(re.findall(r"\bprinciple-[a-z]+(?:-[a-z]+)*", content))
+        require(named_principles <= set(skills), f"unknown principle caller: {relative}")
         if relative in paths:
             continue
-        found = sorted(name for name in skills if name.removeprefix("principle-") in path.read_text())
+        found = sorted(name for name in skills if name.removeprefix("principle-") in content)
         if found:
             callers[relative] = found
     require(callers == read_json(folder / "callers.json"), "caller inventory differs")
@@ -136,10 +140,13 @@ def check(root):
         require(case["id"] not in ids, "duplicate fixture id")
         ids.add(case["id"])
         require(case["prompt"].strip() and case["observe"], "empty fixture")
+        require(all(isinstance(item, str) and item.strip() for item in case["observe"]), "invalid fixture observation")
         require(set(case["loads"]) <= paths.keys(), "fixture loads unknown file")
         require(set(case["forbids"]) <= paths.keys(), "fixture forbids unknown file")
         require(not set(case["loads"]) & set(case["forbids"]), "fixture contradicts itself")
     require({f"manual-{name}" for name in skills if name.startswith("principle-")} <= ids, "missing manual invocation coverage")
+    if config.get("self_contained"):
+        require({"conversation", "commit", "sentence", "tutorial", "translation", "deep-commit", "diagnosis-only", "trivial-edit", "public-api", "concurrent-writes"} <= ids, "missing task fixture coverage")
     routes = {}
     for name, selected in config["routes"].items():
         require(len(selected) == len(set(selected)) and set(selected) <= paths.keys(), f"invalid route: {name}")
@@ -156,13 +163,18 @@ def self_test(root):
         "broken-link": ("skills/unslop/SKILL.md", lambda s: s + "\n[x](missing.md)\n", "broken local link"),
         "caller-drift": ("tests/instruction-budgets/callers.json", lambda s: "{}", "caller inventory differs"),
         "invalid-fixture": ("tests/instruction-budgets/trigger-cases.json", lambda s: json.dumps([dict(c, loads=["missing.md"]) for c in json.loads(s)]), "fixture loads unknown"),
+        "unknown-caller": ("skills/arena/SKILL.md", lambda s: s + "\nUse principle-missing-contract.\n", "unknown principle caller"),
     }
+    if read_json(root / "tests/instruction-budgets/context-budget.json").get("self_contained"):
+        mutations["extra-reference"] = ("skills/unslop/references/catalog.md", lambda s: "Unwanted catalog.\n", "instruction file inventory differs")
+        mutations["implicit-policy"] = ("skills/unslop/agents/openai.yaml", lambda s: s.replace("true", "false"), "implicit invocation disabled")
+        mutations["cross-skill-link"] = ("skills/unslop/SKILL.md", lambda s: s + "\n[x](../technical-writing/SKILL.md)\n", "cross-skill link")
     for name, (relative, mutation, expected) in mutations.items():
         with tempfile.TemporaryDirectory(prefix="rstack-budget-test-") as temporary:
             destination = Path(temporary)
             shutil.copytree(root / "skills", destination / "skills")
             shutil.copytree(root / "tests/instruction-budgets", destination / "tests/instruction-budgets")
-            if name == "broken-link":
+            if name in ("broken-link", "cross-skill-link"):
                 budget_path = destination / "tests/instruction-budgets/context-budget.json"
                 budget = read_json(budget_path)
                 budget["files"]["skills/unslop/SKILL.md"] = {"words": 10000, "tokens": 20000}
@@ -171,7 +183,8 @@ def self_test(root):
             if mutation is None:
                 target.unlink()
             else:
-                target.write_text(mutation(target.read_text()))
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(mutation(target.read_text() if target.exists() else ""))
             try:
                 check(destination)
             except ValueError as error:
@@ -185,11 +198,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument("--tracked", action="store_true", help="require instruction and metadata files to be Git-tracked")
     args = parser.parse_args()
     try:
         report = check(args.root.resolve())
         if args.self_test:
             report["negative_tests"] = self_test(args.root.resolve())
+        if args.tracked:
+            tracked = set(subprocess.check_output(["git", "ls-files"], cwd=args.root, text=True).splitlines())
+            config = read_json(args.root / "tests/instruction-budgets/context-budget.json")
+            require(set(config["files"]) | set(config["metadata"]) <= tracked, "untracked instructions or metadata")
+            report["git_inventory"] = "all instructions and metadata tracked"
         print(json.dumps(report, indent=2))
     except (ValueError, OSError, KeyError, TypeError, AttributeError, yaml.YAMLError) as error:
         parser.exit(1, f"Instruction validation failed: {error}\n")
