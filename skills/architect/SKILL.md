@@ -5,53 +5,66 @@ description: "Sketch types, signatures, and module structure before code, then s
 
 # Architect
 
-Design the shape before filling in the code. Sketch caller usage, data structures, signatures, and module boundaries. Implement against that sketch, and redesign when implementation disproves it.
+Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Compare concrete alternatives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
 
-## Ground
+## Phase A: Ground the problem
 
-Build a working model of every existing system the design touches. Use `how` to trace behavior and ownership. Use `why` when changing an existing boundary or design decision so its rationale becomes a constraint rather than a guess.
+Build a real mental model of every system the new code touches. Run the **how** skill over the relevant subsystems. Critique mode if existing structure is the constraint or the design must push back on it.
 
-Skip grounding only for genuinely isolated greenfield work.
+Naming a file isn't grounding. Produce the traced model `how` prescribes. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.
 
-## Sketch
+Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 
-Write the caller's usage first. Show realistic call sites, then derive the types and signatures from them. Use `not implemented` bodies or brief pseudocode where logic affects the design.
+## Phase B: Sketch
 
-Cover these questions:
+Choose direct work or bounded delegation from the workload. Use `arena` when independent competing designs would resolve a material uncertainty. When delegating, pass `references/runner-prompt.md`, the grounding evidence, and an isolated output path. Each design package follows `references/rationale-template.md`: caller usage first, then types, signatures, module map, and rationale. Cover runtime flow, failure paths, and configuration ownership, including defaults, parsing, and validation.
 
-- What data structures fit the dominant reads and writes?
-- How does runtime flow through them, including state transitions and failure paths?
-- Which configuration changes behavior, and who owns its defaults, parsing, and validation?
-- Which module owns each invariant and state transition?
-- What crosses each boundary, and where is external data parsed?
-- Which invalid states can the types prevent?
-- What is the single source of truth for each fact?
-- Can concurrent actors avoid shared writable state?
-- What happens on retries, partial failure, and repeated execution?
-- How much complexity does the public interface hide from callers?
+Design it twice. Compare at least two structurally distinct shapes before synthesis. The current thread can sketch both. When constraints leave only one viable shape, name a concrete rejected alternative and the constraint that rules it out. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
 
-Read `references/design-red-flags.md` and revise shapes with shallow modules, leaked information, temporal decomposition, or pass-through methods.
+Screen every candidate against [`references/design-red-flags.md`](references/design-red-flags.md) before synthesis. Reject or revise shallow modules, information leakage, temporal decomposition, and pass-through methods.
 
-Choose the exploration method from the workload and uncertainty. Work directly, delegate bounded design angles to subagents or agent threads, or use `arena` when competing concrete designs would change the decision. When delegating, use `references/runner-prompt.md` with a specific focus. Compare at least two structurally distinct shapes before choosing. The current thread can sketch both; separate candidates are optional. When constraints leave only one viable shape, name the rejected alternative and the constraint that rules it out.
+Compare viable candidates on interface depth. Prefer the design that hides more complexity behind a smaller, simpler public surface. A rich interface can keep call chains short by concentrating capability instead of scattering it across layers.
 
-The current thread compares alternatives, chooses the design, and fills `references/rationale-template.md`. Do not delegate synthesis or the final recommendation.
+The current thread owns synthesis and the final recommendation. Record the selection in the rationale's "Synthesis decision" section.
 
-## Checkpoint when requested
+## Phase C: Agree (opt-in)
 
-Proceed into implementation by default. If the user asks for a checkpoint, present the chosen sketch and pause before writing implementation code. Treat pushback as new grounding evidence and redesign before continuing.
+Default: proceed directly to implementation with the synthesized design. No human checkpoint.
 
-## Implement against the sketch
+Opt in to a checkpoint when the invoker explicitly asks: "/architect with checkpoint," "stop and show me before implementing," or similar. Then surface the synthesized design and pause for sign-off.
 
-Replace the empty bodies and pseudocode with working code. Keep usage, types, signatures, and module ownership aligned with the chosen design.
+The synthesis can ship as its own commit either way. That's the "scaffold first" mode of the **foundational-thinking** principle skill; subsequent commits read as filling in bodies against a stable contract. Planned and scoped breakage during fill-in is fine, per the **outcome-oriented-execution** principle skill. For adversarial pressure on the design before implementing, run the **interrogate** skill on the synthesized sketch.
 
-Treat deviations as evidence. When implementation needs a new parameter, escape hatch, shared lock, or caller-visible rule, decide whether the sketch missed a requirement or the implementation is overreaching. Update the design deliberately rather than adding the deviation silently.
+If the human pushes back on the shape (in a checkpoint or after the fact), treat that as Phase A evidence. Re-ground and re-run Phase B before writing more code.
 
-## Redesign when the shape is wrong
+## Phase D: Implement against the sketch
 
-One hard case does not condemn a design. Repeated friction does. Redesign when the same workaround appears in several places, types need repeated casts or impossible optional states, unexpected sharing recurs, or callers must learn internal rules.
+Replace `not implemented` bodies with code, pseudocode with logic. The synthesized sketch is the contract.
 
-Re-ground on what implementation taught you. Subtract the failed assumptions, redesign with the new constraints as foundational, and return to the sketch.
+Deviations from the sketch are signal worth surfacing, not friction to absorb silently. If a function needs a parameter the sketch didn't anticipate, ask whether the sketch was wrong, the requirement was missed, or the implementation is overreaching. Surface it; don't bolt it on.
 
-## Output
+## Phase E: Scrap when the architecture is wrong
 
-For a small change, produce caller usage, types, and signatures in one design file. For a larger change, add a module map with runtime flow and configuration ownership. Keep the rationale beside the sketch with the chosen shape, rejected alternatives, accepted tradeoffs, open risks, and first implementation step.
+If implementation keeps producing friction the sketch can't absorb, throw the sketch out. Don't bolt fixes onto a wrong design, per the **redesign-from-first-principles** and **fix-root-causes** principle skills.
+
+The signal is a *pattern*, not single instances. Tells:
+
+- The same shape of workaround appearing repeatedly across unrelated code.
+- Multiple unrelated edge cases that all need special-case branches.
+- Types that need escape hatches (`any`, casts, optional fields always set in practice) to compile.
+- The "we need a lock" reflex when the sketch said the state wasn't shared.
+- Callers having to know the abstraction's internal rules to use it.
+- Two or more independent Phase D deviations of the same shape across the implementation. Surfacing deviations is Phase D's job; a repeated pattern of them is Phase E's trigger.
+
+Use judgment. A few edge cases don't condemn an architecture. Some problems are legitimately complex; complexity in the data is not complexity in the design. The rewrite signal is repeated friction of the same shape, not single hard cases.
+
+When you scrap:
+
+1. Re-run the **how** skill over what's been built. The implementation lessons enter the new design as inputs, not vibes.
+2. Redesign as if the new constraints had been day-one assumptions, per redesign-from-first-principles.
+3. Subtract before adding, per the **subtract-before-you-add** principle skill. The new sketch should be smaller than the old one before it grows.
+4. Return to Phase B and compare designs against the new constraints.
+
+## Outputs
+
+The caller's usage is written first and the type sketch derived from it. One file with new types and signatures for small changes; module map plus type definitions for larger work. The rationale ships alongside, shaped per `references/rationale-template.md`, including the usage sketch and the synthesis decision.
