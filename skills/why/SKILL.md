@@ -37,7 +37,7 @@ Answer the user's question first. Keep mechanics brief unless they explain the r
 - **What it suggests.** Inferences and their evidence chain.
 - **Competing explanations.** Evidence for and against each live hypothesis.
 - **What remains unknown.** Specific gaps and unsuccessful searches.
-- **Sources checked.** Repositories, paths, commits, PRs, issues, and queries.
+- **Sources checked.** Repositories, paths, commits, PRs, issues, and exact queries. Distinguish empty searches from relevant sources that were unavailable or not searched, and say why.
 
 End with a short confidence statement. If the investigation precedes a code change, translate the findings into Preserve / Change / Avoid / Risk constraints.
 

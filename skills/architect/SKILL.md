@@ -32,7 +32,7 @@ Cover these questions:
 
 Read `references/design-red-flags.md` and revise shapes with shallow modules, leaked information, temporal decomposition, or pass-through methods.
 
-Choose the exploration method from the workload and uncertainty. Work directly, delegate bounded design angles to subagents or agent threads, or use `arena` when competing concrete designs would change the decision. When delegating, use `references/runner-prompt.md` with a specific focus. Explore structurally distinct alternatives when the design space is open; do not force a candidate count when the constraints already select one shape.
+Choose the exploration method from the workload and uncertainty. Work directly, delegate bounded design angles to subagents or agent threads, or use `arena` when competing concrete designs would change the decision. When delegating, use `references/runner-prompt.md` with a specific focus. Compare at least two structurally distinct shapes before choosing. The current thread can sketch both; separate candidates are optional. When constraints leave only one viable shape, name the rejected alternative and the constraint that rules it out.
 
 The current thread compares alternatives, chooses the design, and fills `references/rationale-template.md`. Do not delegate synthesis or the final recommendation.
 

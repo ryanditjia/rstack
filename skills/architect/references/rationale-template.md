@@ -26,7 +26,7 @@ For each material tradeoff, state what the design accepts and what it gains.
 
 ## Alternatives considered
 
-Name each plausible, structurally different alternative. Compare caller burden, hidden complexity, boundaries, and failure behavior. Omit cosmetic variations of the chosen shape.
+Name at least one concrete, structurally different alternative and why it lost, even when constraints leave only one viable shape. Compare caller burden, hidden complexity, boundaries, and failure behavior. Omit cosmetic variations of the chosen shape.
 
 ## Open questions and risks
 
