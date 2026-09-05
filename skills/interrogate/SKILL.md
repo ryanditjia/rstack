@@ -32,14 +32,9 @@ Write one clear paragraph. Reviewers challenge whether the work achieves the int
 
 ## Step 3, Spawn Reviewers
 
-Use the host's delegation mechanism when available. Launch reviewers together when parallelism is supported; otherwise run independent review passes sequentially. Use the `interrogate reviewers` list from `~/.config/rstack/models.md` when present, one reviewer per entry. Without configuration, use up to four available reviewers or passes.
+Use the host's delegation mechanism when available. Launch reviewers together when parallelism is supported. Use the `interrogate-reviewers` list from `~/.config/rstack/models.md` when present, one reviewer per entry. Without configuration, start with two independent reviewers. Add reviewers only for an unresolved disagreement, a named coverage gap, or an explicit user request. Prefer different available models; when model choice is unavailable, inherit the current model and report that model diversity was unavailable.
 
-| Subagent | Default model |
-|----------|---------------|
-| Reviewer A | first configured model, otherwise inherit |
-| Reviewer B | second configured model, otherwise inherit |
-| Reviewer C | third configured model, otherwise inherit |
-| Reviewer D | fourth configured model, otherwise inherit |
+If delegation is unavailable, perform a separate review pass and report that independent review was unavailable. Do not count repeated self-review as independent reviewers.
 
 Each reviewer is read-only. Select its configured model only when the host supports model choice; otherwise inherit the current model.
 
