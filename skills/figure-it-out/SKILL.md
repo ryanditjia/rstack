@@ -11,7 +11,7 @@ Don't reinvent a playbook you already have. A focused single-unit task that matc
 
 ## Start
 
-Open a todolist whose first item is to read the Principles section of the **rmode** skill. Then add the phases below as todos.
+Track the phases below in a short plan. Follow **rmode**'s orchestration policy and read applicable principle skills when their guidance changes a decision.
 
 ## Phase A: Frame
 
