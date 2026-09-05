@@ -78,7 +78,7 @@ A dependency is a context relay, not just ordering: undeclared upstream context 
 
 #### Stack safety
 
-- The frontier is a computed object, never narrative. Recompute `frontier.json` from `gh stack view --json` after every merge and stack mutation: ordered PR list, branch names, head SHAs, a generation number, and the lowest unmerged PR. Resolve it in a checkout that tracks the stack. The command errors rather than guessing when the current branch is not in a stack.
+- The frontier is a computed object, never narrative. Recompute `frontier.json` with `orch frontier set --repo <checkout>` after every merge and stack mutation. The result contains the ordered PR list, branch names, head SHAs, a generation number, and the lowest unmerged PR. Branch order comes from `gh stack view --json`, local branch SHAs from Git, and PR identity and state from GitHub. Resolve it in a checkout that tracks the stack. The command errors rather than guessing when the current branch is not in a stack.
 - Exactly one stacker per stack may change stack topology. Record the holder in the standing orders. Restacks run in the cloud when local work would disrupt the operator.
 - Workers never rebase or change stack topology. Babysitters follow `playbooks/babysit.md`, one per stack, scoped to one immutable frontier generation. They report conflicts to the stacker rather than restacking.
 - PR closes and retargets go through the stacker only; closing a base PR orphans every chain above it. Merges and stack surgery are units with briefs like any other.

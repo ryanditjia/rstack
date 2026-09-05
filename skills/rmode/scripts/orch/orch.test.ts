@@ -111,18 +111,39 @@ async function withFakeGhStack<T>({
   directory: string;
   operation: (outputPath: string) => Promise<T>;
   output: string;
-  pullRequests?: readonly { number: number; state: string; headRefName: string }[];
+  pullRequests?: readonly {
+    number: number;
+    state: string;
+    headRefName: string;
+    headRefOid?: string;
+    isCrossRepository?: boolean;
+  }[];
 }): Promise<T> {
   const bin = join(directory, "bin");
   const outputPath = join(directory, "gh-stack-output.json");
   await mkdir(bin);
   await writeFile(outputPath, output);
   const responses = new Map<string, unknown>();
-  for (const pr of pullRequests) {
-    responses.set(`pr view ${pr.number} --json number,state,headRefName`, pr);
+  const resolvedPullRequests = pullRequests.map((pr) => ({
+    ...pr,
+    headRefOid:
+      pr.headRefOid ??
+      git({
+        repo: join(directory, "repo"),
+        args: ["rev-parse", pr.headRefName],
+      }),
+    isCrossRepository: pr.isCrossRepository ?? false,
+  }));
+  for (const pr of resolvedPullRequests) {
     responses.set(
-      `pr list --state all --head ${pr.headRefName} --limit 2 --json number,state,headRefName`,
-      pullRequests.filter((item) => item.headRefName === pr.headRefName)
+      `pr view ${pr.number} --json number,state,headRefName,headRefOid,isCrossRepository`,
+      pr,
+    );
+    responses.set(
+      `pr list --state all --head ${pr.headRefName} --limit 2 --json number,state,headRefName,headRefOid,isCrossRepository`,
+      resolvedPullRequests.filter(
+        (item) => item.headRefName === pr.headRefName,
+      ),
     );
   }
   const cases: string[] = [];
@@ -150,7 +171,7 @@ ${cases.join("\n")}
     exit 2
     ;;
 esac
-`
+`,
   );
   await chmod(gh, 0o755);
 
@@ -509,17 +530,29 @@ describe("Store", () => {
   it("refreshes the local head instead of trusting cached stack metadata", async () => {
     const { directory, store } = await initializedStore();
     const stack = await makeGitStack(directory);
-    const output = JSON.stringify({ branches: [{
-      name: "stack/open", head: stack.openSha,
-      pr: { number: 11, state: "OPEN" },
-    }] });
-    git({ repo: stack.repo, args: ["commit", "--allow-empty", "-m", "after stack submit"] });
+    const output = JSON.stringify({
+      branches: [
+        {
+          name: "stack/open",
+          head: stack.openSha,
+          pr: { number: 11, state: "OPEN" },
+        },
+      ],
+    });
+    git({
+      repo: stack.repo,
+      args: ["commit", "--allow-empty", "-m", "after stack submit"],
+    });
     const current = git({ repo: stack.repo, args: ["rev-parse", "HEAD"] });
     expect(current).not.toBe(stack.openSha);
-    await withFakeGhStack({ directory, output,
+    await withFakeGhStack({
+      directory,
+      output,
       pullRequests: [{ number: 11, state: "OPEN", headRefName: "stack/open" }],
       operation: async () => {
-        expect((await store.frontier.set({ repo: stack.repo })).prs[0]?.sha).toBe(current);
+        expect(
+          (await store.frontier.set({ repo: stack.repo })).prs[0]?.sha,
+        ).toBe(current);
       },
     });
   });
@@ -527,14 +560,27 @@ describe("Store", () => {
   it("retains PR identity after gh-stack drops a closed association", async () => {
     const { directory, store } = await initializedStore();
     const stack = await makeGitStack(directory);
-    await withFakeGhStack({ directory,
-      output: JSON.stringify({ branches: [{ name: "stack/open", head: stack.openSha,
-        pr: { number: 11, state: "OPEN" } }] }),
-      pullRequests: [{ number: 11, state: "CLOSED", headRefName: "stack/open" }],
+    await withFakeGhStack({
+      directory,
+      output: JSON.stringify({
+        branches: [
+          {
+            name: "stack/open",
+            head: stack.openSha,
+            pr: { number: 11, state: "OPEN" },
+          },
+        ],
+      }),
+      pullRequests: [
+        { number: 11, state: "CLOSED", headRefName: "stack/open" },
+      ],
       operation: async (outputPath) => {
         const first = await store.frontier.set({ repo: stack.repo });
         expect(first.prs[0]?.state).toBe("CLOSED");
-        await writeFile(outputPath, JSON.stringify({ branches: [{ name: "stack/open" }] }));
+        await writeFile(
+          outputPath,
+          JSON.stringify({ branches: [{ name: "stack/open" }] }),
+        );
         const next = await store.frontier.set({ repo: stack.repo });
         expect(next.prs).toEqual(first.prs);
         expect(next.lowestUnmerged).toBeNull();
@@ -545,12 +591,46 @@ describe("Store", () => {
   it("rejects ambiguous branch history without overwriting the frontier", async () => {
     const { directory, store } = await initializedStore();
     const stack = await makeGitStack(directory);
-    await withFakeGhStack({ directory,
-      output: JSON.stringify({ branches: [{ name: "stack/open", head: stack.openSha }] }),
-      pullRequests: [{ number: 11, state: "CLOSED", headRefName: "stack/open" },
-        { number: 9, state: "CLOSED", headRefName: "stack/open" }],
+    await withFakeGhStack({
+      directory,
+      output: JSON.stringify({
+        branches: [{ name: "stack/open", head: stack.openSha }],
+      }),
+      pullRequests: [
+        { number: 11, state: "CLOSED", headRefName: "stack/open" },
+        { number: 9, state: "CLOSED", headRefName: "stack/open" },
+      ],
       operation: async () => {
-        await expect(store.frontier.set({ repo: stack.repo })).rejects.toThrow("multiple pull requests");
+        await expect(store.frontier.set({ repo: stack.repo })).rejects.toThrow(
+          "multiple pull requests",
+        );
+        expect((await store.frontier.show()).generation).toBe(0);
+      },
+    });
+  });
+
+  it("does not attach new unsubmitted work to a historical closed PR", async () => {
+    const { directory, store } = await initializedStore();
+    const stack = await makeGitStack(directory);
+    git({
+      repo: stack.repo,
+      args: ["commit", "--allow-empty", "-m", "new work on reused branch"],
+    });
+    await withFakeGhStack({
+      directory,
+      output: JSON.stringify({ branches: [{ name: "stack/open" }] }),
+      pullRequests: [
+        {
+          number: 11,
+          state: "CLOSED",
+          headRefName: "stack/open",
+          headRefOid: stack.openSha,
+        },
+      ],
+      operation: async () => {
+        await expect(store.frontier.set({ repo: stack.repo })).rejects.toThrow(
+          "does not match the local head",
+        );
         expect((await store.frontier.show()).generation).toBe(0);
       },
     });
