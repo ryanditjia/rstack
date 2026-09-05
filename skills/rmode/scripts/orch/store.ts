@@ -967,84 +967,167 @@ function countLine(value: Counts): string {
     : entries.map(([name, count]) => `${name}=${count}`).join(", ");
 }
 
-function parseStackState(value: unknown, branch: string): FrontierPrState {
-  switch (value) {
-    case "OPEN":
-    case "QUEUED":
-      return "OPEN";
-    case "MERGED":
-      return "MERGED";
-    case "CLOSED":
-      return "CLOSED";
-    default:
-      throw new UserError(
-        `gh stack view output has an unknown PR state for branch ${branch}: ${String(value)}`
-      );
-  }
-}
-
-function parseStackBranch(value: unknown, index: number): FrontierPr {
-  if (!isRecord(value)) {
-    throw new UserError(
-      `gh stack view output has an invalid branch at index ${index}`
-    );
-  }
-  const branch = value.name;
-  const sha = value.head;
-  const pullRequest = value.pr;
-  if (typeof branch !== "string" || branch.length === 0) {
-    throw new UserError(
-      `gh stack view output has an invalid branch name at index ${index}`
-    );
-  }
-  if (typeof sha !== "string" || !/^[0-9a-f]{40,64}$/i.test(sha)) {
-    throw new UserError(
-      `gh stack view output has an invalid head SHA for branch ${branch}`
-    );
-  }
-  if (!isRecord(pullRequest)) {
-    throw new UserError(
-      `gh stack view output branch ${branch} has no pull request; run gh stack submit first`
-    );
-  }
-  const pr = pullRequest.number;
-  if (typeof pr !== "number" || !Number.isSafeInteger(pr) || pr < 1) {
-    throw new UserError(
-      `gh stack view output has an invalid PR for branch ${branch}`
-    );
-  }
-  return {
-    branches: branch,
-    pr,
-    sha,
-    state: parseStackState(pullRequest.state, branch),
-  };
-}
-
-function githubFrontier(repo: string): readonly FrontierPr[] {
+function githubJson({
+  repo,
+  args,
+}: {
+  repo: string;
+  args: readonly string[];
+}): unknown {
+  const label = `gh ${args.slice(0, 2).join(" ")}`;
   let raw: string;
   try {
-    raw = execFileSync("gh", ["stack", "view", "--json"], {
+    raw = execFileSync("gh", args, {
       cwd: repo,
       encoding: "utf8",
       env: { ...process.env, NO_COLOR: "1" },
       stdio: ["ignore", "pipe", "pipe"],
     });
   } catch (error) {
+    throw new UserError(`${label} failed: ${errorMessage(error)}`);
+  }
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new UserError(`${label} output is not valid JSON`);
+  }
+}
+
+function branchSha({ branch, repo }: { branch: string; repo: string }): string {
+  let raw: string;
+  try {
+    raw = execFileSync(
+      "git",
+      ["rev-parse", "--verify", `refs/heads/${branch}^{commit}`],
+      {
+        cwd: repo,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+      },
+    );
+  } catch (error) {
     throw new UserError(
-      `gh stack view --json failed: ${errorMessage(error)}`
+      `cannot resolve local branch ${branch}: ${errorMessage(error)}`,
     );
   }
-  let value: unknown;
-  try {
-    value = JSON.parse(raw);
-  } catch {
-    throw new UserError("gh stack view output is not valid JSON");
+  const sha = raw.trim();
+  if (!/^[0-9a-f]{40,64}$/i.test(sha)) {
+    throw new UserError(
+      `git rev-parse returned an invalid SHA for branch ${branch}`,
+    );
   }
+  return sha;
+}
+
+function resolveStackBranch({
+  value,
+  index,
+  repo,
+}: {
+  value: unknown;
+  index: number;
+  repo: string;
+}): FrontierPr {
+  if (
+    !isRecord(value) ||
+    typeof value.name !== "string" ||
+    value.name.length === 0
+  ) {
+    throw new UserError(
+      `gh stack view output has an invalid branch at index ${index}`,
+    );
+  }
+  const branch = value.name;
+  const sha = branchSha({ branch, repo });
+  let pullRequest: unknown;
+  const fields = "number,state,headRefName,headRefOid,isCrossRepository";
+  if (value.pr === undefined || value.pr === null) {
+    const matches = githubJson({
+      repo,
+      args: [
+        "pr",
+        "list",
+        "--state",
+        "all",
+        "--head",
+        branch,
+        "--limit",
+        "2",
+        "--json",
+        fields,
+      ],
+    });
+    if (!isUnknownArray(matches)) {
+      throw new UserError(
+        `gh pr list output has an invalid shape for branch ${branch}`,
+      );
+    }
+    if (matches.length === 0) {
+      throw new UserError(
+        `branch ${branch} has no pull request; submit it before setting the frontier`,
+      );
+    }
+    if (matches.length > 1) {
+      throw new UserError(
+        `branch ${branch} has multiple pull requests; restore its gh stack PR association before setting the frontier`,
+      );
+    }
+    pullRequest = matches[0];
+    if (!isRecord(pullRequest) || pullRequest.headRefOid !== sha) {
+      throw new UserError(
+        `PR history for branch ${branch} does not match the local head; restore or submit its gh stack PR association before setting the frontier`,
+      );
+    }
+  } else {
+    if (
+      !isRecord(value.pr) ||
+      typeof value.pr.number !== "number" ||
+      !Number.isSafeInteger(value.pr.number) ||
+      value.pr.number < 1
+    ) {
+      throw new UserError(
+        `gh stack view output has an invalid PR for branch ${branch}`,
+      );
+    }
+    pullRequest = githubJson({
+      repo,
+      args: ["pr", "view", String(value.pr.number), "--json", fields],
+    });
+  }
+  if (
+    !isRecord(pullRequest) ||
+    typeof pullRequest.number !== "number" ||
+    !Number.isSafeInteger(pullRequest.number) ||
+    pullRequest.number < 1 ||
+    pullRequest.headRefName !== branch ||
+    pullRequest.isCrossRepository !== false
+  ) {
+    throw new UserError(
+      `GitHub returned an invalid pull request for branch ${branch}`,
+    );
+  }
+  const state = frontierPrStateOrNull(pullRequest.state);
+  if (state === null) {
+    throw new UserError(
+      `GitHub returned an unknown PR state for branch ${branch}: ${String(pullRequest.state)}`,
+    );
+  }
+  return {
+    branches: branch,
+    pr: pullRequest.number,
+    sha,
+    state,
+  };
+}
+
+function resolveFrontier(repo: string): readonly FrontierPr[] {
+  const value = githubJson({ repo, args: ["stack", "view", "--json"] });
   if (!isRecord(value) || !isUnknownArray(value.branches)) {
     throw new UserError("gh stack view output has an invalid shape");
   }
-  const result = value.branches.map(parseStackBranch);
+  const result = value.branches.map((branch, index) =>
+    resolveStackBranch({ value: branch, index, repo }),
+  );
   if (result.length === 0) {
     throw new UserError("gh stack view output did not contain a stack");
   }
@@ -1052,13 +1135,11 @@ function githubFrontier(repo: string): readonly FrontierPr[] {
     throw new UserError("gh stack view output contains duplicate branches");
   }
   if (new Set(result.map((row) => row.pr)).size !== result.length) {
-    throw new UserError("gh stack view output contains duplicate pull requests");
+    throw new UserError(
+      "gh stack view output contains duplicate pull requests",
+    );
   }
   return result;
-}
-
-function resolveFrontier(repo: string): readonly FrontierPr[] {
-  return githubFrontier(repo);
 }
 
 function validateFrontierPin({

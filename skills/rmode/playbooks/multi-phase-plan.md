@@ -10,7 +10,7 @@
 6. Run `node rstack/skills/rmode/scripts/check-plan.mjs <plan.md>` and fix every line it prints (the **encode-lessons-in-structure** principle skill). It enforces the skeleton's shape, the verification rule in every verification block, and the punctuation rules.
 7. Hand back. Post the plan path and the script's output, then stop. Execution starts on the operator's explicit go, under the execution playbook the plan names.
 
-**Verification.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule. Every verification block opens with it. The live block is mandatory. Ten lanes on the configured fast code model at the PR head drive the real surface through its control skill, per the **swarm** skill. Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. One lane is the regression lane against trunk. It runs the same load-bearing scenario on trunk and head. If trunk lacks the feature, the lane records that fact and gates the behavior the diff adds plus the end state the user waits for. The perf gate is dual-sided: trunk and head must both produce the named metric. If trunk lacks the feature, isolate the work the diff adds and set an absolute budget for that work plus the end-to-end state the user waits for. Do not claim a ratio between unlike scenarios. The perf block names the metric, the interleaved probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
+**Verification.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule. Every verification block opens with it. The live block is mandatory. Keep the ten live scenarios below. Assign them under rmode's Orchestration policy. A reviewer may run several scenarios. Worker count and model choice do not change the required coverage or independent review. Drive the real surface at the PR head through its control skill. Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. One lane is the regression lane against trunk. It runs the same load-bearing scenario on trunk and head. If trunk lacks the feature, the lane records that fact and gates the behavior the diff adds plus the end state the user waits for. The perf gate is dual-sided: trunk and head must both produce the named metric. If trunk lacks the feature, isolate the work the diff adds and set an absolute budget for that work plus the end-to-end state the user waits for. Do not claim a ratio between unlike scenarios. The perf block names the metric, the interleaved probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
 
 **Control skill.** Pick it by surface. Browser, Electron, and web UIs use the available UI control capability from available host tooling. CLIs and TUIs use the available CLI control capability from available host tooling. Native mobile uses whatever simulator-driving skill the repo has. A PR that touches two surfaces gets lanes on both. A surface with no control skill is a risk in Appendix C, and its live block still names how each lane drives it.
 
@@ -63,13 +63,13 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 ### Verdict and merge, for every PR
 
-- [ ] At the merge-ready head SHA, run the swarm per `rstack/skills/swarm/SKILL.md`. One gates lane. The ten live lanes from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. One audit lane that reads the diff and the receipts and distrusts the PR body.
+- [ ] At the merge-ready head SHA, run the swarm per `rstack/skills/swarm/SKILL.md`. One gates lane. All ten live scenarios from the PR's **Verify, live** block, with staffing under rmode's Orchestration policy. The perf lane from its **Verify, perf** block. One audit lane that reads the diff and the receipts and distrusts the PR body.
 - [ ] Clean only when every lane is `PASS`. Findings go back to the owner. A new head gets a fresh swarm and a fresh verdict.
 - [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `playbooks/shipping.md`.>
 
 ### Boot recipe, for every live lane
 
-Each live lane runs on its own cloud VM at the PR head. Drive through the available UI control capability or the available CLI control capability from available host tooling.
+Run every live scenario at the PR head. Isolate concurrent runs when they could share mutable state. Sequential scenarios may reuse an environment after restoring the required starting state. Drive through the available UI control capability or the available CLI control capability from available host tooling.
 
 - [ ] `git fetch origin <head-branch> && git checkout <head SHA>`.
 - [ ] <Start the backend and the surface. Wait for ready.>
@@ -98,7 +98,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through the availa
 
 - [ ] <Test file and the case it gains.> Run `<command>`.
 
-**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Ten lanes on `configured fast code model` at the PR head, per the boot recipe.
+**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Cover all ten scenarios at the PR head, per the boot recipe. Assign reviewers under rmode's Orchestration policy.
 
 - [ ] Lane 1. Regression lane against trunk. Run <the same load-bearing scenario> at trunk and head. If trunk lacks the feature, record that and gate <the behavior the diff adds plus the end state the user waits for>. Save `<slug>.png`. Pass when <predicate>.
 - [ ] Lane 2. <Scenario.> Save `<slug>.png`. Pass when <predicate>.

@@ -26,7 +26,9 @@ arena-runners: inherit-parent
 arena-judge: inherit-parent
 swarm-workers: inherit-parent
 interrogate-reviewers: inherit-parent
-reflect-reviewers: inherit-parent
+reflect-judgment: inherit-parent
+reflect-tooling: inherit-parent
+reflect-divergent: inherit-parent
 ```
 
 If a skill cannot use a configured value, it falls back to the parent model and reports the fallback. Configuration never makes a model available.
