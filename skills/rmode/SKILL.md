@@ -37,8 +37,7 @@ Triggers:
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Before delegation → identify blocking steps, independent workstreams, shared writes, and the smallest safe decomposition (Feature step 3).
-- Any prose surface → the **unslop** skill. Agent-facing prose follows the host's skill-authoring guidance when available.
-- Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (the technical-writing skill).
+- Agent-facing prose follows the host's skill-authoring guidance when available.
 - Before commit → inspect the diff for generated clutter, needless comments, and prose that does not match the repository.
 - Before review → the **no-comments** skill (the no-comments skill).
 - Shipping UI / IDE / CLI → use the matching host control capability. For bug fixes, reproduce first on the same surface.
@@ -62,7 +61,7 @@ Before delegating, read [references/host-capabilities.md](references/host-capabi
 
 ## Writing
 
-Use `technical-writing` for documentation and PR text, `unslop` for prose, and `no-comments` before review. Keep evidence, tradeoffs, and unresolved decisions in the reply. Link only artifacts you produced or inspected.
+Use `no-comments` before review. Keep prose plain and concise. Keep evidence, tradeoffs, and unresolved decisions in the reply. Link only artifacts you produced or inspected.
 
 ## Playbooks
 

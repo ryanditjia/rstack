@@ -70,7 +70,7 @@ def check(root):
     skills = config["skills"]
     require(len(skills) == len(set(skills)), "duplicate skill name")
     require(set(skills) == {p.split("/")[1] for p in config["baseline"]["files"]}, "legacy skill inventory differs")
-    require(set(skills) == {"unslop", "technical-writing"} | {p.name for p in (root / "skills").glob("principle-*")}, "skill inventory differs")
+    require(set(skills) == {p.name for p in (root / "skills").glob("principle-*")}, "skill inventory differs")
     paths = {str(p.relative_to(root)): p for name in skills for p in (root / "skills" / name).rglob("*.md")}
     require(set(paths) == set(config["files"]), "instruction file inventory differs")
     metadata_paths = {str(p.relative_to(root)) for name in skills for p in (root / "skills" / name).rglob("*.yaml")}
@@ -129,11 +129,6 @@ def check(root):
         if found:
             callers[relative] = found
     require(callers == read_json(folder / "callers.json"), "caller inventory differs")
-    if config.get("self_contained"):
-        require(set(p for p in paths if p.startswith("skills/unslop/")) == {"skills/unslop/SKILL.md"}, "unslop must remain self-contained")
-        for name in ("opening-a-pr", "multi-phase-plan"):
-            content = (root / f"skills/rmode/playbooks/{name}.md").read_text()
-            require(not re.search(r"technical-writing (?:skill in full|layer)|every technical-writing layer", content), f"unconditional writing layers: {name}")
     cases = read_json(folder / "trigger-cases.json")
     ids = set()
     for case in cases:
@@ -145,8 +140,6 @@ def check(root):
         require(set(case["forbids"]) <= paths.keys(), "fixture forbids unknown file")
         require(not set(case["loads"]) & set(case["forbids"]), "fixture contradicts itself")
     require({f"manual-{name}" for name in skills if name.startswith("principle-")} <= ids, "missing manual invocation coverage")
-    if config.get("self_contained"):
-        require({"conversation", "commit", "sentence", "tutorial", "translation", "deep-commit", "diagnosis-only", "trivial-edit", "public-api", "concurrent-writes"} <= ids, "missing task fixture coverage")
     routes = {}
     for name, selected in config["routes"].items():
         require(len(selected) == len(set(selected)) and set(selected) <= paths.keys(), f"invalid route: {name}")
@@ -156,28 +149,24 @@ def check(root):
 
 def self_test(root):
     mutations = {
-        "word-budget": ("skills/unslop/SKILL.md", lambda s: s + "\n" + "word " * 1000, "words budget"),
-        "token-budget": ("tests/instruction-budgets/context-budget.json", lambda s: json.dumps(dict(read := json.loads(s), files={**read["files"], "skills/unslop/SKILL.md": {"words": 10000, "tokens": 1}})), "tokens budget"),
+        "word-budget": ("skills/principle-boundary-discipline/SKILL.md", lambda s: s + "\n" + "word " * 1000, "words budget"),
+        "token-budget": ("tests/instruction-budgets/context-budget.json", lambda s: json.dumps(dict(read := json.loads(s), files={**read["files"], "skills/principle-boundary-discipline/SKILL.md": {"words": 10000, "tokens": 1}})), "tokens budget"),
         "description-budget": ("tests/instruction-budgets/context-budget.json", lambda s: json.dumps(dict(json.loads(s), description={"words": 10000, "tokens": 1})), "descriptions exceeds tokens"),
-        "missing-file": ("skills/unslop/SKILL.md", None, "inventory differs"),
-        "broken-link": ("skills/unslop/SKILL.md", lambda s: s + "\n[x](missing.md)\n", "broken local link"),
+        "missing-file": ("skills/principle-boundary-discipline/SKILL.md", None, "inventory differs"),
+        "broken-link": ("skills/principle-boundary-discipline/SKILL.md", lambda s: s + "\n[x](missing.md)\n", "broken local link"),
         "caller-drift": ("tests/instruction-budgets/callers.json", lambda s: "{}", "caller inventory differs"),
         "invalid-fixture": ("tests/instruction-budgets/trigger-cases.json", lambda s: json.dumps([dict(c, loads=["missing.md"]) for c in json.loads(s)]), "fixture loads unknown"),
         "unknown-caller": ("skills/arena/SKILL.md", lambda s: s + "\nUse principle-missing-contract.\n", "unknown principle caller"),
     }
-    if read_json(root / "tests/instruction-budgets/context-budget.json").get("self_contained"):
-        mutations["extra-reference"] = ("skills/unslop/references/catalog.md", lambda s: "Unwanted catalog.\n", "instruction file inventory differs")
-        mutations["implicit-policy"] = ("skills/unslop/agents/openai.yaml", lambda s: s.replace("true", "false"), "implicit invocation disabled")
-        mutations["cross-skill-link"] = ("skills/unslop/SKILL.md", lambda s: s + "\n[x](../technical-writing/SKILL.md)\n", "cross-skill link")
     for name, (relative, mutation, expected) in mutations.items():
         with tempfile.TemporaryDirectory(prefix="rstack-budget-test-") as temporary:
             destination = Path(temporary)
             shutil.copytree(root / "skills", destination / "skills")
             shutil.copytree(root / "tests/instruction-budgets", destination / "tests/instruction-budgets")
-            if name in ("broken-link", "cross-skill-link"):
+            if name == "broken-link":
                 budget_path = destination / "tests/instruction-budgets/context-budget.json"
                 budget = read_json(budget_path)
-                budget["files"]["skills/unslop/SKILL.md"] = {"words": 10000, "tokens": 20000}
+                budget["files"]["skills/principle-boundary-discipline/SKILL.md"] = {"words": 10000, "tokens": 20000}
                 budget_path.write_text(json.dumps(budget))
             target = destination / relative
             if mutation is None:

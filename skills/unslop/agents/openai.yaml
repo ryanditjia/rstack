@@ -1,6 +1,0 @@
-interface:
-  display_name: "Unslop"
-  short_description: "Plain writing with fewer AI patterns"
-  default_prompt: "Use $unslop to edit the supplied text."
-policy:
-  allow_implicit_invocation: true

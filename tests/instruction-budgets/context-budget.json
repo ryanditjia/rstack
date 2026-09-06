@@ -22,9 +22,7 @@
     "principle-separate-before-serializing-shared-state",
     "principle-sequence-verifiable-units",
     "principle-subtract-before-you-add",
-    "principle-type-system-discipline",
-    "technical-writing",
-    "unslop"
+    "principle-type-system-discipline"
   ],
   "files": {
     "skills/principle-boundary-discipline/SKILL.md": {
@@ -110,30 +108,6 @@
     "skills/principle-type-system-discipline/SKILL.md": {
       "words": 250,
       "tokens": 400
-    },
-    "skills/technical-writing/SKILL.md": {
-      "words": 220,
-      "tokens": 360
-    },
-    "skills/unslop/SKILL.md": {
-      "words": 280,
-      "tokens": 450
-    },
-    "skills/technical-writing/references/document-structure.md": {
-      "words": 450,
-      "tokens": 700
-    },
-    "skills/technical-writing/references/procedures.md": {
-      "words": 250,
-      "tokens": 380
-    },
-    "skills/technical-writing/references/global-english.md": {
-      "words": 250,
-      "tokens": 400
-    },
-    "skills/technical-writing/references/deep-review.md": {
-      "words": 350,
-      "tokens": 550
     }
   },
   "description": {
@@ -141,46 +115,16 @@
     "tokens": 500
   },
   "total": {
-    "words": 4050,
-    "tokens": 6440
+    "words": 2250,
+    "tokens": 3600
   },
-  "metadata": [
-    "skills/unslop/agents/openai.yaml",
-    "skills/technical-writing/agents/openai.yaml"
-  ],
+  "metadata": [],
   "routes": {
-    "conversation": [
-      "skills/unslop/SKILL.md"
-    ],
-    "commit": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md"
-    ],
     "typed-engineering": [
-      "skills/unslop/SKILL.md",
       "skills/principle-model-the-domain/SKILL.md",
       "skills/principle-boundary-discipline/SKILL.md",
       "skills/principle-type-system-discipline/SKILL.md",
       "skills/principle-prove-it-works/SKILL.md"
-    ],
-    "tutorial": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md",
-      "skills/technical-writing/references/document-structure.md",
-      "skills/technical-writing/references/procedures.md"
-    ],
-    "translation-review": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md",
-      "skills/technical-writing/references/global-english.md"
-    ],
-    "deep-writing-review": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md",
-      "skills/technical-writing/references/document-structure.md",
-      "skills/technical-writing/references/procedures.md",
-      "skills/technical-writing/references/global-english.md",
-      "skills/technical-writing/references/deep-review.md"
     ]
   },
   "baseline": {
@@ -354,22 +298,6 @@
         "description_tokens": 53,
         "name_tokens": 6,
         "sha256": "f19d9f42bb046dd861863b536b00c7569f2c4d86a06004c02d85e87c239b5778"
-      },
-      "skills/technical-writing/SKILL.md": {
-        "words": 1908,
-        "tokens": 2618,
-        "description_words": 31,
-        "description_tokens": 48,
-        "name_tokens": 2,
-        "sha256": "61bf832c187a1eb0ab5c5ff9bcac41b6386d953ff588ea5b304375bd8f7bea66"
-      },
-      "skills/unslop/SKILL.md": {
-        "words": 981,
-        "tokens": 1619,
-        "description_words": 9,
-        "description_tokens": 11,
-        "name_tokens": 2,
-        "sha256": "181883e539caec8258ec9129e3ba5f133409144a2cbf2aa361158ab94cfc3441"
       }
     }
   },

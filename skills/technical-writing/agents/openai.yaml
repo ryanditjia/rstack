@@ -1,6 +1,0 @@
-interface:
-  display_name: "Technical Writing"
-  short_description: "Technical prose with task-specific guidance"
-  default_prompt: "Use $technical-writing for the requested writing task."
-policy:
-  allow_implicit_invocation: true

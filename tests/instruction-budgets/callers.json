@@ -20,12 +20,6 @@
     "principle-redesign-from-first-principles",
     "principle-separate-before-serializing-shared-state"
   ],
-  "skills/automate-me/SKILL.md": [
-    "unslop"
-  ],
-  "skills/blast-radius/SKILL.md": [
-    "unslop"
-  ],
   "skills/figure-it-out/SKILL.md": [
     "principle-encode-lessons-in-structure",
     "principle-foundational-thinking",
@@ -39,16 +33,11 @@
     "principle-boundary-discipline",
     "principle-type-system-discipline"
   ],
-  "skills/recall/SKILL.md": [
-    "unslop"
-  ],
   "skills/reflect/SKILL.md": [
     "principle-encode-lessons-in-structure"
   ],
   "skills/rmode/SKILL.md": [
-    "principle-model-the-domain",
-    "technical-writing",
-    "unslop"
+    "principle-model-the-domain"
   ],
   "skills/rmode/playbooks/authoring-a-skill.md": [
     "principle-encode-lessons-in-structure"
@@ -57,11 +46,7 @@
     "principle-sequence-verifiable-units"
   ],
   "skills/rmode/playbooks/autopilot-full.md": [
-    "principle-prove-it-works",
-    "unslop"
-  ],
-  "skills/rmode/playbooks/autopilot-stack.md": [
-    "unslop"
+    "principle-prove-it-works"
   ],
   "skills/rmode/playbooks/bug-fix.md": [
     "principle-sequence-verifiable-units"
@@ -76,21 +61,12 @@
     "principle-separate-before-serializing-shared-state",
     "principle-sequence-verifiable-units"
   ],
-  "skills/rmode/playbooks/investigation.md": [
-    "unslop"
-  ],
   "skills/rmode/playbooks/multi-phase-plan.md": [
     "principle-encode-lessons-in-structure",
     "principle-guard-the-context-window",
     "principle-never-block-on-the-human",
     "principle-prove-it-works",
-    "principle-sequence-verifiable-units",
-    "technical-writing",
-    "unslop"
-  ],
-  "skills/rmode/playbooks/opening-a-pr.md": [
-    "technical-writing",
-    "unslop"
+    "principle-sequence-verifiable-units"
   ],
   "skills/rmode/playbooks/orchestrate.md": [
     "principle-encode-lessons-in-structure",
@@ -133,11 +109,7 @@
     "principle-prove-it-works"
   ],
   "skills/show-me-your-work/SKILL.md": [
-    "principle-encode-lessons-in-structure",
-    "unslop"
-  ],
-  "skills/teach/SKILL.md": [
-    "unslop"
+    "principle-encode-lessons-in-structure"
   ],
   "skills/typescript-best-practices/SKILL.md": [
     "principle-boundary-discipline",

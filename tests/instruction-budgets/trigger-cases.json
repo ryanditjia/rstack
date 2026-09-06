@@ -231,105 +231,6 @@
     ]
   },
   {
-    "id": "conversation",
-    "prompt": "What does HTTP 404 mean?",
-    "loads": [
-      "skills/unslop/SKILL.md"
-    ],
-    "forbids": [
-      "skills/technical-writing/SKILL.md",
-      "skills/technical-writing/references/document-structure.md",
-      "skills/technical-writing/references/procedures.md",
-      "skills/technical-writing/references/global-english.md",
-      "skills/technical-writing/references/deep-review.md"
-    ],
-    "observe": [
-      "Answer directly without a technical-writing workflow."
-    ]
-  },
-  {
-    "id": "commit",
-    "prompt": "Write a commit message for this diff.",
-    "loads": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md"
-    ],
-    "forbids": [
-      "skills/technical-writing/references/document-structure.md",
-      "skills/technical-writing/references/procedures.md",
-      "skills/technical-writing/references/global-english.md",
-      "skills/technical-writing/references/deep-review.md"
-    ],
-    "observe": [
-      "Describe the concrete change and material verification."
-    ]
-  },
-  {
-    "id": "sentence",
-    "prompt": "Fix one awkward sentence in this README.",
-    "loads": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md"
-    ],
-    "forbids": [
-      "skills/technical-writing/references/document-structure.md",
-      "skills/technical-writing/references/procedures.md",
-      "skills/technical-writing/references/global-english.md",
-      "skills/technical-writing/references/deep-review.md"
-    ],
-    "observe": [
-      "Make the local correction without a document-wide workflow."
-    ]
-  },
-  {
-    "id": "tutorial",
-    "prompt": "Write a tutorial for configuring the service.",
-    "loads": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md",
-      "skills/technical-writing/references/document-structure.md",
-      "skills/technical-writing/references/procedures.md"
-    ],
-    "forbids": [
-      "skills/technical-writing/references/global-english.md",
-      "skills/technical-writing/references/deep-review.md"
-    ],
-    "observe": [
-      "Explain what the learner builds and the expected result of each step."
-    ]
-  },
-  {
-    "id": "translation",
-    "prompt": "Review this manual for translation ambiguity.",
-    "loads": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md",
-      "skills/technical-writing/references/global-english.md"
-    ],
-    "forbids": [
-      "skills/technical-writing/references/deep-review.md"
-    ],
-    "observe": [
-      "Check modifier scope and ambiguous referents without automatically reading deep review."
-    ]
-  },
-  {
-    "id": "deep-commit",
-    "prompt": "Use $technical-writing deep-review on this commit message.",
-    "loads": [
-      "skills/unslop/SKILL.md",
-      "skills/technical-writing/SKILL.md",
-      "skills/technical-writing/references/deep-review.md"
-    ],
-    "forbids": [
-      "skills/technical-writing/references/document-structure.md",
-      "skills/technical-writing/references/procedures.md"
-    ],
-    "observe": [
-      "Review the message without imposing Diátaxis or a procedure."
-    ]
-  },
-  {
     "id": "diagnosis-only",
     "prompt": "Diagnose why the service fails after restart. Do not change files.",
     "loads": [
@@ -343,9 +244,7 @@
   {
     "id": "trivial-edit",
     "prompt": "Rename this local variable to match its use.",
-    "loads": [
-      "skills/unslop/SKILL.md"
-    ],
+    "loads": [],
     "forbids": [
       "skills/principle-build-the-lever/SKILL.md",
       "skills/principle-exhaust-the-design-space/SKILL.md"

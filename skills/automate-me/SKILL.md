@@ -73,7 +73,7 @@ Use the host's available skill-authoring guidance to author the skill. Placement
 
 ### 5. Iterate on prose
 
-Apply the **unslop** skill and the host's skill-authoring guidelines to every line. Both apply to any agent-read prose, not just skills.
+Apply the host's skill-authoring guidelines to every line of agent-read prose.
 
 Show the draft to the user and take feedback. Expect multiple iterations. Cut ruthlessly; a mode skill is not a manual.
 
@@ -104,5 +104,4 @@ Run a description-optimization loop only if the skill's trigger accuracy turns o
 ## Reference files
 
 - The **rmode** skill: example of the output shape.
-- The **unslop** skill: prose discipline for every line.
 - The host's available skill-authoring workflow: skill authoring process and writing guidelines.
