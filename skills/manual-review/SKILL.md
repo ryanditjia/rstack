@@ -1,6 +1,6 @@
 ---
 name: manual-review
-description: Guide a human through an effective code diff one coherent chunk at a time while they inspect and stage approved changes. Use only when explicitly invoked.
+description: Guide a human through an effective code diff one coherent chunk at a time while they inspect and stage approved changes.
 disable-model-invocation: true
 ---
 

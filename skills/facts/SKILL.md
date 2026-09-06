@@ -1,6 +1,7 @@
 ---
 name: facts
-description: Brief a capable engineer on the few facts and consequences that materially affect the current effort. Use only when the user explicitly invokes facts.
+description: Brief a capable engineer on the few facts and consequences that materially affect the current effort.
+disable-model-invocation: true
 ---
 
 # Facts

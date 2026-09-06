@@ -1,6 +1,7 @@
 ---
 name: recap
-description: Summarize the latest work and current state of this conversation in two or three sentences. Use only when the user explicitly invokes recap.
+description: Summarize the latest work and current state of this conversation in two or three sentences.
+disable-model-invocation: true
 ---
 
 # Recap

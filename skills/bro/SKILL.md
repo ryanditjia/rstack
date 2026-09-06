@@ -1,6 +1,7 @@
 ---
 name: bro
-description: Restate the assistant's previous message in short, ordinary language. Use only when the user explicitly invokes bro or asks for the last answer without jargon.
+description: Restate the assistant's previous message in short, ordinary language.
+disable-model-invocation: true
 ---
 
 # Bro

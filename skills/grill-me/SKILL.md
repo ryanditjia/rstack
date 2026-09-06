@@ -1,6 +1,7 @@
 ---
 name: grill-me
-description: Stress-test a plan, decision, or design through a structured interview. Use when the user explicitly asks to be grilled or wants hidden assumptions exposed before work starts.
+description: Stress-test a plan, decision, or design through a structured interview.
+disable-model-invocation: true
 ---
 
 # Grill me

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Readback"
+  short_description: "Restate a request before work begins"
+  default_prompt: "Use $readback to restate my request clearly before beginning the work."
+
+policy:
+  allow_implicit_invocation: false

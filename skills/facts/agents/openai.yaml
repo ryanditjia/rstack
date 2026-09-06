@@ -1,0 +1,7 @@
+interface:
+  display_name: "Facts"
+  short_description: "Brief an engineer on the facts that matter"
+  default_prompt: "Use $facts to brief an engineer on the few facts and consequences that matter here."
+
+policy:
+  allow_implicit_invocation: false

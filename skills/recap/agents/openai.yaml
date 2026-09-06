@@ -1,0 +1,7 @@
+interface:
+  display_name: "Recap"
+  short_description: "Summarize the latest conversation state"
+  default_prompt: "Use $recap to summarize the latest work and current state of this conversation."
+
+policy:
+  allow_implicit_invocation: false

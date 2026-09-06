@@ -31,10 +31,10 @@ The installer records the source repository. Use `npx -y skills@latest update ui
 ## Entry points
 
 - `rmode` applies the repository-first engineering workflow. It infers the language and toolchain from the project, including Bun, TypeScript, and Go.
-- `grill-me` interviews the user until a plan or decision has no hidden branches.
+- `grill-me` is an explicit control that interviews the user until a plan or decision has no hidden branches.
 - `show-me` explains the current topic with diagrams, code-shape sketches, and focused HTML artifacts.
 - `ui-design` automatically handles requested spacing, alignment, typography, or color adjustments to a named existing interface. Use `$ui-design tune the billing form spacing`, `$ui-design review the checkout flow`, or `$ui-design redesign the analytics overview`. Review reports findings without editing. Review and redesign require an explicit invocation with that mode.
-- `bro`, `facts`, `readback`, and `recap` are explicit conversation controls.
+- `bro`, `facts`, `readback`, and `recap` are explicit conversation controls. `manual-review` is explicit-only as well.
 - `typescript-best-practices` and `go-best-practices` apply language-specific guidance when their source files are in scope.
 - The remaining skills are focused engineering workflows and principles used directly or through `rmode`.
 
@@ -56,7 +56,7 @@ The automatic `unslop` and `technical-writing` skills were removed to reduce bas
 
 Run `./scripts/check-instruction-budgets --self-test --tracked` before publishing. Like the UI validator, it uses Python 3.10+, pinned dependencies, and a private cache under `${XDG_CACHE_HOME:-$HOME/.cache}/rstack/instruction-budgets`. It measures full Markdown files and discovery descriptions with tiktoken 0.14.0 / `o200k_base`, and checks budgets, links, caller inventory, invocation metadata, and negative test cases. Baseline measurements and route definitions live in `tests/instruction-budgets/`. Budgets are ceilings, not targets or billing estimates; installed bodies do not all load every turn.
 
-Trigger fixtures describe expected reads and actions. Deterministic checks validate their structure, not model behavior. Replay them in fresh Codex, Claude Code, and OpenCode sessions and inspect actual reads before claiming routing accuracy. Codex's official `quick_validate.py` accepts the revised writing and principle entrypoints; it rejects rmode's pre-existing Claude Code `disable-model-invocation` field. Preserve that invocation policy when checking the rmode playbooks.
+Trigger fixtures describe expected reads and actions. Deterministic checks validate their structure, not model behavior. Replay them in fresh Codex, Claude Code, and OpenCode sessions and inspect actual reads before claiming routing accuracy. Codex's official `quick_validate.py` rejects the portable `disable-model-invocation` field used by explicit-only skills. Preserve that cross-host policy; Codex and ChatGPT receive the equivalent policy from each skill's `agents/openai.yaml`.
 
 Install from the pushed branch as described above, then resolve installed destinations with `skills list --global --json`. Run `./scripts/check-skill-installation --revision <verified-sha> --installed-root <resolved-skills-directory>` to compare all budgeted skills and rmode, including references, metadata, and unexpected files. Repeat `--installed-root` for distinct agent directories, or use repeated `--skill` flags for individual installs. Updates can affect other agents sharing the canonical directory. To roll back, publish a revert or reinstall the previous verified ref, compare bytes again, and start fresh sessions; already-loaded instructions remain in existing sessions.
 

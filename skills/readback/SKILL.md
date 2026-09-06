@@ -1,6 +1,7 @@
 ---
 name: readback
-description: Restate a long, dictated, ambiguous, or complex user request so the user can confirm alignment before work starts. Use only when explicitly invoked.
+description: Restate a long, dictated, ambiguous, or complex user request so the user can confirm alignment before work starts.
+disable-model-invocation: true
 ---
 
 # Readback
