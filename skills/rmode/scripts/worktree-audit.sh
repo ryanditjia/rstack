@@ -22,9 +22,9 @@ prs=$(mktemp)
 gh pr list --author "@me" --state all --limit 1000 \
 	--json number,state,headRefName 2>/dev/null > "$prs" || echo "[]" > "$prs"
 
-# Optional host transcript directory. Leave unset when the host does not expose
-# transcripts as files. This keeps the audit useful across agent hosts.
-transcripts="${RSTACK_TRANSCRIPTS_DIR:-}"
+# Transcripts dir: the host session store (Cursor: ~/.cursor/projects/<slugified-repo-path>/agent-transcripts).
+slug=$(printf '%s' "$main_wt" | sed 's#^/##; s#/#-#g')
+transcripts="$HOME/.cursor/projects/$slug/agent-transcripts"
 now=$(date +%s)
 
 printf "SIZE\tAGE\tMERGED\tDIRTY\tREMOTE\tPR\tLAST_CHAT\tBUCKET\tWORKTREE\n"

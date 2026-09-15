@@ -1,10 +1,21 @@
 ---
 name: principle-subtract-before-you-add
-description: "Use when adding or reshaping functionality on top of obsolete or redundant structure."
+description: "Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base."
+disable-model-invocation: true
 ---
 
-# subtract before you add
+# Subtract Before You Add
 
-Remove dead code, orphan references, redundant validation, and speculative features before building on them. Delete a reference with no unique content instead of leaving a stub.
+When evolving a system, remove complexity first, then build.
 
-Choose structures for observed use. New persistence, retries, or migration features bring validation and maintenance costs; do not add them without a requirement. Simplify instructions as well as code. Keep the smallest change that delivers the requested result.
+**Why:** Adding to a complex system compounds complexity. Removing first leaves less code, reveals the essential structure, and usually makes the next design obvious. Default to subtraction.
+
+Make simplification a continual investment. Leave the design slightly simpler and more capable behind the same or smaller surface than you found it.
+
+**The pattern:**
+- Sequence removal before construction
+- Cut before you polish (get to the minimum before investing in quality)
+- Design for observed usage, not speculative edge cases
+- No speculative validators, parsers, or guards beyond what the spec demands
+- Simplify prompts (remove redundant instructions, excessive templates)
+- When a reference has no novel content, delete it rather than leaving a stub

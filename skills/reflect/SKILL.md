@@ -1,6 +1,7 @@
 ---
 name: reflect
-description: Review the active conversation from three independent lenses, surface durable learnings, and route each to a concrete skill improvement. Use when the user says reflect.
+description: Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill. Use when the user says reflect.
+disable-model-invocation: true
 ---
 
 # Reflect
@@ -9,52 +10,54 @@ Mine the current conversation for durable learnings, then route them into skill 
 
 ## When to invoke
 
-- The user said "reflect" or "/reflect".
-- A complex task (5+ tool calls) just landed cleanly and the recipe is worth keeping.
-- The agent hit dead ends, found the working path, and the path generalizes.
-- The user corrected the agent's approach mid-task.
-- A non-trivial workflow emerged that isn't captured anywhere.
-
-Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
+Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
 
 ## Process
 
-### 1. Obtain the active conversation
+### 1. Locate the active transcript
 
-Use the host's task-history or transcript interface if it is available and scoped to the active workspace. Do not search unrelated workspaces. If the host does not expose a transcript, write a tight digest from the current conversation and use that as the review input.
+The parent finds its own transcript file before fanning out. The system prompt names the active workspace's session store. Use that source. Do not glob across other workspaces' transcripts. That crosses workspace boundaries and reads private chats from unrelated projects.
 
-### 2. Run three independent reviews
+```bash
+ls -t <session-store>/*.jsonl <session-store>/*/*.jsonl <session-store>/*/subagents/*.jsonl 2>/dev/null | head -10 (when the host stores transcripts as JSONL)
+```
 
-Use parallel delegation when the host supports it; otherwise run the lenses sequentially. Reviewers may use available read-only context tools for cited tickets, chat threads, or traces, but they must not edit files. The coordinating agent applies approved edits. Optional model preferences live in `~/.config/rstack/models.md`; otherwise inherit the current model.
+Three transcript layouts: legacy flat (`<id>.jsonl`), current nested (`<id>/<id>.jsonl`), and subagent (`<parent>/subagents/<child>.jsonl`).
 
-| Lens | `model` | Prompt template |
+For each candidate, read the first JSONL line and check that `message.content[0].text` contains the conversation's opening user prompt. Take the matching path. If no path resolves, write a tight digest of the session and pass that instead.
+
+### 2. Spawn three reviewers in parallel
+
+One message, three `Task` calls, one per reviewer agent, tools enabled. Reviewers need MCP access for context lookups (tickets, chat threads, observability traces referenced in the transcript).
+
+| Lens | Agent | Prompt template |
 |---|---|---|
-| Judgment | `reflect-judgment` when configured | `references/judgment-reviewer.md` |
-| Tooling | `reflect-tooling` when configured | `references/tooling-reviewer.md` |
-| Divergent | `reflect-divergent` when configured | `references/divergent-reviewer.md` |
+| Judgment | `luna` | `references/judgment-reviewer.md` |
+| Tooling | `luna` | `references/tooling-reviewer.md` |
+| Divergent | `luna` | `references/divergent-reviewer.md` |
 
-Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the delegated result body.
+Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `Task` response body.
 
 ### 3. Synthesize
 
-The current thread synthesizes the three reviews using `references/synthesizer.md`. Read all reviewer findings and apply every criterion in that checklist. Do not create a separate synthesizer. Spot-check citations through available read-only tools. Return a structured Accepted / Rejected / Backlog list.
+One `Task` call on `luna`, tools enabled. The synthesizer's quality check includes spot-verifying citations, which can require MCP access. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 
-Sanity-check the Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. Apply this check before edits land. See the **encode-lessons-in-structure** principle skill.
+Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. See the **encode-lessons-in-structure** principle skill.
 
 ### 5. Apply
 
-Before applying any Accepted edit, present the full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org; do not auto-apply.
+Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
 
-Do not file backlog items or make skill edits without the user's approval. After approval, file tracker items only when the user has authorized that external action.
+Backlog items file to whatever devex / backlog tracker your team uses automatically. Only the Accepted list waits for approval.
 
 For each approved Accepted item, follow the Routing field exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): use the host's available skill-authoring guidance and run its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but did not trigger when it should have): use the host's skill-authoring workflow and run its description-optimization loop.
-- `new skill: <kebab-name>`: use the host's skill-authoring workflow. Do not invent the shape ad hoc.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the host's skill-authoring flow and run its draft / test / iterate loop.
+- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to the authoring flow and run its description-optimization loop.
+- `new skill via authoring: <kebab-name>`: hand creation to the authoring flow. Do not invent the shape ad hoc.
 
 If your environment ships a SKILL.md validator, run it on every touched skill before declaring done. Skip this step if it doesn't.
 
@@ -65,4 +68,4 @@ Short list, no preamble:
 - Edits applied: `<skill path>`. What changed, one line each.
 - New skills created: `<skill path>`. One line each (rare).
 - Backlog filed to the devex tracker: `<issue title>` (`<tags>`). One line each.
-- Dropped: one line per rejected finding + reason from synthesis.
+- Dropped: one line per rejected finding + reason from the synthesizer.

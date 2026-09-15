@@ -1,10 +1,18 @@
 ---
 name: principle-laziness-protocol
-description: "Use when a proposed refactor adds indirection, abstractions, or signal threading."
+description: "Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem."
+disable-model-invocation: true
 ---
 
-# laziness protocol
+# Laziness Protocol
 
-Choose the smallest change that reaches the intended result. Prefer deletion and remove pass-through wrappers, duplicated choices, and representation leaks.
+Aim for the most result with the least code and complexity.
 
-Before threading a signal through multiple layers, look for a more direct path. Consolidate decisions at one owner. Flatten layers that add tracing without hiding meaningful complexity; a rich interface can still have a short call chain. Do not add abstractions for imagined future consumers.
+- **Prefer deletion.** When asked to refactor or improve, look for removals before additions.
+- **Maintain a flat call hierarchy.** Avoid deep call chains. A rich interface that hides substantial work is not a deep call chain. If answering a question requires tracing through more than 3 files or layers, flatten it.
+- **Consolidate decisions.** Do not repeat the same choice in several places. Put it behind one source of truth and pass the result as a simple flag.
+- **Minimize the diff.** Make the smallest change that solves the problem. Fewer lines beat "elegant" boilerplate.
+- **Question the threading.** If a task asks you to pass a new signal through types, schemas, pipelines, or similar layers, stop and look for a more direct path.
+- **Sweat the small leaks.** Remove tiny pass-throughs, representation leaks, and duplicated choices before they spread. Small leaks compound into permanent coordination costs.
+
+**The test:** If a human developer would find the code exhausting to maintain, it is a bad solution.

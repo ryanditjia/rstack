@@ -40,7 +40,7 @@ The installer records the source repository. Use `npx -y skills@latest update ui
 
 ## Portability
 
-Skills describe host capabilities instead of assuming one agent product. Pull request stacks are the exception: rstack uses GitHub's native stacked pull requests and prefers the `gh stack` extension. Read `skills/rmode/references/host-capabilities.md` for the fallback contract. Run `scripts/check-portability` before publishing.
+Skills describe host capabilities instead of assuming one agent product. Pull request stacks use GitHub's native stacked pull requests through `gh`, with `gh stack` preferred when present. Work routes through four opencode subagents (`flash`, `luna`, `glm`, `muse`); `setup-rstack` writes each role's model and reasoning effort. Run `scripts/check-portability` before publishing.
 
 ## UI design validation and migration
 
@@ -52,9 +52,7 @@ After UI design validates and is installed, replace broad Impeccable discovery w
 
 ## Principle budgets
 
-The automatic `unslop` and `technical-writing` skills were removed to reduce baseline instruction overhead. All 21 `principle-*` names remain available, including individual installations, with short self-contained instructions.
-
-Run `./scripts/check-instruction-budgets --self-test --tracked` before publishing. Like the UI validator, it uses Python 3.10+, pinned dependencies, and a private cache under `${XDG_CACHE_HOME:-$HOME/.cache}/rstack/instruction-budgets`. It measures full Markdown files and discovery descriptions with tiktoken 0.14.0 / `o200k_base`, and checks budgets, links, caller inventory, invocation metadata, and negative test cases. Baseline measurements and route definitions live in `tests/instruction-budgets/`. Budgets are ceilings, not targets or billing estimates; installed bodies do not all load every turn.
+All 23 `principle-*` names are available, including individual installations. `unslop` and `technical-writing` are installed and routed from `rmode` on prose surfaces. Run `./scripts/check-instruction-budgets --self-test --tracked` before publishing. Like the UI validator, it uses Python 3.10+, pinned dependencies, and a private cache under `${XDG_CACHE_HOME:-$HOME/.cache}/rstack/instruction-budgets`. It measures full Markdown files and discovery descriptions with tiktoken 0.14.0 / `o200k_base`, and checks budgets, links, caller inventory, invocation metadata, and negative test cases. Baseline measurements and route definitions live in `tests/instruction-budgets/`. Budgets are ceilings, not targets or billing estimates; installed bodies do not all load every turn.
 
 Trigger fixtures describe expected reads and actions. Deterministic checks validate their structure, not model behavior. Replay them in fresh Codex, Claude Code, and OpenCode sessions and inspect actual reads before claiming routing accuracy. Codex's official `quick_validate.py` rejects the portable `disable-model-invocation` field used by explicit-only skills. Preserve that cross-host policy; Codex and ChatGPT receive the equivalent policy from each skill's `agents/openai.yaml`.
 

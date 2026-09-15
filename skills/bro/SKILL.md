@@ -1,9 +1,7 @@
 ---
 name: bro
-description: Restate the assistant's previous message in short, ordinary language.
+description: Restate the last message in plain human language, with no jargon.
 disable-model-invocation: true
 ---
 
-# Bro
-
-Rewrite only the assistant's previous message. Use plain words and short sentences. Keep the conclusion, important constraints, and next action. Remove jargon and ceremony. Do not add new analysis or restart the task.
+Restate your last message. Stop using jargon and speak coherently. State it more simply and concisely, like one human talking to another.

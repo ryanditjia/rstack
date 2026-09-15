@@ -1,94 +1,53 @@
 ---
 name: how
-description: "Use for \"how does X work\", code walkthroughs before changing something, and placement / ownership / layering questions (\"where should this live\", \"which package owns this\", \"is this the right layer\"). Explains subsystem architecture, runtime flow, onboarding mental models. Can critique architecture. Use why for motivation."
+description: "Use for \"how does X work\", code walkthroughs before changing something, and placement / ownership / layering questions (\"where should this live\", \"which package owns this\", \"is this the right layer\"). Explains subsystem architecture, runtime flow, onboarding mental models. Use why for motivation."
+disable-model-invocation: true
 ---
 
 # How
 
-Explore the codebase to answer "how does X work?" questions. Produce clear architectural explanations at the level of a senior engineer onboarding onto a subsystem. Enough to build a working mental model, not annotated source code.
+Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
-Two modes:
+## Step 1. Assess Complexity
 
-1. **Explain** (default). Explore the codebase and produce a clear explanation
-2. **Critique.** Explain first, then spawn multiple models to independently identify architectural issues
+If the scope is ambiguous, state your interpretation and explore. The user can redirect.
 
-## Explain mode
+- **Simple** (a single module, a small utility, a narrow question such as "how does function X work"): no explorers. One explainer explores and explains in a single pass. Go to Step 2b.
+- **Complex** (a subsystem spanning multiple files or services, a cross-cutting feature, a full architectural overview): spawn parallel explorers first, then hand off to the explainer. Go to Step 2a.
 
-### Understand the question
+When in doubt, take the simple path.
 
-Parse what the user is asking about:
+## Step 2a. Explore (complex questions only)
 
-- "How does the rate limiter work?", a subsystem
-- "How do we handle billing for on-demand usage?", a feature flow
-- "How is the auth service structured?", an architectural overview
-- "Walk me through what happens when a user submits a form", a runtime trace
+Decompose the question into 2 to 4 exploration angles, each a distinct slice of the subsystem. Spawn all explorers in a single message:
 
-Identify the scope. If ambiguous, state your best-guess interpretation before exploring. Don't ask. Let the user redirect if you're off.
+- `subagent_type`: `flash`
+- read-only, no edits
 
-### Explore
+Each explorer gets the prompt in `references/explorer-prompt.md` with its angle filled in. Then go to Step 3.
 
-Start broad enough to find the relevant code, then follow the implementation. Read the code rather than guessing from names.
+## Step 2b. Direct Explain (simple questions)
 
-For complex questions, cover the data model and state management, request path and enforcement, configuration and metrics infrastructure, and subsystem boundaries.
+Spawn one Task subagent that explores and explains in one pass:
 
-Choose how to investigate based on the workload and available capabilities. Work directly or delegate independent, bounded investigations to subagents or agent threads when useful. When delegating, use `references/explorer-prompt.md` with a specific exploration focus. Delegated work is read-only and returns evidence and unresolved gaps to the current thread.
+- `subagent_type`: `luna`
+- read-only, no edits
 
-During exploration:
-- Start broad: Glob for relevant directories, Grep for key types/interfaces/class names
-- Follow the thread: from an entry point, trace the call chain (callers, callees, data flow, type definitions)
-- Read the actual code, don't guess from file names
-- Stop when it can describe the full path from input to output (or trigger to effect) without hand-waving any step
-- Note things that are surprising, non-obvious, or that a newcomer would get wrong
+Build its prompt from `references/explainer-prompt.md` without the explorer-findings section. Go to Step 4.
 
-The current thread owns the question, reconciles findings, and writes the final explanation. Do not delegate synthesis. Check the code when delegated findings conflict or leave gaps.
+## Step 3. Synthesize (complex questions only)
 
-### Present
+Once all explorers have returned, spawn one Task subagent to synthesize their findings into one explanation:
 
-Present one coherent explanation grounded in the code.
-Use concrete names and mechanisms. Explain the source of complexity, keep simple behavior brief, and state unresolved questions.
-Use `show-me` when a diagram, call tree, or file map would make the explanation clearer than prose.
+- `subagent_type`: `luna`
+- read-only, no edits
 
-### Output Format
+Build its prompt from `references/explainer-prompt.md` with every explorer's findings filled in.
 
-Follow this structure, adapted to the question. Not every section is needed for every question.
+## Step 4. Present
 
-**Overview.** 1-2 paragraphs. What it is, what it does, why it exists. Enough to decide whether to keep reading.
+Present the explainer's output to the user. Light edits for clarity or context from the conversation are fine. Do not substantially rewrite it.
 
-**Key Concepts.** The important types, services, or abstractions. Brief definition of each. Not exhaustive, just the ones needed to understand the rest.
+## Output Format
 
-**How It Works.** The core of the explanation. Walk through the flow: what triggers it, what happens step by step, where data goes, the decision points. Prose, not pseudocode. Reference specific files and functions so the reader can go look, but don't dump code blocks unless a snippet is genuinely necessary.
-
-**Where Things Live.** A brief map of the relevant files/directories. Not every file, just the ones needed to start working in this area.
-
-**Gotchas.** Non-obvious or surprising things that would trip someone up. Historical context that explains why something looks weird. Known sharp edges.
-
-## Critique Mode
-
-Triggered when the user asks for architectural issues, problems, or improvements, not just understanding.
-
-### Step 1. Explain First
-
-Run the full explain flow above. You must understand the architecture before critiquing it.
-
-### Step 2. Spawn Critics
-
-After the explanation is complete, run independent architectural critics. Use the configured `how-critics` list when present; otherwise start with two critics. Add critics only for an unresolved disagreement, a named coverage gap, or an explicit user request. Run them together when parallel delegation is supported.
-
-Each critic is read-only and uses one configured model when model selection is supported. When model selection is unavailable, inherit the current model. If delegation is unavailable, perform a separate review pass and report that independent critique was unavailable.
-
-Read `references/critic-prompt.md` for the prompt template. Each critic gets:
-1. The explanation from Step 1 (so they don't re-explore)
-2. The relevant file paths (so they can read the actual code)
-3. The architectural critique rubric from `references/critique-rubric.md`
-
-### Step 3. Lead Judgment
-
-Same framework as the interrogate skill. You're a pragmatic lead, not an aggregator.
-
-Categorize findings:
-- **Act on.** Architectural problems worth fixing now
-- **Consider.** Real concerns, but the cost/benefit is unclear
-- **Noted.** Valid observations, low priority
-- **Dismissed.** Wrong, missing context, or style preference
-
-Present the explanation first (from Step 1), then the critique verdict below it. The explanation should stand on its own; someone who just wants to understand the system shouldn't wade through critique.
+The explanation uses the sections defined in `references/explainer-prompt.md`, dropping any that do not apply: Overview, Key Concepts, How It Works, Where Things Live, Gotchas.
