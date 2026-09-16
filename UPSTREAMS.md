@@ -15,7 +15,7 @@
 
 ## OpenCode adaptation
 
-- Role agents: `flash` (DeepSeek V4.1 Flash), `luna` (GPT-5.6 Luna), `glm` (GLM-5.3-Flash), and `muse` (Muse Spark 1.3 Contributor) run in `~/.config/opencode/opencode.jsonc`, each at the model's highest reasoning effort. `rmode` routes roles to agents; `setup-rstack` rewrites the mapping.
+- Role agents: `flash` (DeepSeek V4.1 Flash), `luna` (GPT-5.6 Luna), `glm` (GLM-5.3-Flash), and `muse` (Muse Spark 1.3 Contributor) run in `~/.config/opencode/opencode.jsonc`, each at its configured reasoning effort. `rmode` routes roles to agents; `setup-rstack` rewrites the mapping.
 - Skill permissions: opencode ignores `disable-model-invocation`, so explicit-only policies live in the config's `permission.skill` map instead.
 - Tool mapping: Cursor `AskQuestion` becomes opencode's `question` tool, `run_in_background`/`environment` are dropped, `create-skill` becomes the host's skill-authoring guidance, `deslop` becomes `unslop` over the diff, `control-ui`/`control-cli` become host UI and CLI control capabilities, `/loop` becomes the persistent-work mechanism, and Origin merge flows normalize to `gh`.
 

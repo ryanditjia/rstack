@@ -84,7 +84,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-Role agents: `flash` (code and bulk), `luna` (judgment and prose), `glm` and `muse` (panel diversity). Each agent runs its model at its maximum reasoning effort. Spawn every subagent on the agent its role names; `setup-rstack` rewrites the mapping.
+Role agents: `flash` (code and bulk), `luna` (judgment and prose), `glm` and `muse` (panel diversity). Each agent runs its model at its configured reasoning effort; `luna` sits at xhigh so prose does not pay max thinking latency. Spawn every subagent on the agent its role names; `setup-rstack` rewrites the mapping.
 
 **Default role.** Code-writing delegates and ad-hoc helpers use `flash`, including the hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms). Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`, `arena`, `architect`) prescribe their own agent. Respect what the skill prescribes, don't override it.
 
