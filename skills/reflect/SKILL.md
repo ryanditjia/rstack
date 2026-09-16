@@ -32,15 +32,15 @@ One message, three `Task` calls, one per reviewer agent, tools enabled. Reviewer
 
 | Lens | Agent | Prompt template |
 |---|---|---|
-| Judgment | `luna` | `references/judgment-reviewer.md` |
-| Tooling | `luna` | `references/tooling-reviewer.md` |
-| Divergent | `luna` | `references/divergent-reviewer.md` |
+| Judgment | `flash` | `references/judgment-reviewer.md` |
+| Tooling | `flash` | `references/tooling-reviewer.md` |
+| Divergent | `flash` | `references/divergent-reviewer.md` |
 
 Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `Task` response body.
 
 ### 3. Synthesize
 
-One `Task` call on `luna`, tools enabled. The synthesizer's quality check includes spot-verifying citations, which can require MCP access. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+One `Task` call on `flash`, tools enabled. The synthesizer's quality check includes spot-verifying citations, which can require MCP access. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 
