@@ -11,8 +11,8 @@ Configure the role agents rmode routes to and write them into `~/.config/opencod
 
 | Agent | Model | Reasoning | Roles |
 |---|---|---|---|
-| `flash` | `opencode-go/deepseek-v4.1-flash` | max | feature, refactoring, bug-fix, perf-issue, hillclimb, how explorer, why investigators, swarm workers |
-| `luna` | `opencode-go/gpt-5.6-luna` | max | judgment and prose, hardest tasks, how explainer, why synthesizer, reflect judgment, tooling, divergent, and synthesizer |
+| `flash` | `opencode-go/deepseek-v4.1-flash` | max | feature, refactoring, bug-fix, perf-issue, hillclimb, hardest tasks, how explorer, why investigators, swarm workers |
+| `luna` | `opencode-go/gpt-5.6-luna` | max | judgment and prose, how explainer, why synthesizer, reflect judgment, tooling, divergent, and synthesizer |
 | `glm` | `opencode-go/glm-5.3-flash` | max | panel diversity |
 | `muse` | `opencode-go/muse-spark-1.3-contributor` | xhigh | panel diversity |
 
