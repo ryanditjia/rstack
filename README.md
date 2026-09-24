@@ -30,17 +30,34 @@ The installer records the source repository. Use `npx -y skills@latest update ui
 
 ## Entry points
 
-- `rmode` applies the repository-first engineering workflow. It infers the language and toolchain from the project, including Bun, TypeScript, and Go.
+- `rmode` automatically applies a compact engineering baseline for implementation, debugging, code review, and technical specs. It routes to relevant principles and TypeScript guidance as needed.
 - `grill-me` is an explicit control that interviews the user until a plan or decision has no hidden branches.
 - `show-me` explains the current topic with diagrams, code-shape sketches, and focused HTML artifacts.
 - `ui-design` automatically handles requested spacing, alignment, typography, or color adjustments to a named existing interface. Use `$ui-design tune the billing form spacing`, `$ui-design review the checkout flow`, or `$ui-design redesign the analytics overview`. Review reports findings without editing. Review and redesign require an explicit invocation with that mode.
 - `bro`, `facts`, `readback`, and `recap` are explicit conversation controls. `manual-review` is explicit-only as well.
 - `typescript-best-practices` and `go-best-practices` apply language-specific guidance when their source files are in scope.
-- The remaining skills are focused engineering workflows and principles used directly or through `rmode`.
+- The remaining workflow skills can be invoked separately. `rmode` does not automatically activate them.
+
+### Lightweight Codex setup
+
+Install `rmode` together with all 23 `principle-*` skills and `typescript-best-practices`. Other skills are optional. Rmode supports this selected installation without requiring the rest of rstack.
+
+Keep personal preferences and general authorization rules in `~/.codex/AGENTS.md`. The coding baseline lives in rmode; replace duplicated coding guidelines with this activation rule:
+
+```markdown
+For implementation, debugging, code review, and implementation plans or technical
+specs, read `~/.agents/skills/rmode/SKILL.md` and use the relevant principles.
+Skip it for ordinary conversation and read-only explanations unless explicitly
+requested. Reuse it while its instructions remain in context.
+```
+
+Rmode allows implicit invocation in `agents/openai.yaml`; the principle leaves and TypeScript skill retain their explicit-only discovery policy. Rmode reads those files by relative path when relevant. Its effort policy qualifies upstream procedures so a principle does not automatically trigger prototypes, scripts, subagents, or more verification. Routing is model-followed guidance, not an executable classifier.
+
+The rmode package contains only `SKILL.md` and `agents/openai.yaml`. Its former playbooks, scripts, and workflow references have been removed. `setup-rstack` configures OpenCode role agents for optional workflows; it does not select the Codex model or affect lightweight rmode.
 
 ## Portability
 
-Skills describe host capabilities instead of assuming one agent product. Pull request stacks use GitHub's native stacked pull requests through `gh`, with `gh stack` preferred when present. Work routes through four opencode subagents (`flash`, `luna`, `glm`, `muse`); `setup-rstack` writes each role's model and reasoning effort. Run `scripts/check-portability` before publishing.
+Skills describe host capabilities instead of assuming one agent product. The optional full workflows use GitHub's native stacked pull requests through `gh`, with `gh stack` preferred when present. Those workflows route through four opencode subagents (`flash`, `luna`, `glm`, `muse`); `setup-rstack` writes each role's model and reasoning effort. Rmode does not require those workflows or agents. Run `scripts/check-portability` before publishing.
 
 ## UI design validation and migration
 
@@ -52,7 +69,7 @@ After UI design validates and is installed, replace broad Impeccable discovery w
 
 ## Principle budgets
 
-All 23 `principle-*` names are available, including individual installations. `unslop` and `technical-writing` are installed and routed from `rmode` on prose surfaces. Run `./scripts/check-instruction-budgets --self-test --tracked` before publishing. Like the UI validator, it uses Python 3.10+, pinned dependencies, and a private cache under `${XDG_CACHE_HOME:-$HOME/.cache}/rstack/instruction-budgets`. It measures full Markdown files and discovery descriptions with tiktoken 0.14.0 / `o200k_base`, and checks budgets, links, caller inventory, invocation metadata, and negative test cases. Baseline measurements and route definitions live in `tests/instruction-budgets/`. Budgets are ceilings, not targets or billing estimates; installed bodies do not all load every turn.
+All 23 `principle-*` names are available, including individual installations. Rmode selects principle details conditionally; `unslop` and `technical-writing` are optional separate workflows. Run `./scripts/check-instruction-budgets --self-test --tracked` before publishing. Like the UI validator, it uses Python 3.10+, pinned dependencies, and a private cache under `${XDG_CACHE_HOME:-$HOME/.cache}/rstack/instruction-budgets`. It measures full Markdown files and discovery descriptions with tiktoken 0.14.0 / `o200k_base`, and checks budgets, links, caller inventory, invocation metadata, and negative test cases. Baseline measurements and route definitions live in `tests/instruction-budgets/`. The baseline covers the 23 restored upstream principles at `8c3d19d`; the older compressed 21-skill budgets no longer describe this package. Rmode has a separate entry-point budget, invocation-policy check, and exact two-file package check. Budgets are ceilings, not targets or billing estimates; installed bodies do not all load every turn.
 
 Trigger fixtures describe expected reads and actions. Deterministic checks validate their structure, not model behavior. Replay them in fresh Codex, Claude Code, and OpenCode sessions and inspect actual reads before claiming routing accuracy. Codex's official `quick_validate.py` rejects the portable `disable-model-invocation` field used by explicit-only skills. Preserve that cross-host policy; Codex and ChatGPT receive the equivalent policy from each skill's `agents/openai.yaml`.
 

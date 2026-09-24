@@ -2,6 +2,7 @@
   "encoding": "o200k_base",
   "tokenizer_version": "0.14.0",
   "skills": [
+    "principle-attack-the-premise",
     "principle-boundary-discipline",
     "principle-build-the-lever",
     "principle-encode-lessons-in-structure",
@@ -22,103 +23,136 @@
     "principle-separate-before-serializing-shared-state",
     "principle-sequence-verifiable-units",
     "principle-subtract-before-you-add",
+    "principle-test-behavior-not-implementation",
     "principle-type-system-discipline"
   ],
   "files": {
+    "skills/principle-attack-the-premise/SKILL.md": {
+      "words": 300,
+      "tokens": 500
+    },
     "skills/principle-boundary-discipline/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 300,
+      "tokens": 400
     },
     "skills/principle-build-the-lever/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 400,
+      "tokens": 600
     },
     "skills/principle-encode-lessons-in-structure/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 350,
+      "tokens": 500
     },
     "skills/principle-exhaust-the-design-space/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 200,
+      "tokens": 300
     },
     "skills/principle-experience-first/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 200,
+      "tokens": 300
     },
     "skills/principle-fix-root-causes/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 200,
+      "tokens": 300
     },
     "skills/principle-foundational-thinking/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 250,
+      "tokens": 300
     },
     "skills/principle-guard-the-context-window/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 200,
+      "tokens": 300
     },
     "skills/principle-laziness-protocol/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 250,
+      "tokens": 300
     },
     "skills/principle-make-operations-idempotent/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 250,
+      "tokens": 300
     },
     "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 200,
+      "tokens": 300
     },
     "skills/principle-minimize-reader-load/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 350,
+      "tokens": 500
     },
     "skills/principle-model-the-domain/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 350,
+      "tokens": 500
     },
     "skills/principle-never-block-on-the-human/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 200,
+      "tokens": 300
     },
     "skills/principle-outcome-oriented-execution/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 150,
+      "tokens": 300
     },
     "skills/principle-prove-it-works/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 300,
+      "tokens": 500
     },
     "skills/principle-redesign-from-first-principles/SKILL.md": {
-      "words": 100,
-      "tokens": 160
+      "words": 150,
+      "tokens": 200
     },
     "skills/principle-separate-before-serializing-shared-state/SKILL.md": {
-      "words": 100,
-      "tokens": 160
-    },
-    "skills/principle-sequence-verifiable-units/SKILL.md": {
-      "words": 100,
-      "tokens": 160
-    },
-    "skills/principle-subtract-before-you-add/SKILL.md": {
-      "words": 100,
-      "tokens": 160
-    },
-    "skills/principle-type-system-discipline/SKILL.md": {
       "words": 250,
       "tokens": 400
+    },
+    "skills/principle-sequence-verifiable-units/SKILL.md": {
+      "words": 350,
+      "tokens": 500
+    },
+    "skills/principle-subtract-before-you-add/SKILL.md": {
+      "words": 200,
+      "tokens": 300
+    },
+    "skills/principle-test-behavior-not-implementation/SKILL.md": {
+      "words": 400,
+      "tokens": 700
+    },
+    "skills/principle-type-system-discipline/SKILL.md": {
+      "words": 800,
+      "tokens": 1100
     }
   },
   "description": {
-    "words": 360,
-    "tokens": 500
+    "words": 750,
+    "tokens": 1000
   },
   "total": {
-    "words": 2250,
-    "tokens": 3600
+    "words": 6500,
+    "tokens": 9000
   },
-  "metadata": [],
+  "metadata": [
+    "skills/principle-attack-the-premise/agents/openai.yaml",
+    "skills/principle-boundary-discipline/agents/openai.yaml",
+    "skills/principle-build-the-lever/agents/openai.yaml",
+    "skills/principle-encode-lessons-in-structure/agents/openai.yaml",
+    "skills/principle-exhaust-the-design-space/agents/openai.yaml",
+    "skills/principle-experience-first/agents/openai.yaml",
+    "skills/principle-fix-root-causes/agents/openai.yaml",
+    "skills/principle-foundational-thinking/agents/openai.yaml",
+    "skills/principle-guard-the-context-window/agents/openai.yaml",
+    "skills/principle-laziness-protocol/agents/openai.yaml",
+    "skills/principle-make-operations-idempotent/agents/openai.yaml",
+    "skills/principle-migrate-callers-then-delete-legacy-apis/agents/openai.yaml",
+    "skills/principle-minimize-reader-load/agents/openai.yaml",
+    "skills/principle-model-the-domain/agents/openai.yaml",
+    "skills/principle-never-block-on-the-human/agents/openai.yaml",
+    "skills/principle-outcome-oriented-execution/agents/openai.yaml",
+    "skills/principle-prove-it-works/agents/openai.yaml",
+    "skills/principle-redesign-from-first-principles/agents/openai.yaml",
+    "skills/principle-separate-before-serializing-shared-state/agents/openai.yaml",
+    "skills/principle-sequence-verifiable-units/agents/openai.yaml",
+    "skills/principle-subtract-before-you-add/agents/openai.yaml",
+    "skills/principle-test-behavior-not-implementation/agents/openai.yaml",
+    "skills/principle-type-system-discipline/agents/openai.yaml"
+  ],
   "routes": {
     "typed-engineering": [
       "skills/principle-model-the-domain/SKILL.md",
@@ -128,178 +162,198 @@
     ]
   },
   "baseline": {
-    "revision": "4684b5d",
+    "revision": "8c3d19d7b049908e37107eccd33683a425c937ec",
     "tokenizer": "tiktoken 0.14.0, o200k_base",
     "files": {
+      "skills/principle-attack-the-premise/SKILL.md": {
+        "words": 300,
+        "tokens": 438,
+        "description_words": 40,
+        "description_tokens": 43,
+        "name_tokens": 7,
+        "sha256": "c87bd7536f772f8a403ad8155535ee17a1bbec9a353156693eb3bb1520c87ae3"
+      },
       "skills/principle-boundary-discipline/SKILL.md": {
-        "words": 278,
-        "tokens": 378,
+        "words": 274,
+        "tokens": 379,
         "description_words": 29,
         "description_tokens": 39,
         "name_tokens": 6,
-        "sha256": "3fee7ce89a74a9911e769e38b39f4505887b06842c36902e7a1733a4e5a07576"
+        "sha256": "62ac2862c2caa22dd14531f51c9c6bb445ceb198ca98a687e25b4d47c1f10a28"
       },
       "skills/principle-build-the-lever/SKILL.md": {
-        "words": 424,
-        "tokens": 606,
+        "words": 393,
+        "tokens": 573,
         "description_words": 45,
         "description_tokens": 64,
         "name_tokens": 6,
-        "sha256": "de717c17ba655f299dab4232ce8a6ed4d226e8f5700ba89784e8292f1b9df40a"
+        "sha256": "458b269eab8e95a1573276955312f7d2a13ae8599879a9efc748248f6bc34b56"
       },
       "skills/principle-encode-lessons-in-structure/SKILL.md": {
-        "words": 343,
+        "words": 340,
         "tokens": 467,
         "description_words": 33,
         "description_tokens": 39,
         "name_tokens": 9,
-        "sha256": "9ab0e6d979982260ead6410e51709fba4e37add615871993ff8a4725b5f2af3d"
+        "sha256": "77044c83a9ac6df78fc643887ea5f1f11f082adaf14b717c060cdaed03cce863"
       },
       "skills/principle-exhaust-the-design-space/SKILL.md": {
-        "words": 169,
-        "tokens": 212,
-        "description_words": 33,
-        "description_tokens": 37,
+        "words": 170,
+        "tokens": 223,
+        "description_words": 27,
+        "description_tokens": 33,
         "name_tokens": 7,
-        "sha256": "5d58b649f6943a1becfcfe6020cee691783245678e489f18c7f0477d344cbb4a"
+        "sha256": "8583310d7297b7823d75494faa57b003564d436807febecdecbd8321abe5cf6e"
       },
       "skills/principle-experience-first/SKILL.md": {
-        "words": 199,
-        "tokens": 260,
+        "words": 178,
+        "tokens": 238,
         "description_words": 23,
         "description_tokens": 31,
         "name_tokens": 5,
-        "sha256": "f8f61e0b0c215988b3199ae4b1f9e16c9443e5580906594feb23d48b12d3dafe"
+        "sha256": "58903529d733b1c1a7c9ccf127d45ef3c7d0d9f0b81164a4dc6b80efe6f2912b"
       },
       "skills/principle-fix-root-causes/SKILL.md": {
-        "words": 218,
-        "tokens": 286,
+        "words": 200,
+        "tokens": 270,
         "description_words": 28,
         "description_tokens": 34,
         "name_tokens": 7,
-        "sha256": "1f88767ab08caffa8fda3335cf7cc79ba66412d19cd5c4dc865c95df000b7a1e"
+        "sha256": "ba4cd38da1dcc8fe5432feb64457cba95594736a9b21b2ebf8f8c52aee068707"
       },
       "skills/principle-foundational-thinking/SKILL.md": {
-        "words": 243,
-        "tokens": 331,
+        "words": 207,
+        "tokens": 290,
         "description_words": 28,
         "description_tokens": 36,
         "name_tokens": 5,
-        "sha256": "64aec61f4d1f9f977662b3b90abac09865eaa1f80ee61da85c15adaa8dc84ae0"
+        "sha256": "864b827e8199d946ce58beca0f89c4ed4099ed6e426fb698a3aaa45de2a9eea2"
       },
       "skills/principle-guard-the-context-window/SKILL.md": {
-        "words": 169,
-        "tokens": 235,
+        "words": 158,
+        "tokens": 228,
         "description_words": 27,
         "description_tokens": 38,
         "name_tokens": 7,
-        "sha256": "17301d7bd38c98b4ea73d9390a4565c5623b06f454a71b568adb64589653f396"
+        "sha256": "9f60e2c79b35f865cb103462f9128c6760b70f603475d1e535e5930f61840f66"
       },
       "skills/principle-laziness-protocol/SKILL.md": {
-        "words": 233,
-        "tokens": 318,
+        "words": 213,
+        "tokens": 295,
         "description_words": 26,
         "description_tokens": 34,
         "name_tokens": 7,
-        "sha256": "02cd2c474b9ceec8611ce9bd8861eb4e5129aa324223d8b6b0e1a1d847347585"
+        "sha256": "9006579e9e3f33955d17569733db688ae65f22577dc3b21803d219a5a8445aff"
       },
       "skills/principle-make-operations-idempotent/SKILL.md": {
-        "words": 202,
-        "tokens": 283,
+        "words": 204,
+        "tokens": 291,
         "description_words": 27,
         "description_tokens": 36,
         "name_tokens": 9,
-        "sha256": "6ff9aed07af7c3e57c4ef247f1a236b6ffdd1b294732cfedb9845413395d659c"
+        "sha256": "540738217c3da7bf513b9886924ad6a2bc77e58be867f5bd2e1831c74bf2ce70"
       },
       "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md": {
-        "words": 169,
-        "tokens": 222,
+        "words": 170,
+        "tokens": 229,
         "description_words": 28,
         "description_tokens": 31,
         "name_tokens": 13,
-        "sha256": "9a91f35639fabff432f1ed8b79c2a4249d53a0a4eb7019c1aa2b8855224f27ea"
+        "sha256": "09978915a4a11990cf0a9a02d9c08cc59e0b7a04c5c24b83aa560fbe4146f75b"
       },
       "skills/principle-minimize-reader-load/SKILL.md": {
         "words": 325,
-        "tokens": 437,
+        "tokens": 443,
         "description_words": 30,
         "description_tokens": 37,
         "name_tokens": 6,
-        "sha256": "02f1bf8431cb21e5011d9cf5f426f9d052167564dcb02eac0883965ec2494772"
+        "sha256": "42551c5dc74cd578163c148da552db3ff67d29b78600ef216bfd311fb828fe69"
       },
       "skills/principle-model-the-domain/SKILL.md": {
-        "words": 329,
+        "words": 323,
         "tokens": 413,
         "description_words": 28,
         "description_tokens": 33,
         "name_tokens": 5,
-        "sha256": "5c3c1a3db2af1452a742b4c3d50ef34118e0ea2cf90c6042749abe2abc31a0e0"
+        "sha256": "bbadbb9a723fac3f76e782ae45665eb94058ec10993e4bae36d4dc6b0e4eac07"
       },
       "skills/principle-never-block-on-the-human/SKILL.md": {
-        "words": 229,
-        "tokens": 340,
+        "words": 190,
+        "tokens": 294,
         "description_words": 28,
         "description_tokens": 37,
         "name_tokens": 8,
-        "sha256": "f543460518bfb74d3e7edbfd5348271e5ed7b2db40a8cbd7305d7086a3ef98ce"
+        "sha256": "d82bce9ab9193249d1ec0d514202d89602f0fd3d312174d622c2dd222bae5a2e"
       },
       "skills/principle-outcome-oriented-execution/SKILL.md": {
-        "words": 142,
-        "tokens": 194,
+        "words": 144,
+        "tokens": 202,
         "description_words": 24,
         "description_tokens": 31,
         "name_tokens": 7,
-        "sha256": "f2fe80adf2da1e1e15aa1d1b465f1cb963acb05114be9032a89ae6ead06df288"
+        "sha256": "beedcaed75572a6a1662d47f16da203c2bd2c9dbffbbd678d4ba187d67b7e670"
       },
       "skills/principle-prove-it-works/SKILL.md": {
-        "words": 315,
-        "tokens": 431,
+        "words": 286,
+        "tokens": 403,
         "description_words": 30,
         "description_tokens": 42,
         "name_tokens": 7,
-        "sha256": "124cebf0527fb24bd37be21dbbf4447f9ddce5c058872cfce047e043bbf70bfd"
+        "sha256": "ae13d287984a5864312b6286899d4ee2b60f8272b5e5e8fcc586a7c3ea51020b"
       },
       "skills/principle-redesign-from-first-principles/SKILL.md": {
-        "words": 141,
-        "tokens": 181,
+        "words": 126,
+        "tokens": 169,
         "description_words": 28,
         "description_tokens": 33,
         "name_tokens": 9,
-        "sha256": "bd51e67f78eefa6af7e1d12cd15dba9e55fd9ab96f7942163fe5bacc36b79941"
+        "sha256": "a1c7fd0a96b40e12a74bceb0e6bb20a9666dd844dcabfb624acb27da23b929fe"
       },
       "skills/principle-separate-before-serializing-shared-state/SKILL.md": {
-        "words": 228,
-        "tokens": 335,
+        "words": 219,
+        "tokens": 327,
         "description_words": 30,
         "description_tokens": 38,
         "name_tokens": 11,
-        "sha256": "d3fc7b258718c845ec880e14a0ef36fab59a6a4c1ccb16d811a2bcb1f46e5489"
+        "sha256": "05294b40448e927c5da1c7b6f5c6b9fed3744637e3833d2d948b9154a9dd00bb"
       },
       "skills/principle-sequence-verifiable-units/SKILL.md": {
-        "words": 387,
-        "tokens": 494,
+        "words": 340,
+        "tokens": 444,
         "description_words": 46,
         "description_tokens": 59,
         "name_tokens": 8,
-        "sha256": "40de5b6d82a408423fffcc9553c73aaf278bd6a1ba24659a4e56174726374bcb"
+        "sha256": "761390804ee36c32f5338d8db47ec54463d40ff96dbb296dfafabcd5f2593eec"
       },
       "skills/principle-subtract-before-you-add/SKILL.md": {
-        "words": 191,
-        "tokens": 253,
+        "words": 158,
+        "tokens": 214,
         "description_words": 23,
         "description_tokens": 31,
         "name_tokens": 7,
-        "sha256": "6382fdd1225c9564f3edd6c27aa112a7dae190992673ba3a7f00c58cec284254"
+        "sha256": "a983a50e732c1ed315eba7aaf47a61329e31c4794eb1ab9d25d9945265b31e03"
+      },
+      "skills/principle-test-behavior-not-implementation/SKILL.md": {
+        "words": 379,
+        "tokens": 605,
+        "description_words": 47,
+        "description_tokens": 53,
+        "name_tokens": 9,
+        "sha256": "87e40efe4e486f7ea639d2ed1fc0abe6c93b8fd0e89a81218086909d2470a52e"
       },
       "skills/principle-type-system-discipline/SKILL.md": {
-        "words": 800,
-        "tokens": 1097,
+        "words": 773,
+        "tokens": 1070,
         "description_words": 39,
         "description_tokens": 53,
         "name_tokens": 6,
-        "sha256": "f19d9f42bb046dd861863b536b00c7569f2c4d86a06004c02d85e87c239b5778"
+        "sha256": "c83da8031ffb4c86410030d3e261f659598fca2b7d8158fd9dc269d70a3a025e"
       }
     }
   },
-  "self_contained": true
+  "self_contained": false,
+  "rmode": {
+    "words": 1000,
+    "tokens": 2000
+  }
 }

@@ -33,7 +33,7 @@ Write one clear paragraph. If you're unsure about the intent, ask the user befor
 
 ## Step 3, Spawn Reviewers
 
-Launch all reviewers in a single message using the Task tool. Use the `interrogate reviewers` list from the rmode Subagents section, one reviewer per entry, extending or shrinking the Reviewer A/B/C/D labels below to the configured entry count. Otherwise use the table defaults.
+Launch all reviewers in a single message using the Task tool. Use the configured OpenCode role agents, one reviewer per entry, extending or shrinking the Reviewer A/B/C/D labels below to the configured entry count. Use the table below as defaults.
 
 | Subagent | Default agent |
 |----------|---------------|
@@ -43,7 +43,7 @@ Launch all reviewers in a single message using the Task tool. Use the `interroga
 | Reviewer D | `luna` |
 
 For each reviewer:
-- `subagent_type`: the reviewer's agent
+- `agent`: the reviewer's agent
 - read-only for review
 
 If an agent does not resolve when you try to spawn the subagent, fall back to `flash` and open a separate PR to update the configured entry or default table. Do not block the review on the agent issue.

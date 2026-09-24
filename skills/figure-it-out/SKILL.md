@@ -10,7 +10,7 @@ When the task matches no playbook, design one. The deliverable before any code i
 
 ## Start
 
-Open a todolist whose first item is to read the Principles section of the **rmode** skill. Then add the phases below as todos.
+Open a todolist whose first item is to read the Additional principles section of the **rmode** skill. Then add the phases below as todos.
 
 ## Phase A: Frame
 

@@ -75,6 +75,11 @@ def check(root):
     require(set(paths) == set(config["files"]), "instruction file inventory differs")
     metadata_paths = {str(p.relative_to(root)) for name in skills for p in (root / "skills" / name).rglob("*.yaml")}
     require(metadata_paths == set(config["metadata"]), "metadata inventory differs")
+    entrypoint = root / "skills/rmode"
+    require({str(p.relative_to(entrypoint)) for p in entrypoint.rglob("*") if p.is_file()} == {"SKILL.md", "agents/openai.yaml"}, "unexpected rmode package files")
+    entrypoint_metrics = measure((entrypoint / "SKILL.md").read_text(), encoder)
+    limits(entrypoint_metrics, config["rmode"], "rmode")
+    require(yaml.safe_load((entrypoint / "agents/openai.yaml").read_text()).get("policy", {}).get("allow_implicit_invocation") is True, "rmode implicit invocation disabled")
     metrics = {}
     descriptions = {"words": 0, "tokens": 0}
     name_tokens = 0
@@ -111,12 +116,7 @@ def check(root):
     limits(total, config["total"], "total instructions")
     for relative in metadata_paths:
         agent = yaml.safe_load((root / relative).read_text())
-        skill_name = relative.split("/")[1]
-        require(agent.get("policy", {}).get("allow_implicit_invocation") is True, f"implicit invocation disabled: {relative}")
-        interface = agent.get("interface", {})
-        require(isinstance(interface.get("display_name"), str), f"missing display name: {relative}")
-        require(25 <= len(interface.get("short_description", "")) <= 64, f"invalid short description: {relative}")
-        require(f"${skill_name}" in interface.get("default_prompt", ""), f"invalid default prompt: {relative}")
+        require(agent.get("policy", {}).get("allow_implicit_invocation") is False, f"implicit invocation enabled: {relative}")
     callers = {}
     for path in sorted((root / "skills").rglob("*.md")):
         relative = str(path.relative_to(root))
@@ -144,11 +144,14 @@ def check(root):
     for name, selected in config["routes"].items():
         require(len(selected) == len(set(selected)) and set(selected) <= paths.keys(), f"invalid route: {name}")
         routes[name] = {unit: sum(metrics[p][unit] for p in selected) for unit in ("words", "tokens")}
-    return {"tokenizer": f"tiktoken {tiktoken.__version__}, {config['encoding']}", "files": metrics, "descriptions": descriptions, "name_tokens": name_tokens, "total": total, "routes": routes, "caller_files": len(callers), "structural_fixtures": len(cases), "behavioral_replay": "not performed"}
+    return {"tokenizer": f"tiktoken {tiktoken.__version__}, {config['encoding']}", "rmode": entrypoint_metrics, "files": metrics, "descriptions": descriptions, "name_tokens": name_tokens, "total": total, "routes": routes, "caller_files": len(callers), "structural_fixtures": len(cases), "behavioral_replay": "not performed"}
 
 
 def self_test(root):
     mutations = {
+        "unexpected-rmode-file": ("skills/rmode/playbooks/legacy.md", lambda s: "Unused workflow", "unexpected rmode package files"),
+        "rmode-budget": ("skills/rmode/SKILL.md", lambda s: s + "\n" + "word " * 1000, "rmode exceeds words budget"),
+        "rmode-invocation": ("skills/rmode/agents/openai.yaml", lambda s: s.replace("true", "false"), "rmode implicit invocation disabled"),
         "word-budget": ("skills/principle-boundary-discipline/SKILL.md", lambda s: s + "\n" + "word " * 1000, "words budget"),
         "token-budget": ("tests/instruction-budgets/context-budget.json", lambda s: json.dumps(dict(read := json.loads(s), files={**read["files"], "skills/principle-boundary-discipline/SKILL.md": {"words": 10000, "tokens": 1}})), "tokens budget"),
         "description-budget": ("tests/instruction-budgets/context-budget.json", lambda s: json.dumps(dict(json.loads(s), description={"words": 10000, "tokens": 1})), "descriptions exceeds tokens"),

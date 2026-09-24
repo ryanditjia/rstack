@@ -12,10 +12,13 @@
 - Review note: pstack 0.14.4 added `grokbot/make-bot-ui`. Rstack does not port it because it depends on Cursor Grok Bot routines, Cursor's secret-request flow, `update_state`, and a local Tailscale host. The supported Agent Skills hosts do not share those capabilities.
 - Review note: pstack 0.14.6 made its PR workflows forge-neutral and added schema-first TypeScript boundary guidance. Rstack ports the workflow changes as a GitHub-native policy that uses `gh stack`, with a connected-GitHub fallback that preserves the same base-branch chain. It does not port Cursor model defaults or Cursor-only skill frontmatter.
 - Review note: pstack 0.14.7 only added Cursor plugin packaging and a logo. Rstack has no Cursor plugin manifest, so no logo asset is imported.
+- Review note: pstack 0.15.3 removed redundant pattern prose from `principle-prove-it-works` and `principle-sequence-verifiable-units`; those two skill bodies are synced. Other changes after the recorded import remain outside this selected-skill update.
+
+- Local adaptation (2026-09-23): rewrote `rmode` as an automatically selected coding baseline and conditional router for all 23 principle leaves plus TypeScript guidance. It blends the user's coding guidelines with pstack, qualifies costly upstream procedures with proportional effort and request scope, and removes automatic routes into full workflows. The obsolete bundled playbooks, scripts, and workflow references were removed on 2026-09-24. Principle bodies remain upstream-derived.
 
 ## OpenCode adaptation
 
-- Role agents: `flash` (DeepSeek V4.1 Flash), `luna` (GPT-5.6 Luna), `glm` (GLM-5.3-Flash), and `muse` (Muse Spark 1.3 Contributor) run in `~/.config/opencode/opencode.jsonc`, each at its configured reasoning effort. `rmode` routes roles to agents; `setup-rstack` rewrites the mapping.
+- Role agents: `flash` (DeepSeek V4.1 Flash), `luna` (GPT-5.6 Luna), `glm` (GLM-5.3-Flash), and `muse` (Muse Spark 1.3 Contributor) run in `~/.config/opencode/opencode.jsonc`, each at its configured reasoning effort. The optional full workflow skills route roles to agents; `setup-rstack` rewrites the mapping. The lightweight `rmode` entry point does not use this roster.
 - Skill permissions: opencode ignores `disable-model-invocation`, so explicit-only policies live in the config's `permission.skill` map instead.
 - Tool mapping: Cursor `AskQuestion` becomes opencode's `question` tool, `run_in_background`/`environment` are dropped, `create-skill` becomes the host's skill-authoring guidance, `deslop` becomes `unslop` over the diff, `control-ui`/`control-cli` become host UI and CLI control capabilities, `/loop` becomes the persistent-work mechanism, and Origin merge flows normalize to `gh`.
 

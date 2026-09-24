@@ -274,5 +274,27 @@
     "observe": [
       "Consider separate write targets before serializing a truly shared object."
     ]
+  },
+  {
+    "id": "manual-principle-attack-the-premise",
+    "prompt": "Use $principle-attack-the-premise. Two fixes assuming equal worker load failed the same latency gate. Diagnose the shared premise.",
+    "loads": [
+      "skills/principle-attack-the-premise/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "State the shared premise and measure the distribution across actors before choosing another fix."
+    ]
+  },
+  {
+    "id": "manual-principle-test-behavior-not-implementation",
+    "prompt": "Use $principle-test-behavior-not-implementation. Review a test that only asserts a mocked helper was called.",
+    "loads": [
+      "skills/principle-test-behavior-not-implementation/SKILL.md"
+    ],
+    "forbids": [],
+    "observe": [
+      "Exercise observable behavior and assert a concrete expected result instead of merely confirming the call."
+    ]
   }
 ]
