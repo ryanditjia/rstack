@@ -34,7 +34,7 @@ The installer records the source repository. Use `npx -y skills@latest update ui
 - `grill-me` is an explicit control that interviews the user until a plan or decision has no hidden branches.
 - `show-me` explains the current topic with diagrams, code-shape sketches, and focused HTML artifacts.
 - `ui-design` automatically handles requested spacing, alignment, typography, or color adjustments to a named existing interface. Use `$ui-design tune the billing form spacing`, `$ui-design review the checkout flow`, or `$ui-design redesign the analytics overview`. Review reports findings without editing. Review and redesign require an explicit invocation with that mode.
-- `bro`, `facts`, `readback`, and `recap` are explicit conversation controls. `manual-review` is explicit-only as well.
+- `bro`, `facts`, `readback`, `restate`, and `recap` are explicit conversation controls. `manual-review` is explicit-only as well.
 - `typescript-best-practices` and `go-best-practices` apply language-specific guidance when their source files are in scope.
 - The remaining workflow skills can be invoked separately. `rmode` does not automatically activate them.
 
