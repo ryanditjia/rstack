@@ -6,9 +6,4 @@ disable-model-invocation: true
 
 # Restate
 
-In your own words, state:
-
-- what you understand the user's goals to be; and
-- what underlying problem they are trying to solve.
-
-Synthesize the intent rather than repeating the request sentence by sentence. Distinguish explicit goals from reasonable inferences, and note any material ambiguity without turning the response into an interview. Do not begin the work, propose a solution, or add advice unless the user asks for it.
+restate in your own words what you think my goals are and what the problem i'm trying to solve is
