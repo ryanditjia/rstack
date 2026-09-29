@@ -12,6 +12,7 @@ Apply the baseline below, then read principle details only when they would chang
 - **Keep it simple.** Choose data shapes around actual invariants and access patterns. Make the smallest coherent change that meets the requirement. Avoid speculative features, single-use abstractions, unnecessary configuration, and checks for impossible states.
 - **Keep changes surgical.** Match existing style. Every changed line should serve the request. Remove what your changes make unused; mention unrelated dead code rather than deleting it.
 - **Verify the outcome.** For multi-step work, give a brief plan with meaningful checks. Reproduce bugs before fixing them; check behavior before and after refactors. Test observable outcomes, not implementation details or trivial edits. Run appropriate checks and required repository gates. Stop when evidence is sufficient; repeat or broaden checks only for changes, failures, or unresolved risks.
+- **Write for humans.** A reader should understand the code without knowing the discussion that produced it. Use consistent domain terms, and name helpers so their actions and return values are clear. Add concise comments before non-obvious blocks to explain their purpose, constraints, or consequences. In tests, explain the scenario and what each meaningful group of assertions protects; split independent behaviors when they obscure the test’s intent. Prefer clearer names and structure over lengthy explanations, and avoid comments that merely repeat the syntax.
 
 ## Additional principles
 
