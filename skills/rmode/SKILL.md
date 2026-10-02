@@ -16,7 +16,7 @@ Apply the baseline below, then read principle details only when they would chang
 
 ## Additional principles
 
-All entries below are installed sibling skills. A name `X` resolves to `../principle-X/SKILL.md` relative to this file. Read the relevant file directly, even when its metadata excludes automatic discovery. The user does not need to invoke it. Reuse guidance already read while it remains in context; reread only after it changes or the detail is lost.
+All entries below are installed sibling skills. A name `X` resolves to `../principle-X/SKILL.md` relative to this file. Before relying on an additional principle to make a decision, read its leaf `SKILL.md` in full, even when its metadata excludes automatic discovery. The user does not need to invoke it. Reuse guidance already read while it remains in context; reread only after it changes or the detail is lost. Do not read extra principles just to populate the reply.
 
 Choose entries whose conditions actually apply, not every entry associated with the task category. The baseline is sufficient for routine edits. Follow a leaf's cross-references only when their detail is needed for the current decision.
 
@@ -57,4 +57,4 @@ When using these principles through rmode, this baseline and effort policy quali
 - Keep verification units coherent; do not mechanically rerun a suite after every individual edit. Existing authorization and repository policy determine commits, rebases, and PRs.
 - Principle references to other workflow skills do not activate those workflows. This skill depends only on the 23 principle skills and TypeScript guidance. The other installed conversation controls keep their own invocation rules.
 - Respect task scope, compatibility requirements, authorization, and host security boundaries. A principle grants no additional permission and creates no obligation to fix unrelated problems.
-- Explain consequential decisions and verification results naturally. Do not produce a principle checklist or cite every principle used.
+- In your reply, name each additional principle that materially shaped a decision and explain the specific choice it changed. Attribute only principles whose leaf `SKILL.md` you actually read and applied in this session. Tie each reference to a concrete design choice, implementation change, or verification step, not a generic claim of compliance. Keep the explanation concise; do not list principles that had no effect.
